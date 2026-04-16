@@ -1,7 +1,7 @@
 title: "Навчальні посібники"
 description: "Стислі навчальні посібники для студентів НУЛП"
 url: ""
-baseurl: "/iot_guides"
+baseurl: "/IOT-guides"
 
 markdown: kramdown
 
