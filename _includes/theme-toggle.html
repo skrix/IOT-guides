@@ -1,0 +1,18 @@
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Переключити тему">
+  <span class="icon-sun">&#9728;</span>
+  <span class="icon-moon">&#9790;</span>
+</button>
+
+<script>
+(function() {
+  var saved = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+})();
+
+function toggleTheme() {
+  var current = document.documentElement.getAttribute('data-theme');
+  var next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+}
+</script>

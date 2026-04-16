@@ -1,0 +1,23 @@
+title: "Навчальні посібники"
+description: "Стислі навчальні посібники для студентів НУЛП"
+url: ""
+baseurl: "/iot_guides"
+
+markdown: kramdown
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - .DS_Store
+  - vendor
+
+collections:
+  guides:
+    output: false
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: "default"

@@ -1,0 +1,49 @@
+---
+layout: home
+title: Головна
+---
+
+<div class="home-container">
+  <header class="home-header">
+    <h1>Навчальні <span>посібники</span></h1>
+    <p class="tagline">Стислі конспекти для студентів ІоТ</p>
+    <div class="home-uni">
+      <span>🏛</span>
+      <span>НУ «Львівська політехніка» · <a href="https://lpnu.ua" target="_blank" rel="noopener">lpnu.ua</a></span>
+    </div>
+  </header>
+
+  <section class="guides-section">
+    <h2>Курси</h2>
+    <div class="guides-grid">
+
+      <a class="guide-card" href="{{ '/computer_networks/' | relative_url }}">
+        <div class="card-icon">🌐</div>
+        <h3>Комп'ютерні мережі</h3>
+        <p class="card-desc">Від фізичного рівня до безпеки мережі — OSI, TCP/IP, Ethernet, Wi-Fi, IP-адресація, транспортний та прикладний рівні.</p>
+        <div class="card-meta">
+          <span class="card-tag">10 розділів</span>
+          <span class="card-tag">OSI + TCP/IP</span>
+          <span class="card-tag">IPv4 / IPv6</span>
+        </div>
+      </a>
+
+      <!-- Додавайте нові курси тут -->
+      <!--
+      <a class="guide-card" href="{{ '/course_name/' | relative_url }}">
+        <div class="card-icon">📚</div>
+        <h3>Назва курсу</h3>
+        <p class="card-desc">Опис курсу.</p>
+        <div class="card-meta">
+          <span class="card-tag">тег</span>
+        </div>
+      </a>
+      -->
+
+    </div>
+  </section>
+
+  <footer class="home-footer">
+    <p>Створено студентами НУЛП · <a href="https://github.com/sawhikes/iot_guides" target="_blank" rel="noopener">GitHub</a></p>
+  </footer>
+</div>
