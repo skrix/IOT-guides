@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Комп'ютерні мережі — Стислий посібник</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Source+Serif+4:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e1117;
+  --surface: #161b22;
+  --surface2: #1c2230;
+  --border: #2d333b;
+  --text: #e6edf3;
+  --text-dim: #8b949e;
+  --accent: #58a6ff;
+  --accent2: #3fb950;
+  --accent3: #d2a8ff;
+  --accent4: #f0883e;
+  --accent5: #f85149;
+  --accent6: #79c0ff;
+  --code-bg: #0d1117;
+  --chapter-1: #58a6ff;
+  --chapter-2: #3fb950;
+  --chapter-3: #d2a8ff;
+  --chapter-4: #f0883e;
+  --chapter-5: #79c0ff;
+  --chapter-6: #f85149;
+  --chapter-7: #7ee787;
+  --chapter-8: #ffa657;
+  --chapter-9: #d2a8ff;
+  --chapter-10: #ff7b72;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 300px;
+  height: 100vh;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  z-index: 100;
+  padding: 24px 0;
+  transition: transform 0.3s ease;
+}
+
+.sidebar.collapsed {
+  transform: translateX(-300px);
+}
+
+.sidebar-logo {
+  padding: 0 20px 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+
+.sidebar-logo h1 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.sidebar-logo p {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 13px;
+  color: var(--text-dim);
+  border-left: 3px solid transparent;
+  gap: 10px;
+}
+
+.nav-item:hover {
+  background: var(--surface2);
+  color: var(--text);
+}
+
+.nav-item.active {
+  color: var(--text);
+  background: rgba(88,166,255,0.06);
+}
+
+.nav-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Toggle button */
+.sidebar-toggle {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 200;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  transition: left 0.3s ease;
+}
+
+/* Main content */
+.main {
+  margin-left: 300px;
+  min-height: 100vh;
+  transition: margin-left 0.3s ease;
+}
+
+.main.expanded {
+  margin-left: 0;
+}
+
+/* Hero */
+.hero {
+  padding: 80px 60px 60px;
+  background: linear-gradient(135deg, rgba(88,166,255,0.08) 0%, rgba(210,168,255,0.05) 100%);
+  border-bottom: 1px solid var(--border);
+}
+
+.hero h1 {
+  font-family: 'Source Serif 4', serif;
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.hero h1 span { color: var(--accent); }
+
+.hero .subtitle {
+  font-size: 16px;
+  color: var(--text-dim);
+  max-width: 600px;
+  line-height: 1.8;
+}
+
+.hero .meta {
+  display: flex;
+  gap: 24px;
+  margin-top: 24px;
+  font-size: 12px;
+  color: var(--text-dim);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.hero .meta span {
+  background: var(--surface);
+  padding: 4px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+}
+
+/* Chapter sections */
+.chapter {
+  padding: 48px 60px;
+  border-bottom: 1px solid var(--border);
+  scroll-margin-top: 20px;
+}
+
+.chapter-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.chapter-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.chapter-title {
+  font-family: 'Source Serif 4', serif;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+/* Content blocks */
+.concept {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+}
+
+.concept-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.concept p, .concept li {
+  font-size: 14px;
+  color: var(--text-dim);
+  line-height: 1.8;
+}
+
+.concept ul {
+  list-style: none;
+  padding: 0;
+}
+
+.concept li {
+  padding: 3px 0 3px 20px;
+  position: relative;
+}
+
+.concept li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 12px;
+}
+
+.key-term {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Comparison table */
+.comparison {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 13px;
+}
+
+.comparison th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 2px solid var(--border);
+  color: var(--accent);
+}
+
+.comparison td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-dim);
+}
+
+.comparison tr:hover td {
+  background: rgba(88,166,255,0.04);
+}
+
+/* Protocol highlight */
+.proto-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.proto-card {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 14px 16px;
+}
+
+.proto-card .name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.proto-card .desc {
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+/* OSI stack visual */
+.osi-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 16px 0;
+  max-width: 500px;
+}
+
+.osi-layer {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: 'JetBrains Mono', monospace;
+  gap: 12px;
+}
+
+.osi-layer .num {
+  font-weight: 700;
+  width: 20px;
+  text-align: center;
+}
+
+.osi-layer .lname { flex: 1; font-weight: 500; }
+.osi-layer .pdu { font-size: 11px; opacity: 0.7; }
+
+/* Diagram: Frame structure */
+.frame-diagram {
+  display: flex;
+  gap: 2px;
+  margin: 16px 0;
+  flex-wrap: wrap;
+}
+
+.frame-field {
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.frame-field .field-name { font-weight: 700; display: block; }
+.frame-field .field-size { font-size: 10px; opacity: 0.7; }
+
+/* IP address visual */
+.ip-visual {
+  font-family: 'JetBrains Mono', monospace;
+  padding: 16px;
+  background: var(--code-bg);
+  border-radius: 6px;
+  margin: 12px 0;
+  font-size: 13px;
+  border: 1px solid var(--border);
+}
+
+.ip-net { color: var(--accent); font-weight: 700; }
+.ip-host { color: var(--accent2); font-weight: 700; }
+
+/* Warning / Note blocks */
+.note-block {
+  padding: 14px 18px;
+  border-radius: 6px;
+  margin: 14px 0;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.note-block.important {
+  background: rgba(88,166,255,0.08);
+  border-left: 3px solid var(--accent);
+  color: var(--accent6);
+}
+
+.note-block.exam {
+  background: rgba(210,168,255,0.08);
+  border-left: 3px solid var(--accent3);
+  color: var(--accent3);
+}
+
+/* Footer */
+.footer {
+  padding: 32px 60px;
+  font-size: 12px;
+  color: var(--text-dim);
+  font-family: 'JetBrains Mono', monospace;
+  border-top: 1px solid var(--border);
+}
+
+/* Glossary */
+.glossary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.abbr-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px 14px;
+  transition: border-color 0.2s;
+}
+
+.abbr-card:hover {
+  border-color: var(--accent);
+}
+
+.abbr-key {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 2px;
+}
+
+.abbr-full {
+  font-size: 12px;
+  color: var(--text);
+  margin-bottom: 4px;
+  font-style: italic;
+}
+
+.abbr-desc {
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+.glossary-category {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin: 24px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-300px); }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-toggle { display: flex; }
+  .main { margin-left: 0 !important; }
+  .hero { padding: 60px 24px 40px; }
+  .hero h1 { font-size: 28px; }
+  .chapter { padding: 32px 24px; }
+  .proto-grid { grid-template-columns: 1fr; }
+  .footer { padding: 24px; }
+}
+</style>
+</head>
+<body>
+
+<button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <h1>NET GUIDE</h1>
+    <p>Комп'ютерні мережі · Львівська Політехніка</p>
+  </div>
+  <div class="nav-item active" onclick="scrollTo('hero')">
+    <div class="nav-dot" style="background:var(--text-dim)"></div> Огляд
+  </div>
+  <div class="nav-item" onclick="scrollTo('ch1')">
+    <div class="nav-dot" style="background:var(--chapter-1)"></div> 1. Вступ та класифікація
+  </div>
+  <div class="nav-item" onclick="scrollTo('ch2')">
+    <div class="nav-dot" style="background:var(--chapter-2)"></div> 2. Принципи побудови мереж
+  </div>
+  <div class="nav-item" onclick="scrollTo('ch3')">
+    <div class="nav-dot" style="background:var(--chapter-3)"></div> 3. Моделі OSI та TCP/IP
+  </div>
+  <div class="nav-item" onclick="scrollTo('ch4')">
+    <div class="nav-dot" style="background:var(--chapter-4)"></div> 4. Ethernet та VLAN
+  </div>
+  <div class="nav-item" onclick="scrollTo('ch5')">
+    <div class="nav-dot" style="background:var(--chapter-5)"></div> 5. Wi-Fi (802.11)
+  </div>
+  <div class="nav-item" onclick="scrollTo('ch6')">
+    <div class="nav-dot" style="background:var(--chapter-6)"></div> 6. Мережевий рівень / IP
+  </div>
+  <div class="nav-item" onclick="scrollTo('ch7')">
+    <div class="nav-dot" style="background:var(--chapter-7)"></div> 7. IP-адресація та підмережі
+  </div>
+  <div class="nav-item" onclick="scrollTo('ch8')">
+    <div class="nav-dot" style="background:var(--chapter-8)"></div> 8. Транспортний рівень
+  </div>
+  <div class="nav-item" onclick="scrollTo('ch9')">
+    <div class="nav-dot" style="background:var(--chapter-9)"></div> 9. Прикладний рівень
+  </div>
+  <div class="nav-item" onclick="scrollTo('ch10')">
+    <div class="nav-dot" style="background:var(--chapter-10)"></div> 10. Безпека мереж
+  </div>
+  <div class="nav-item" onclick="scrollTo('glossary')">
+    <div class="nav-dot" style="background:var(--text-dim)"></div> 📖 Глосарій
+  </div>
+</nav>
+
+<main class="main" id="main">
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <h1>Комп'ютерні <span>мережі</span></h1>
+  <p class="subtitle">Стислий навчальний посібник за підручником Влах-Вигриновської Г.І. та Наконечного Р.А. — від фізичного рівня до безпеки мережі за 10 розділів.</p>
+  <div class="meta">
+    <span>10 розділів</span>
+    <span>OSI + TCP/IP</span>
+    <span>IPv4 / IPv6</span>
+    <span>Ethernet · Wi-Fi</span>
+  </div>
+</section>
+
+<!-- CHAPTER 1 -->
+<section class="chapter" id="ch1">
+  <div class="chapter-header">
+    <span class="chapter-num" style="background:rgba(88,166,255,0.15);color:var(--chapter-1)">РОЗДІЛ 01</span>
+    <h2 class="chapter-title">Вступ до комп'ютерних мереж</h2>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-1)">⬡ Що таке комп'ютерна мережа</div>
+    <p>Система, яка забезпечує зв'язок між двома чи більше комп'ютерами через дротове або бездротове середовище. Передача здійснюється електричними сигналами, світлом (оптоволокно) або радіохвилями.</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-1)">⬡ 4 ключові характеристики мережі</div>
+    <ul>
+      <li><span class="key-term">Топологія</span> — фізична організація вузлів (шина, зірка, кільце)</li>
+      <li><span class="key-term">Протокол</span> — набір правил передачі даних (TCP, IP, HTTP…)</li>
+      <li><span class="key-term">Мережевий інтерфейс</span> — програмно-апаратна межа між компонентами</li>
+      <li><span class="key-term">Мережеве ПЗ</span> — ОС і додатки для управління мережею</li>
+    </ul>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-1)">⬡ Класифікація мереж</div>
+    <table class="comparison">
+      <tr><th>Критерій</th><th>Типи</th></tr>
+      <tr><td>За охопленням</td><td><span class="key-term">PAN</span> (персональна) → <span class="key-term">LAN</span> (локальна) → <span class="key-term">MAN</span> (міська) → <span class="key-term">WAN</span> (глобальна)</td></tr>
+      <tr><td>За топологією</td><td>Шина, Зірка, Кільце</td></tr>
+      <tr><td>За архітектурою</td><td>Клієнт-сервер, Однорангова (P2P)</td></tr>
+      <tr><td>За комутацією</td><td>Каналів, Пакетів, Повідомлень</td></tr>
+      <tr><td>За режимом</td><td>Симплекс, Напівдуплекс, Повний дуплекс</td></tr>
+    </table>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-1)">⬡ Стандартизація</div>
+    <ul>
+      <li><span class="key-term">ISO</span> — еталонна модель OSI</li>
+      <li><span class="key-term">IEEE</span> — стандарти LAN (802.3 Ethernet, 802.11 Wi-Fi)</li>
+      <li><span class="key-term">IETF</span> — Інтернет-протоколи (RFC)</li>
+      <li><span class="key-term">W3C</span> — веб-стандарти (HTML, CSS)</li>
+    </ul>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-1)">⬡ Топологія «Сітка» (Mesh) та порівняння</div>
+    <table class="comparison">
+      <tr><th>Топологія</th><th>Переваги</th><th>Недоліки</th></tr>
+      <tr><td>Шина</td><td>Простота, дешевизна</td><td>Одна точка відмови, колізії</td></tr>
+      <tr><td>Зірка</td><td>Легке додавання вузлів, ізоляція збоїв</td><td>Залежність від центрального вузла</td></tr>
+      <tr><td>Кільце</td><td>Рівний доступ, детермінований</td><td>Збій одного вузла = збій мережі</td></tr>
+      <tr><td>Сітка (Mesh)</td><td>Висока надійність, резервні шляхи</td><td>Дорога, складна кабельна система</td></tr>
+    </table>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-1)">⬡ Комутація каналів vs пакетів</div>
+    <table class="comparison">
+      <tr><th>Параметр</th><th>Комутація каналів</th><th>Комутація пакетів</th></tr>
+      <tr><td>З'єднання</td><td>Виділений канал на весь час</td><td>Спільне середовище, пакети незалежні</td></tr>
+      <tr><td>Ефективність</td><td>Низька (канал зайнятий навіть при мовчанні)</td><td>Висока (ресурси використовуються за потребою)</td></tr>
+      <tr><td>Затримка</td><td>Постійна, передбачувана</td><td>Змінна (залежить від навантаження)</td></tr>
+      <tr><td>Приклад</td><td>Телефонна мережа</td><td>Інтернет (TCP/IP)</td></tr>
+    </table>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-1)">⬡ Діагностичні команди (Lab 1)</div>
+    <div class="ip-visual">
+      <span style="color:var(--accent)">ping 8.8.8.8</span> — перевірка доступності (ICMP Echo Request/Reply)<br>
+      → bytes=32 time=20ms <span style="color:var(--accent2)">TTL=115</span><br>
+      → TTL: початкове значення залежить від ОС:<br>
+      &nbsp;&nbsp;Windows=128, Linux=64, Cisco=255<br>
+      → Кількість hops = початковий TTL − отриманий TTL<br>
+      → 128 − 115 = <span style="color:var(--accent4)">13 маршрутизаторів</span><br><br>
+      <span style="color:var(--accent3)">tracert google.com</span> — маршрут пакета (hop-by-hop)<br>
+      → показує IP кожного маршрутизатора та затримку<br><br>
+      <span style="color:var(--accent4)">ipconfig /all</span> — IP, маска, шлюз, DNS, MAC-адреса<br>
+      <span style="color:var(--accent5)">netstat -an</span> — активні з'єднання та відкриті порти<br><br>
+      <span style="color:var(--accent2)">nslookup google.com</span> — DNS-запит: домен → IP<br>
+      <span style="color:var(--accent3)">arp -a</span> — вивести ARP-кеш (IP → MAC відповідності)<br>
+      <span style="color:var(--text-dim)">ipconfig /release</span> — звільнити DHCP-оренду IP<br>
+      <span style="color:var(--text-dim)">ipconfig /renew</span> — отримати нову IP від DHCP
+    </div>
+  </div>
+</section>
+
+<!-- CHAPTER 2 -->
+<section class="chapter" id="ch2">
+  <div class="chapter-header">
+    <span class="chapter-num" style="background:rgba(63,185,80,0.15);color:var(--chapter-2)">РОЗДІЛ 02</span>
+    <h2 class="chapter-title">Принципи побудови мереж</h2>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-2)">⬡ Вимоги до глобальних мереж (WAN)</div>
+    <ul>
+      <li><span class="key-term">Масштабованість</span> — зростання без втрати продуктивності</li>
+      <li><span class="key-term">Надлишковість</span> — резервні канали на випадок відмови</li>
+      <li><span class="key-term">Безпека</span> — брандмауери, шифрування, контроль доступу</li>
+      <li><span class="key-term">Взаємодія</span> — стандартні протоколи та інтерфейси</li>
+      <li><span class="key-term">QoS</span> — пріоритизація критичного трафіку</li>
+    </ul>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-2)">⬡ Технології WAN</div>
+    <div class="proto-grid">
+      <div class="proto-card"><div class="name">MPLS</div><div class="desc">Багатопротокольна комутація міток — створює VPN між вузлами, пріоритизує трафік</div></div>
+      <div class="proto-card"><div class="name">VPN</div><div class="desc">Безпечне з'єднання через Інтернет із шифруванням</div></div>
+      <div class="proto-card"><div class="name">SD-WAN</div><div class="desc">Програмне управління WAN — інтелектуальна маршрутизація, зниження витрат</div></div>
+      <div class="proto-card"><div class="name">IXP</div><div class="desc">Точки обміну трафіком між ISP — зменшення затримки</div></div>
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-2)">⬡ Мережеве обладнання</div>
+    <table class="comparison">
+      <tr><th>Пристрій</th><th>Рівень OSI</th><th>Функція</th></tr>
+      <tr><td>Повторювач (Repeater)</td><td>1 — Фізичний</td><td>Підсилення сигналу</td></tr>
+      <tr><td>Концентратор (Hub)</td><td>1 — Фізичний</td><td>Розсилає всім пристроям (без фільтрації)</td></tr>
+      <tr><td>Комутатор (Switch)</td><td>2 — Канальний</td><td>Пересилає за MAC-адресою, таблиця комутації</td></tr>
+      <tr><td>Міст (Bridge)</td><td>2 — Канальний</td><td>З'єднує два сегменти LAN</td></tr>
+      <tr><td>Маршрутизатор (Router)</td><td>3 — Мережевий</td><td>Маршрутизація за IP-адресою між мережами</td></tr>
+      <tr><td>Брандмауер (Firewall)</td><td>1–4</td><td>Фільтрація трафіку за правилами безпеки</td></tr>
+    </table>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-2)">⬡ Фізичне середовище передачі (кабелі)</div>
+    <table class="comparison">
+      <tr><th>Тип кабелю</th><th>Макс. довжина</th><th>Швидкість</th><th>Застосування</th></tr>
+      <tr><td>Коаксіальний (RG-58)</td><td>185–500 м</td><td>10 Мбіт/с</td><td>Застаріле (10BASE2/5)</td></tr>
+      <tr><td>Вита пара UTP (RJ-45)</td><td>100 м</td><td>до 10 Гбіт/с</td><td>LAN — найпоширеніший</td></tr>
+      <tr><td>Волоконно-оптичний</td><td>до 80 км</td><td>до 100 Гбіт/с+</td><td>Магістралі, дата-центри</td></tr>
+    </table>
+    <p style="font-size:13px;color:var(--text-dim);margin-top:8px">Вита пара: <span class="key-term">Straight-through</span> (ПК↔Switch) vs <span class="key-term">Crossover</span> (ПК↔ПК, Switch↔Switch). <span class="key-term">Медіаконвертор</span> — перетворює електричний сигнал ↔ оптичний.</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-2)">⬡ Мережева карта (NIC)</div>
+    <p>Працює на фізичному рівні OSI. Має унікальну <span class="key-term">MAC-адресу</span> (зберігається в ПЗП → копіюється в ОЗП при запуску). Кодує дані у електричні/оптичні сигнали. Зв'язується з ОС через <span class="key-term">драйвер пристрою</span>. Підтримує: Gigabit/10G Ethernet, VLAN, QoS. Бездротова NIC — Wi-Fi адаптер (радіочастотні сигнали замість кабелю).</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-2)">⬡ Типи серверів</div>
+    <p>Веб-сервер · Файловий · Бази даних · Додатків · Поштовий · DNS · Проксі · FTP · VoIP</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-2)">⬡ Hub vs Switch — ключова різниця (Lab 2)</div>
+    <table class="comparison">
+      <tr><th>Параметр</th><th>Hub (концентратор)</th><th>Switch (комутатор)</th></tr>
+      <tr><td>Рівень OSI</td><td>1 (фізичний)</td><td>2 (канальний)</td></tr>
+      <tr><td>Передача кадрів</td><td>На ВСІ порти (broadcast)</td><td>Лише на потрібний порт (за MAC)</td></tr>
+      <tr><td>Collision domain</td><td>Один на весь hub</td><td>Кожен порт — окремий домен</td></tr>
+      <tr><td>Broadcast domain</td><td>Один</td><td>Один (без VLAN)</td></tr>
+      <tr><td>Таблиця MAC</td><td>Немає</td><td>Є — зіставляє MAC → порт</td></tr>
+      <tr><td>Продуктивність</td><td>Низька (колізії)</td><td>Висока (виділені канали)</td></tr>
+    </table>
+    <div class="note-block important">Collision domain — зона, де можуть виникати колізії. Hub = 1 великий collision domain. Switch = кожен порт ізольований. Broadcast domain — зона, де поширюються broadcast-кадри (обмежується маршрутизатором або VLAN).</div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-2)">⬡ Як комутатор будує таблицю MAC-адрес</div>
+    <p>1. Кадр надходить на порт → комутатор зчитує <span class="key-term">MAC джерела</span> → записує в таблицю: MAC → порт.<br>
+    2. Перевіряє <span class="key-term">MAC призначення</span> у таблиці → якщо знайдено → пересилає на конкретний порт.<br>
+    3. Якщо MAC призначення <b>невідомий</b> → пересилає на ВСІ порти (flooding), крім вхідного.<br>
+    4. Записи в таблиці мають <span class="key-term">таймер старіння</span> (зазвичай 300 сек).</p>
+  </div>
+</section>
+
+<!-- CHAPTER 3 -->
+<section class="chapter" id="ch3">
+  <div class="chapter-header">
+    <span class="chapter-num" style="background:rgba(210,168,255,0.15);color:var(--chapter-3)">РОЗДІЛ 03</span>
+    <h2 class="chapter-title">Моделі OSI та TCP/IP</h2>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-3)">⬡ Еталонна модель OSI — 7 рівнів</div>
+    <div class="osi-stack">
+      <div class="osi-layer" style="background:rgba(210,168,255,0.15);color:var(--accent3)"><span class="num">7</span><span class="lname">Прикладний</span><span class="pdu">Дані</span></div>
+      <div class="osi-layer" style="background:rgba(210,168,255,0.12);color:var(--accent3)"><span class="num">6</span><span class="lname">Представлення</span><span class="pdu">Дані</span></div>
+      <div class="osi-layer" style="background:rgba(210,168,255,0.09);color:var(--accent3)"><span class="num">5</span><span class="lname">Сеансовий</span><span class="pdu">Дані</span></div>
+      <div class="osi-layer" style="background:rgba(240,136,62,0.15);color:var(--accent4)"><span class="num">4</span><span class="lname">Транспортний</span><span class="pdu">Сегмент</span></div>
+      <div class="osi-layer" style="background:rgba(88,166,255,0.15);color:var(--accent)"><span class="num">3</span><span class="lname">Мережевий</span><span class="pdu">Пакет</span></div>
+      <div class="osi-layer" style="background:rgba(63,185,80,0.15);color:var(--accent2)"><span class="num">2</span><span class="lname">Канальний</span><span class="pdu">Кадр</span></div>
+      <div class="osi-layer" style="background:rgba(248,81,73,0.15);color:var(--accent5)"><span class="num">1</span><span class="lname">Фізичний</span><span class="pdu">Біти</span></div>
+    </div>
+    <div class="note-block important">Рівні 1–3 = мережозалежні (передача). Рівні 5–7 = програмно-орієнтовані (додатки). Рівень 4 = посередник.</div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-3)">⬡ Функції кожного рівня OSI</div>
+    <ul>
+      <li><span class="key-term">1. Фізичний</span> — біти → електричні/оптичні сигнали. Кабелі, роз'єми, кодування</li>
+      <li><span class="key-term">2. Канальний</span> — фреймування, MAC-адресація, контроль помилок (CRC), CSMA/CD</li>
+      <li><span class="key-term">3. Мережевий</span> — IP-адресація, маршрутизація, фрагментація пакетів</li>
+      <li><span class="key-term">4. Транспортний</span> — надійна доставка (TCP), сегментація, контроль потоку</li>
+      <li><span class="key-term">5. Сеансовий</span> — управління сеансами, синхронізація, контрольні точки</li>
+      <li><span class="key-term">6. Представлення</span> — кодування (ASCII, UTF-8), шифрування (AES), стиснення</li>
+      <li><span class="key-term">7. Прикладний</span> — HTTP, FTP, SMTP, DNS — інтерфейс до мережі для додатків</li>
+    </ul>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-3)">⬡ Пристрої та PDU по рівнях OSI</div>
+    <table class="comparison">
+      <tr><th>Рівень</th><th>PDU (одиниця даних)</th><th>Пристрої</th><th>Адресація</th></tr>
+      <tr><td>7–5 Прикладний</td><td>Дані (Data)</td><td>Шлюзи, проксі</td><td>URL, hostname</td></tr>
+      <tr><td>4 Транспортний</td><td>Сегмент (TCP) / Дейтаграма (UDP)</td><td>Брандмауер (L4)</td><td>Порти</td></tr>
+      <tr><td>3 Мережевий</td><td>Пакет (Packet)</td><td>Маршрутизатор</td><td>IP-адреса</td></tr>
+      <tr><td>2 Канальний</td><td>Кадр (Frame)</td><td>Комутатор, Міст</td><td>MAC-адреса</td></tr>
+      <tr><td>1 Фізичний</td><td>Біти (Bits)</td><td>Hub, Повторювач</td><td>—</td></tr>
+    </table>
+    <div class="note-block important">Peer-to-peer зв'язок: кожен рівень "спілкується" зі своїм аналогом на іншому пристрої через протоколи. Реально дані йдуть вниз → кабель → вгору. Логічно — горизонтально (рівень 3 ↔ рівень 3).</div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-3)">⬡ Інкапсуляція ↓ та Декапсуляція ↑</div>
+    <p><span class="key-term">Інкапсуляція:</span> Дані рухаються зверху вниз. Кожен рівень додає свій заголовок (і трейлер на рівні 2): Дані → Сегмент → Пакет → Кадр → Біти.</p>
+    <p style="margin-top:8px"><span class="key-term">Декапсуляція:</span> зворотний процес — на приймачі заголовки видаляються знизу вверх.</p>
+    <div class="ip-visual" style="margin-top:12px">
+      <span style="color:var(--accent)">Wireshark показує всі рівні одночасно:</span><br>
+      └ Frame (L1) — фізичний кадр, розмір в байтах<br>
+      &nbsp;&nbsp;└ Ethernet II (L2) — MAC src/dst, Type<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;└ IPv4 (L3) — IP src/dst, TTL, Protocol<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└ TCP/UDP (L4) — порти src/dst, Seq, ACK<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└ HTTP (L7) — GET /index.html, Status 200
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-3)">⬡ Модель TCP/IP — 4 рівні</div>
+    <table class="comparison">
+      <tr><th>TCP/IP</th><th>Відповідність OSI</th><th>Ключові протоколи</th></tr>
+      <tr><td>4. Прикладний</td><td>5+6+7</td><td>HTTP, FTP, SMTP, DNS, SSH, DHCP</td></tr>
+      <tr><td>3. Транспортний</td><td>4</td><td>TCP, UDP</td></tr>
+      <tr><td>2. Інтернет</td><td>3</td><td>IPv4, IPv6, ICMP, ARP</td></tr>
+      <tr><td>1. Мережевий інтерфейс</td><td>1+2</td><td>Ethernet, Wi-Fi, PPP</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- CHAPTER 4 -->
+<section class="chapter" id="ch4">
+  <div class="chapter-header">
+    <span class="chapter-num" style="background:rgba(240,136,62,0.15);color:var(--chapter-4)">РОЗДІЛ 04</span>
+    <h2 class="chapter-title">Ethernet та VLAN</h2>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-4)">⬡ Ethernet — основи</div>
+    <p>Найпопулярніший протокол LAN (IEEE 802.3), працює на рівнях 1 і 2 OSI. Канальний рівень поділяється на два підрівні:</p>
+    <ul>
+      <li><span class="key-term">LLC</span> (Logical Link Control, IEEE 802.2) — інтерфейс з мережевим рівнем. Контроль потоку, помилок, мультиплексування протоколів. Режими: LLC1 (без з'єднання, без ACK), LLC2 (з з'єднанням, надійний), LLC3 (без з'єднання, з ACK)</li>
+      <li><span class="key-term">MAC</span> (Media Access Control) — інкапсуляція даних у кадри, MAC-адресація, контроль доступу до середовища (CSMA/CD). Реалізований в апаратурі (NIC)</li>
+    </ul>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-4)">⬡ CSMA/CD vs повний дуплекс</div>
+    <p><span class="key-term">CSMA/CD</span> (напівдуплекс): пристрій слухає лінію → передає → якщо колізія → JAM-сигнал → випадкова пауза → повтор. Використовувався в старих мережах зі спільним середовищем.</p>
+    <p style="margin-top:8px"><span class="key-term">Сучасний Ethernet</span> = повний дуплекс + комутатори → кожен пристрій має виділений канал до комутатора → колізії неможливі → CSMA/CD не потрібен.</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-4)">⬡ Структура кадру Ethernet II (DIX)</div>
+    <div class="frame-diagram">
+      <div class="frame-field" style="background:rgba(240,136,62,0.15);color:var(--accent4)"><span class="field-name">Преамбула</span><span class="field-size">7 Б</span></div>
+      <div class="frame-field" style="background:rgba(240,136,62,0.12);color:var(--accent4)"><span class="field-name">SFD</span><span class="field-size">1 Б</span></div>
+      <div class="frame-field" style="background:rgba(88,166,255,0.15);color:var(--accent)"><span class="field-name">MAC призн.</span><span class="field-size">6 Б</span></div>
+      <div class="frame-field" style="background:rgba(63,185,80,0.15);color:var(--accent2)"><span class="field-name">MAC джер.</span><span class="field-size">6 Б</span></div>
+      <div class="frame-field" style="background:rgba(210,168,255,0.15);color:var(--accent3)"><span class="field-name">Тип</span><span class="field-size">2 Б</span></div>
+      <div class="frame-field" style="background:rgba(255,255,255,0.06);color:var(--text)"><span class="field-name">Дані</span><span class="field-size">46–1500 Б</span></div>
+      <div class="frame-field" style="background:rgba(248,81,73,0.15);color:var(--accent5)"><span class="field-name">FCS (CRC)</span><span class="field-size">4 Б</span></div>
+    </div>
+    <p style="font-size:13px;color:var(--text-dim)">Тип: 0x0800 = IPv4, 0x0806 = ARP, 0x86DD = IPv6. MTU = 1500 Б (Jumbo Frames до 9000 Б).</p>
+    <div class="note-block important">Мінімальний розмір кадру Ethernet = <b>64 байти</b> (без преамбули/SFD). Якщо дані &lt; 46 Б → додається padding (нулі). Мінімум потрібен для коректного виявлення колізій (CSMA/CD). <b>FCS</b> (CRC-32) обчислюється відправником, перевіряється отримувачем — якщо не збігається → кадр відкидається.</div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-4)">⬡ Типи MAC-розсилок</div>
+    <ul>
+      <li><span class="key-term">Unicast</span> — один → один (конкретна MAC-адреса)</li>
+      <li><span class="key-term">Broadcast</span> — один → всі (FF:FF:FF:FF:FF:FF)</li>
+      <li><span class="key-term">Multicast</span> — один → група (починається з 01:00:5E)</li>
+    </ul>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-4)">⬡ VLAN (802.1Q)</div>
+    <p>Віртуальна LAN — логічна сегментація мережі на одному фізичному комутаторі. Кадри тегуються 4-байтовим тегом 802.1Q (VLAN ID 0–4095). Трафік між VLAN потребує маршрутизатора (L3).</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-4)">⬡ Порти комутатора: Access vs Trunk (Lab 4)</div>
+    <table class="comparison">
+      <tr><th>Тип порту</th><th>Функція</th><th>Тегування</th></tr>
+      <tr><td>Access</td><td>Підключення кінцевих пристроїв (ПК, принтер)</td><td>Належить одному VLAN, кадри без тегу</td></tr>
+      <tr><td>Trunk</td><td>Зв'язок між комутаторами або з маршрутизатором</td><td>Передає кадри КІЛЬКОХ VLAN з тегами 802.1Q</td></tr>
+    </table>
+    <div class="note-block exam">Тег 802.1Q (4 байти) вставляється між MAC-джерела та полем Type у кадрі Ethernet. Містить VLAN ID (12 біт → 4096 VLAN) та пріоритет (3 біти).</div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-4)">⬡ Міжвланова маршрутизація (Lab 4)</div>
+    <ul>
+      <li><span class="key-term">Традиційна</span> — окремий фізичний інтерфейс маршрутизатора для кожного VLAN (неефективно)</li>
+      <li><span class="key-term">Router-on-a-Stick</span> — один фізичний інтерфейс, поділений на субінтерфейси (GigabitEthernet0/0.10, .20). Кожен субінтерфейс = шлюз для свого VLAN. Порт комутатора до маршрутизатора = trunk</li>
+      <li><span class="key-term">L3 Switch (SVI)</span> — комутатор з маршрутизацією. Створюються віртуальні інтерфейси (interface vlan 10) — найшвидший метод</li>
+    </ul>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-4)">⬡ ARP — детальний процес (Lab 3)</div>
+    <div class="ip-visual">
+      Хост A хоче надіслати дані до хоста B (знає IP, не знає MAC):<br><br>
+      1. A перевіряє <span style="color:var(--accent)">ARP-кеш</span> → немає запису<br>
+      2. A надсилає <span style="color:var(--accent4)">ARP Request</span> (broadcast FF:FF:FF:FF:FF:FF):<br>
+      &nbsp;&nbsp;"Хто має IP 192.168.1.5? Скажіть 192.168.1.1"<br>
+      3. ВСІ пристрої отримують запит, тільки B відповідає<br>
+      4. B надсилає <span style="color:var(--accent2)">ARP Reply</span> (unicast) зі своєю MAC-адресою<br>
+      5. A записує MAC B у <span style="color:var(--accent)">ARP-кеш</span> → передає дані
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-4)">⬡ Структура MAC-адреси та OUI (Lab 3)</div>
+    <div class="ip-visual">
+      MAC: <span style="color:var(--accent)">00:1A:2B</span>:<span style="color:var(--accent2)">3C:4D:5E</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--accent)">← OUI (виробник) →</span> <span style="color:var(--accent2)">← Серійний номер →</span>
+    </div>
+    <p style="font-size:13px;color:var(--text-dim)"><span class="key-term">OUI</span> (Organizationally Unique Identifier) — перші 3 байти (24 біти), призначені IEEE виробнику (Cisco, Intel, Dell...). Останні 3 байти — унікальний серійний номер пристрою.</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-4)">⬡ Швидкості Ethernet</div>
+    <table class="comparison">
+      <tr><th>Стандарт</th><th>Швидкість</th><th>Кабель</th></tr>
+      <tr><td>Ethernet (10BASE-T)</td><td>10 Мбіт/с</td><td>Cat 3+</td></tr>
+      <tr><td>Fast Ethernet (100BASE-TX)</td><td>100 Мбіт/с</td><td>Cat 5+</td></tr>
+      <tr><td>Gigabit Ethernet (1000BASE-T)</td><td>1 Гбіт/с</td><td>Cat 5e / Cat 6</td></tr>
+      <tr><td>10G Ethernet</td><td>10 Гбіт/с</td><td>Cat 6a / оптика</td></tr>
+      <tr><td>40G / 100G Ethernet</td><td>40–100 Гбіт/с</td><td>Оптика / Cat 8</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- CHAPTER 5 -->
+<section class="chapter" id="ch5">
+  <div class="chapter-header">
+    <span class="chapter-num" style="background:rgba(121,192,255,0.15);color:var(--chapter-5)">РОЗДІЛ 05</span>
+    <h2 class="chapter-title">Бездротова технологія Wi-Fi</h2>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-5)">⬡ Основи Wi-Fi (IEEE 802.11)</div>
+    <p>Бездротова LAN на основі радіохвиль. Використовує <span class="key-term">CSMA/CA</span> (Collision Avoidance) замість CD — бо в радіо неможливо одночасно передавати і слухати колізії.</p>
+    <p style="margin-top:8px"><span class="key-term">CSMA/CA:</span> Прослуховування → Випадкова затримка → Передача → ACK від отримувача. Опціонально: RTS/CTS для уникнення проблеми "прихованого вузла".</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-5)">⬡ Архітектура Wi-Fi</div>
+    <ul>
+      <li><span class="key-term">BSS (Basic Service Set)</span> — одна точка доступу (AP) + клієнти</li>
+      <li><span class="key-term">ESS (Extended Service Set)</span> — кілька AP з одним SSID, роумінг</li>
+      <li><span class="key-term">Ad-hoc (IBSS)</span> — прямий зв'язок між пристроями без AP</li>
+    </ul>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-5)">⬡ Стандарти Wi-Fi</div>
+    <table class="comparison">
+      <tr><th>Стандарт</th><th>Wi-Fi</th><th>Частота</th><th>Макс. швидкість</th></tr>
+      <tr><td>802.11a</td><td>—</td><td>5 ГГц</td><td>54 Мбіт/с</td></tr>
+      <tr><td>802.11b</td><td>—</td><td>2.4 ГГц</td><td>11 Мбіт/с</td></tr>
+      <tr><td>802.11g</td><td>—</td><td>2.4 ГГц</td><td>54 Мбіт/с</td></tr>
+      <tr><td>802.11n</td><td>Wi-Fi 4</td><td>2.4 / 5 ГГц</td><td>600 Мбіт/с</td></tr>
+      <tr><td>802.11ac</td><td>Wi-Fi 5</td><td>5 ГГц</td><td>6.9 Гбіт/с</td></tr>
+      <tr><td>802.11ax</td><td>Wi-Fi 6/6E</td><td>2.4/5/6 ГГц</td><td>9.6 Гбіт/с</td></tr>
+    </table>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-5)">⬡ Проблеми бездротових мереж</div>
+    <ul>
+      <li><span class="key-term">Прихований вузол (Hidden Terminal)</span> — вузли A і C не чують один одного, але обидва передають до B → колізія на B. Вирішення: RTS/CTS</li>
+      <li><span class="key-term">Засвічений вузол (Exposed Terminal)</span> — вузол C чує передачу B→A і помилково вважає канал зайнятим, хоча міг би передавати до D без перешкод</li>
+    </ul>
+    <div class="note-block important">У бездротових мережах колізії неможливо виявити під час передачі (напівдуплекс радіо), тому замість CSMA/CD використовується CSMA/CA (Collision <b>Avoidance</b>).</div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-5)">⬡ CSMA/CA — детальний механізм</div>
+    <div class="ip-visual">
+      1. Прослуховування каналу (очікування DIFS)<br>
+      2. Якщо канал вільний → випадкова затримка (backoff slots 0–15)<br>
+      3. Лічильник = 0 → <span style="color:var(--accent)">Передача кадру</span><br>
+      4. Отримувач → <span style="color:var(--accent2)">ACK</span> (підтвердження)<br>
+      5. Немає ACK → подвоєння паузи → повтор (експоненційне зростання)<br><br>
+      <span style="color:var(--accent3)">Опціонально (RTS/CTS):</span><br>
+      Відправник → <span style="color:var(--accent4)">RTS</span> (Request to Send) → Точка доступу<br>
+      Точка доступу → <span style="color:var(--accent4)">CTS</span> (Clear to Send) → Усі вузли<br>
+      → Усі інші вузли мовчать на вказаний час → Передача без колізій
+    </div>
+    <p style="font-size:13px;color:var(--text-dim)">RTS/CTS вирішує проблему прихованого вузла, але додає overhead. Використовується для великих кадрів.</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-5)">⬡ Процес підключення до Wi-Fi (асоціація)</div>
+    <div class="ip-visual">
+      <span style="color:var(--accent)">Етап 1 — Зондування (Probe)</span><br>
+      Клієнт надсилає Probe Request на кількох каналах (з SSID або без)<br>
+      Точки доступу відповідають Probe Response<br><br>
+      <span style="color:var(--accent2)">Етап 2 — Автентифікація</span><br>
+      Відкрита (Open/NULL) — ТД завжди погоджується<br>
+      Із ключем (WEP — застаріле, WPA2/WPA3 — сучасне)<br><br>
+      <span style="color:var(--accent3)">Етап 3 — Асоціація</span><br>
+      Клієнт надсилає Association Request<br>
+      ТД призначає AID (Association ID) = логічний порт<br>
+      <span style="color:var(--accent4)">✓ Канал даних встановлено</span>
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-5)">⬡ Типи кадрів Wi-Fi (802.11)</div>
+    <ul>
+      <li><span class="key-term">Кадри даних (Data)</span> — несуть корисне навантаження користувача</li>
+      <li><span class="key-term">Кадри керування (Management)</span> — Beacon, Probe Req/Resp, Association, Authentication, Deauthentication</li>
+      <li><span class="key-term">Керуючі кадри (Control)</span> — ACK, RTS, CTS, PS-Poll</li>
+    </ul>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-5)">⬡ Структура кадру даних Wi-Fi</div>
+    <div class="frame-diagram">
+      <div class="frame-field" style="background:rgba(121,192,255,0.15);color:var(--chapter-5)"><span class="field-name">Керув. кадром</span><span class="field-size">2 Б</span></div>
+      <div class="frame-field" style="background:rgba(121,192,255,0.12);color:var(--chapter-5)"><span class="field-name">Тривалість</span><span class="field-size">2 Б</span></div>
+      <div class="frame-field" style="background:rgba(88,166,255,0.15);color:var(--accent)"><span class="field-name">Адреса 1</span><span class="field-size">6 Б</span></div>
+      <div class="frame-field" style="background:rgba(63,185,80,0.15);color:var(--accent2)"><span class="field-name">Адреса 2</span><span class="field-size">6 Б</span></div>
+      <div class="frame-field" style="background:rgba(210,168,255,0.15);color:var(--accent3)"><span class="field-name">Адреса 3</span><span class="field-size">6 Б</span></div>
+      <div class="frame-field" style="background:rgba(240,136,62,0.12);color:var(--accent4)"><span class="field-name">Seq Ctrl</span><span class="field-size">2 Б</span></div>
+      <div class="frame-field" style="background:rgba(121,192,255,0.08);color:var(--chapter-5)"><span class="field-name">Адреса 4*</span><span class="field-size">6 Б</span></div>
+      <div class="frame-field" style="background:rgba(255,255,255,0.06);color:var(--text)"><span class="field-name">Дані</span><span class="field-size">0–2304 Б</span></div>
+      <div class="frame-field" style="background:rgba(248,81,73,0.15);color:var(--accent5)"><span class="field-name">FCS</span><span class="field-size">4 Б</span></div>
+    </div>
+    <div class="note-block exam">Wi-Fi кадр має до 4 MAC-адрес (vs 2 у Ethernet): отримувач, передавач, BSSID (AP), + 4-та для WDS/mesh. Макс. payload 2304 Б (vs 1500 у Ethernet). NIC автоматично конвертує Ethernet ↔ 802.11 кадри.</div>
+  </div>
+</section>
+
+<!-- CHAPTER 6 -->
+<section class="chapter" id="ch6">
+  <div class="chapter-header">
+    <span class="chapter-num" style="background:rgba(248,81,73,0.15);color:var(--chapter-6)">РОЗДІЛ 06</span>
+    <h2 class="chapter-title">Мережевий рівень: IP</h2>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-6)">⬡ Характеристики IP</div>
+    <ul>
+      <li><span class="key-term">Без з'єднання</span> — пакети незалежні, без попереднього handshake</li>
+      <li><span class="key-term">Без гарантії доставки</span> — "best effort" (надійність — відповідальність TCP)</li>
+      <li><span class="key-term">Без порядку</span> — пакети можуть йти різними маршрутами</li>
+      <li><span class="key-term">Незалежний від середовища</span> — працює поверх будь-якої L2 технології</li>
+    </ul>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-6)">⬡ Заголовок IPv4 — всі поля (20–60 байт)</div>
+    <table class="comparison">
+      <tr><th>Поле</th><th>Біти</th><th>Призначення</th></tr>
+      <tr><td>Version</td><td>4</td><td>Версія IP (завжди 0100 для IPv4)</td></tr>
+      <tr><td>IHL (Header Length)</td><td>4</td><td>Довжина заголовка в 32-бітних словах (мін. 5 = 20 Б)</td></tr>
+      <tr><td>TOS / DSCP + ECN</td><td>8</td><td>Пріоритет трафіку (QoS). DSCP=6 біт, ECN=2 біти</td></tr>
+      <tr><td>Total Length</td><td>16</td><td>Загальна довжина пакета (макс. 65535 Б, зазвичай ≤1500)</td></tr>
+      <tr><td>Identification</td><td>16</td><td>ID для збирання фрагментів одного пакета</td></tr>
+      <tr><td>Flags</td><td>3</td><td>DF (Don't Fragment), MF (More Fragments)</td></tr>
+      <tr><td>Fragment Offset</td><td>13</td><td>Зміщення фрагмента для правильного збирання</td></tr>
+      <tr><td>TTL</td><td>8</td><td>−1 на кожному hop; TTL=0 → пакет відкидається (ICMP Time Exceeded)</td></tr>
+      <tr><td>Protocol</td><td>8</td><td>TCP=6, UDP=17, ICMP=1</td></tr>
+      <tr><td>Header Checksum</td><td>16</td><td>Перевірка цілісності заголовка</td></tr>
+      <tr><td>Source IP</td><td>32</td><td>IP відправника</td></tr>
+      <tr><td>Destination IP</td><td>32</td><td>IP отримувача</td></tr>
+      <tr><td>Options + Padding</td><td>0–320</td><td>Необов'язкові опції, вирівнювання до 32 біт</td></tr>
+    </table>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-6)">⬡ Заголовок IPv6 — 8 полів (40 байт фіксовано)</div>
+    <table class="comparison">
+      <tr><th>Поле</th><th>Біти</th><th>Призначення</th></tr>
+      <tr><td>Version</td><td>4</td><td>Завжди 0110</td></tr>
+      <tr><td>Traffic Class</td><td>8</td><td>Пріоритет (DSCP + ECN, аналог TOS в IPv4)</td></tr>
+      <tr><td>Flow Label</td><td>20</td><td>Ідентифікатор потоку для QoS (нове в IPv6)</td></tr>
+      <tr><td>Payload Length</td><td>16</td><td>Розмір даних (без заголовка)</td></tr>
+      <tr><td>Next Header</td><td>8</td><td>Тип наступного заголовка/протоколу (TCP=6, UDP=17)</td></tr>
+      <tr><td>Hop Limit</td><td>8</td><td>Аналог TTL — −1 на кожному hop</td></tr>
+      <tr><td>Source Address</td><td>128</td><td>IPv6-адреса відправника</td></tr>
+      <tr><td>Destination Address</td><td>128</td><td>IPv6-адреса отримувача</td></tr>
+    </table>
+    <p style="font-size:13px;color:var(--text-dim);margin-top:8px">Немає: контрольної суми (ефективність), фрагментації маршрутизатором, полів Options. Розширення — через Extension Headers (ланцюг "Next Header").</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-6)">⬡ IPv6 — ключові відмінності</div>
+    <table class="comparison">
+      <tr><th>Параметр</th><th>IPv4</th><th>IPv6</th></tr>
+      <tr><td>Довжина адреси</td><td>32 біти (4.3 млрд)</td><td>128 біт (340 ундеціліонів)</td></tr>
+      <tr><td>Заголовок</td><td>20–60 байт, 14 полів</td><td>40 байт, 8 полів (спрощений)</td></tr>
+      <tr><td>Фрагментація</td><td>Маршрутизатори + відправник</td><td>Тільки відправник</td></tr>
+      <tr><td>NAT</td><td>Часто потрібен</td><td>Не потрібен</td></tr>
+      <tr><td>IPsec</td><td>Опціональний</td><td>Обов'язковий</td></tr>
+      <tr><td>Контрольна сума</td><td>Є</td><td>Видалена (ефективність)</td></tr>
+    </table>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-6)">⬡ ICMP — діагностика мережі</div>
+    <p>Повідомлення про помилки та стан. Не підвищує надійність IP — лише інформує.</p>
+    <table class="comparison">
+      <tr><th>Тип повідомлення</th><th>Призначення</th><th>Інструмент</th></tr>
+      <tr><td>Echo Request / Reply</td><td>Перевірка доступності вузла</td><td>ping</td></tr>
+      <tr><td>Destination Unreachable</td><td>Пакет не доставлено (0=мережа, 1=хост, 3=порт)</td><td>автоматично</td></tr>
+      <tr><td>Time Exceeded</td><td>TTL = 0, пакет відкинуто маршрутизатором</td><td>tracert/traceroute</td></tr>
+      <tr><td>Redirect</td><td>Повідомлення про кращий маршрут</td><td>автоматично</td></tr>
+    </table>
+    <p style="font-size:13px;color:var(--text-dim);margin-top:8px"><span class="key-term">ICMPv6</span> = ICMPv4 + додаткові функції: Neighbor Discovery (замінює ARP), Router Solicitation/Advertisement, SLAAC (автоконфігурація адрес).</p>
+  </div>
+</section>
+
+<!-- CHAPTER 7 -->
+<section class="chapter" id="ch7">
+  <div class="chapter-header">
+    <span class="chapter-num" style="background:rgba(126,231,135,0.15);color:var(--chapter-7)">РОЗДІЛ 07</span>
+    <h2 class="chapter-title">IP-адресація та підмережі</h2>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-7)">⬡ Структура IPv4-адреси</div>
+    <div class="ip-visual">
+      <span class="ip-net">192.168.1</span>.<span class="ip-host">25</span><br>
+      <span style="color:var(--accent);font-size:11px">← Ідентифікатор мережі →</span> <span style="color:var(--accent2);font-size:11px">← Хост →</span><br><br>
+      Двійково: <span class="ip-net">11000000.10101000.00000001</span>.<span class="ip-host">00011001</span>
+    </div>
+    <p style="font-size:13px;color:var(--text-dim)">Кожен октет = 0–255. Маска підмережі розділяє мережеву та хостову частини.</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-7)">⬡ Класи адрес (класова адресація)</div>
+    <table class="comparison">
+      <tr><th>Клас</th><th>Перший октет</th><th>Маска</th><th>Мережі / Хости</th></tr>
+      <tr><td>A</td><td>1–126</td><td>/8 (255.0.0.0)</td><td>128 мереж × 16 млн хостів</td></tr>
+      <tr><td>B</td><td>128–191</td><td>/16 (255.255.0.0)</td><td>16 384 × 65 534</td></tr>
+      <tr><td>C</td><td>192–223</td><td>/24 (255.255.255.0)</td><td>2 097 152 × 254</td></tr>
+      <tr><td>D</td><td>224–239</td><td>—</td><td>Multicast</td></tr>
+      <tr><td>E</td><td>240–255</td><td>—</td><td>Зарезервовано</td></tr>
+    </table>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-7)">⬡ Підмережі (Subnetting)</div>
+    <ul>
+      <li><span class="key-term">FLSM</span> (Fixed Length) — усі підмережі однакового розміру</li>
+      <li><span class="key-term">VLSM</span> (Variable Length) — підмережі різного розміру (ефективніше)</li>
+    </ul>
+    <div class="note-block exam">Формула: Кількість хостів = 2<sup>n</sup> − 2 (де n = кількість бітів хостової частини). Мінус 2: адреса мережі та broadcast.</div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-7)">⬡ NAT (Network Address Translation)</div>
+    <p>Перетворює приватні IP-адреси (10.x.x.x, 172.16–31.x.x, 192.168.x.x) у одну або кілька публічних для виходу в Інтернет. Основна причина — нестача IPv4 адрес.</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-7)">⬡ IPv6-адресація</div>
+    <p>128 біт = 8 груп по 4 hex-цифри, розділених двокрапкою.</p>
+    <div class="ip-visual">
+      <span style="color:var(--accent)">Повна:</span> 2001:0db8:0000:0000:0000:0000:0000:0001<br>
+      <span style="color:var(--accent2)">Правило 1</span> — провідні нулі в кожному блоці опускаються:<br>
+      &nbsp;&nbsp;&nbsp;→ 2001:db8:0:0:0:0:0:1<br>
+      <span style="color:var(--accent3)">Правило 2</span> — одна послідовність нулів замінюється на :: (тільки раз!):<br>
+      &nbsp;&nbsp;&nbsp;→ <span style="color:var(--accent4)">2001:db8::1</span>
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-7)">⬡ Типи IPv6-адрес</div>
+    <table class="comparison">
+      <tr><th>Тип</th><th>Префікс</th><th>Призначення</th></tr>
+      <tr><td>Global Unicast</td><td>2000::/3</td><td>Публічні адреси Інтернету (аналог IPv4 публічних)</td></tr>
+      <tr><td>Link-Local</td><td>fe80::/10</td><td>Автоматичні, лише в межах сегменту (не маршрутизуються)</td></tr>
+      <tr><td>Unique Local (ULA)</td><td>fc00::/7</td><td>Приватні адреси (аналог 10.x.x.x, 192.168.x.x)</td></tr>
+      <tr><td>Multicast</td><td>ff00::/8</td><td>Групова передача (замість broadcast в IPv4)</td></tr>
+      <tr><td>Loopback</td><td>::1</td><td>Аналог 127.0.0.1</td></tr>
+      <tr><td>IPv4-mapped</td><td>::ffff:A.B.C.D</td><td>IPv4 у форматі IPv6 (::ffff:192.0.2.1)</td></tr>
+    </table>
+    <div class="note-block exam">В IPv6 немає broadcast! Замість нього — multicast (ff02::1 = all nodes, ff02::2 = all routers). Link-local (fe80::) генерується автоматично на кожному інтерфейсі.</div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-7)">⬡ Таблиця степенів двійки (для розрахунків)</div>
+    <div class="ip-visual">
+      Біт:&nbsp;&nbsp;&nbsp;  7&nbsp;&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;0<br>
+      Вага:&nbsp; <span style="color:var(--accent)">128</span>&nbsp;&nbsp;&nbsp;<span style="color:var(--accent)">64</span>&nbsp;&nbsp;&nbsp;<span style="color:var(--accent)">32</span>&nbsp;&nbsp;&nbsp;<span style="color:var(--accent)">16</span>&nbsp;&nbsp;&nbsp;<span style="color:var(--accent)">8</span>&nbsp;&nbsp;&nbsp;<span style="color:var(--accent)">4</span>&nbsp;&nbsp;&nbsp;<span style="color:var(--accent)">2</span>&nbsp;&nbsp;&nbsp;<span style="color:var(--accent)">1</span><br><br>
+      <span style="color:var(--accent2)">Приклад:</span> 201 → 128+64+8+1 → <span style="color:var(--accent4)">11001001</span><br>
+      <span style="color:var(--accent2)">Приклад:</span> 11101001 → 128+64+32+8+1 = <span style="color:var(--accent4)">233</span><br><br>
+      Макс. значення 8 біт: 11111111 = 255 (256 значень: 0–255)
+    </div>
+    <div class="note-block exam">Запам'ятай ключові маски: /24=256 адрес, /25=128, /26=64, /27=32, /28=16, /29=8, /30=4 (point-to-point), /31=2, /32=1</div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-7)">⬡ CIDR (безкласова адресація)</div>
+    <p><span class="key-term">CIDR</span> (Classless Inter-Domain Routing) — замінює жорсткі класи A/B/C. Довжина префікса /N визначає кількість бітів мережевої частини. Наприклад: 192.168.1.0<span class="key-term">/26</span> = маска 255.255.255.192 = 64 адреси (62 хости).</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-7)">⬡ Wildcard mask (обернена маска)</div>
+    <p><span class="key-term">Wildcard</span> = NOT(маска). Показує, які біти IP-адреси <b>можуть змінюватись</b>. Використовується в ACL та протоколах маршрутизації (OSPF).</p>
+    <div class="ip-visual">
+      Маска:&nbsp;&nbsp;&nbsp;&nbsp;255.255.255.0&nbsp;&nbsp;= 11111111.11111111.11111111.00000000<br>
+      Wildcard: 0.0.0.255&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= 00000000.00000000.00000000.11111111<br><br>
+      <span style="color:var(--text-dim)">Правило: маска + wildcard = 255.255.255.255 (по кожному октету сума = 255)</span>
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-7)">⬡ Логічні операції в IP-адресації</div>
+    <div class="ip-visual">
+      <span style="color:var(--accent)">AND — визначення мережевої адреси:</span><br>
+      IP:&nbsp;&nbsp;&nbsp;&nbsp;192.168.1.10&nbsp; = 11000000.10101000.00000001.<span style="color:var(--accent2)">00001010</span><br>
+      Маска: 255.255.255.0 = 11111111.11111111.11111111.<span style="color:var(--text-dim)">00000000</span><br>
+      AND:&nbsp;&nbsp;192.168.1.0&nbsp;&nbsp; = 11000000.10101000.00000001.<span style="color:var(--accent4)">00000000</span> ← мережа<br><br>
+      <span style="color:var(--accent3)">NOT — інвертована маска (wildcard):</span><br>
+      Маска: 255.255.255.0 → NOT → 0.0.0.255<br>
+      Використовується в ACL та протоколах маршрутизації<br><br>
+      <span style="color:var(--accent4)">OR — визначення broadcast-адреси:</span><br>
+      Мережа:&nbsp;&nbsp;&nbsp;192.168.1.0<br>
+      Wildcard: 0.0.0.255<br>
+      OR:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;192.168.1.255 ← broadcast
+    </div>
+    <div class="note-block exam">Правила: 1 AND 1 = 1, решта = 0. NOT інвертує. 0 OR 0 = 0, решта = 1. Ці операції — основа для розрахунку підмереж на іспиті!</div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-7)">⬡ FLSM — приклад розрахунку</div>
+    <p>Мережа <span class="key-term">192.168.1.0/24</span> → розбити на 4 підмережі.</p>
+    <p style="margin-top:4px">Запозичуємо 2 біти з хост-частини: 2² = 4 підмережі, залишилось 6 біт → 2⁶ − 2 = 62 хости. Маска: /26 (255.255.255.192).</p>
+    <table class="comparison">
+      <tr><th>Підмережа</th><th>Мережа</th><th>Хости</th><th>Broadcast</th></tr>
+      <tr><td>1</td><td>192.168.1.0</td><td>.1 – .62</td><td>192.168.1.63</td></tr>
+      <tr><td>2</td><td>192.168.1.64</td><td>.65 – .126</td><td>192.168.1.127</td></tr>
+      <tr><td>3</td><td>192.168.1.128</td><td>.129 – .190</td><td>192.168.1.191</td></tr>
+      <tr><td>4</td><td>192.168.1.192</td><td>.193 – .254</td><td>192.168.1.255</td></tr>
+    </table>
+    <div class="note-block important">Формули: Підмережі = 2<sup>s</sup> (s = запозичені біти). Хости = 2<sup>h</sup> − 2 (h = залишені біти). Крок між підмережами = 2<sup>h</sup>.</div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-7)">⬡ VLSM — приклад розрахунку</div>
+    <p>Та сама мережа 192.168.1.0/24, але підмережі <b>різного розміру</b>:</p>
+    <table class="comparison">
+      <tr><th>Потреба</th><th>Блок</th><th>Маска</th><th>Мережа</th><th>Діапазон</th></tr>
+      <tr><td>44 хости</td><td>64</td><td>/26</td><td>192.168.1.0</td><td>.1 – .62</td></tr>
+      <tr><td>24 хости</td><td>32</td><td>/27</td><td>192.168.1.64</td><td>.65 – .94</td></tr>
+      <tr><td>12 хостів</td><td>16</td><td>/28</td><td>192.168.1.96</td><td>.97 – .110</td></tr>
+      <tr><td>2 хости</td><td>4</td><td>/30</td><td>192.168.1.112</td><td>.113 – .114</td></tr>
+    </table>
+    <p style="font-size:13px;color:var(--text-dim);margin-top:8px">Правило: завжди починати з найбільшої підмережі. Блоки = ступені 2. Вільний простір (.116–.255) залишається для майбутнього розширення.</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-7)">⬡ Методи переходу IPv4 → IPv6</div>
+    <div class="proto-grid">
+      <div class="proto-card"><div class="name">Dual Stack</div><div class="desc">Обидва протоколи одночасно на кожному пристрої. Поступовий перехід</div></div>
+      <div class="proto-card"><div class="name">Tunneling</div><div class="desc">Пакети IPv6 інкапсулюються в IPv4 для проходження через IPv4-мережу</div></div>
+      <div class="proto-card"><div class="name">Translation (NAT64)</div><div class="desc">Перетворення заголовків IPv6 ↔ IPv4 на шлюзі</div></div>
+      <div class="proto-card"><div class="name">GRE Tunnel</div><div class="desc">IPv6 через IPv4 GRE — універсальна інкапсуляція з заголовком GRE</div></div>
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-7)">⬡ Маршрутизація IP-пакетів</div>
+    <p>Процес: пакет → маршрутизатор зчитує IP призначення → пошук у таблиці маршрутизації → пересилання на наступний hop → TTL−1 (якщо 0 → відкидання).</p>
+    <ul>
+      <li><span class="key-term">Статична маршрутизація</span> — маршрути вручну. Для малих мереж</li>
+      <li><span class="key-term">Динамічна маршрутизація</span> — протоколи автоматично оновлюють маршрути</li>
+    </ul>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-7)">⬡ Протоколи маршрутизації</div>
+    <table class="comparison">
+      <tr><th>Протокол</th><th>Тип</th><th>Метрика</th><th>Особливості</th></tr>
+      <tr><td>RIP</td><td>Distance Vector</td><td>Кількість hops (макс. 15)</td><td>Простий, повільна конвергенція. RIPv2 = CIDR + multicast</td></tr>
+      <tr><td>OSPF</td><td>Link State</td><td>Вартість (bandwidth)</td><td>Алгоритм Дейкстри (SPF). Зони. Швидка конвергенція. Корпоративний</td></tr>
+      <tr><td>BGP</td><td>Path Vector</td><td>Атрибути шляху (AS_PATH, NEXT_HOP, LOCAL_PREF)</td><td>Між автономними системами. Основа Інтернету. eBGP/iBGP</td></tr>
+    </table>
+    <div class="note-block important">RIP = прості мережі. OSPF = корпоративні мережі. BGP = між ISP та великими AS. Алгоритми: Distance Vector (сусіди обмінюються таблицями) vs Link State (повна карта мережі).</div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-7)">⬡ Таблиця маршрутизації</div>
+    <table class="comparison">
+      <tr><th>Мережа призначення</th><th>Маска</th><th>Шлюз (Gateway)</th><th>Інтерфейс</th><th>Метрика</th></tr>
+      <tr><td>192.168.1.0</td><td>255.255.255.0</td><td>0.0.0.0 (пряме)</td><td>eth0</td><td>1</td></tr>
+      <tr><td>10.0.0.0</td><td>255.0.0.0</td><td>192.168.1.1</td><td>eth1</td><td>2</td></tr>
+      <tr><td>0.0.0.0 (default)</td><td>0.0.0.0</td><td>192.168.1.254</td><td>eth0</td><td>5</td></tr>
+    </table>
+    <p style="font-size:13px;color:var(--text-dim)">0.0.0.0/0 = маршрут за замовчуванням (default route) — куди відправляти пакети, якщо жоден маршрут не збігся.</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-7)">⬡ NAT — типи та деталі</div>
+    <table class="comparison">
+      <tr><th>Тип NAT</th><th>Механізм</th><th>Застосування</th></tr>
+      <tr><td>Static NAT</td><td>1 приватна IP ↔ 1 публічна IP (постійно)</td><td>Веб-сервери, пристрої з фіксованою адресою</td></tr>
+      <tr><td>Dynamic NAT</td><td>Пул публічних IP, призначення за потребою</td><td>Середні мережі з кількома публічними IP</td></tr>
+      <tr><td>PAT (Overload)</td><td>Багато приватних → 1 публічна IP + різні порти</td><td>Домашні мережі, найпоширеніший тип</td></tr>
+    </table>
+    <div class="ip-visual">
+      <span style="color:var(--accent)">Приватні діапазони (RFC 1918):</span><br>
+      10.0.0.0/8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(10.0.0.0 – 10.255.255.255)<br>
+      172.16.0.0/12&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(172.16.0.0 – 172.31.255.255)<br>
+      192.168.0.0/16&nbsp;&nbsp;&nbsp;&nbsp;(192.168.0.0 – 192.168.255.255)<br><br>
+      <span style="color:var(--accent4)">PAT приклад:</span><br>
+      192.168.1.5:3001 → <span style="color:var(--accent2)">208.141.17.4:5001</span><br>
+      192.168.1.8:3045 → <span style="color:var(--accent2)">208.141.17.4:5002</span><br>
+      Одна публічна IP, різні порти для кожного пристрою
+    </div>
+  </div>
+</section>
+
+<!-- CHAPTER 8 -->
+<section class="chapter" id="ch8">
+  <div class="chapter-header">
+    <span class="chapter-num" style="background:rgba(255,166,87,0.15);color:var(--chapter-8)">РОЗДІЛ 08</span>
+    <h2 class="chapter-title">Транспортний рівень: TCP та UDP</h2>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-8)">⬡ TCP vs UDP</div>
+    <table class="comparison">
+      <tr><th>Характеристика</th><th>TCP</th><th>UDP</th></tr>
+      <tr><td>З'єднання</td><td>Так (3-way handshake)</td><td>Ні</td></tr>
+      <tr><td>Надійність</td><td>Гарантована доставка, повтори</td><td>Без гарантії</td></tr>
+      <tr><td>Порядок</td><td>Зберігається (seq numbers)</td><td>Не зберігається</td></tr>
+      <tr><td>Контроль потоку</td><td>Так (вікно)</td><td>Ні</td></tr>
+      <tr><td>Швидкість</td><td>Повільніший (overhead)</td><td>Швидший</td></tr>
+      <tr><td>Застосування</td><td>HTTP, FTP, Email, SSH</td><td>DNS, VoIP, відео, ігри</td></tr>
+    </table>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-8)">⬡ TCP 3-way Handshake</div>
+    <div class="ip-visual">
+      Клієнт → SYN → Сервер<br>
+      Клієнт ← SYN+ACK ← Сервер<br>
+      Клієнт → ACK → Сервер<br>
+      <span style="color:var(--accent2)">✓ З'єднання встановлено</span>
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-8)">⬡ Заголовки TCP та UDP</div>
+    <table class="comparison">
+      <tr><th>Поле</th><th>TCP</th><th>UDP</th></tr>
+      <tr><td>Source Port</td><td>16 біт</td><td>16 біт</td></tr>
+      <tr><td>Destination Port</td><td>16 біт</td><td>16 біт</td></tr>
+      <tr><td>Sequence Number</td><td>32 біти — номер першого байта в сегменті</td><td>—</td></tr>
+      <tr><td>Acknowledgment Number</td><td>32 біти — наступний очікуваний байт</td><td>—</td></tr>
+      <tr><td>Flags</td><td>SYN, ACK, FIN, RST, PSH, URG</td><td>—</td></tr>
+      <tr><td>Window Size</td><td>16 біт — розмір вікна прийому</td><td>—</td></tr>
+      <tr><td>Checksum</td><td>16 біт</td><td>16 біт</td></tr>
+      <tr><td>Length</td><td>—</td><td>16 біт — довжина дейтаграми</td></tr>
+      <tr><td><b>Розмір заголовка</b></td><td><b>20–60 байт</b></td><td><b>8 байт (фіксовано)</b></td></tr>
+    </table>
+    <p style="font-size:13px;color:var(--text-dim);margin-top:8px"><span class="key-term">MSS</span> (Maximum Segment Size) — макс. розмір даних TCP в одному сегменті. Зазвичай 1460 Б (MTU 1500 − 20 IP − 20 TCP). Великий HTTP-відповідь розбивається на сегменти по MSS.</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-8)">⬡ Порти</div>
+    <ul>
+      <li><span class="key-term">Добре відомі (0–1023):</span> HTTP=80, HTTPS=443, FTP=21, SSH=22, DNS=53, SMTP=25</li>
+      <li><span class="key-term">Зареєстровані (1024–49151):</span> додатки (MySQL=3306, PostgreSQL=5432)</li>
+      <li><span class="key-term">Динамічні (49152–65535):</span> тимчасові, призначаються ОС клієнту</li>
+    </ul>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-8)">⬡ Функції транспортного рівня</div>
+    <ul>
+      <li><span class="key-term">Сегментація / збирання</span> — великі дані розбиваються на сегменти для передачі, збираються на приймачі за sequence numbers</li>
+      <li><span class="key-term">Мультиплексування</span> — кілька додатків спільно використовують одне мережеве з'єднання через унікальні номери портів</li>
+      <li><span class="key-term">Контроль потоку</span> — регулювання швидкості передачі, щоб не перевантажити приймач (TCP sliding window)</li>
+      <li><span class="key-term">Контроль помилок</span> — виявлення втрачених/пошкоджених сегментів і повторна передача (TCP)</li>
+      <li><span class="key-term">Керування з'єднаннями</span> — встановлення (handshake), підтримка та завершення сеансів</li>
+    </ul>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-8)">⬡ Життєвий цикл TCP-з'єднання</div>
+    <div class="ip-visual">
+      <span style="color:var(--accent2)">▶ Встановлення (3-way handshake):</span><br>
+      SYN → SYN+ACK → ACK<br><br>
+      <span style="color:var(--accent)">▶ Передача даних:</span><br>
+      Кожен сегмент має Sequence Number<br>
+      Отримувач надсилає ACK з номером наступного очікуваного байта<br>
+      Якщо ACK не отримано → повторна передача (retransmission)<br><br>
+      <span style="color:var(--accent5)">▶ Завершення (4-way teardown):</span><br>
+      Клієнт → FIN → Сервер<br>
+      Клієнт ← ACK ← Сервер<br>
+      Клієнт ← FIN ← Сервер<br>
+      Клієнт → ACK → Сервер<br>
+      <span style="color:var(--text-dim)">✗ З'єднання закрито</span>
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-8)">⬡ Контроль потоку та перевантаження (TCP)</div>
+    <ul>
+      <li><span class="key-term">Sliding Window</span> — отримувач повідомляє розмір вікна (window size) у кожному ACK → відправник не надсилає більше даних, ніж вікно. Вікно = 0 → передача зупиняється</li>
+      <li><span class="key-term">Контроль перевантаження</span> — TCP починає з малого вікна (Slow Start), збільшує експоненційно до порогу, потім лінійно (Congestion Avoidance). При втраті пакета — зменшення вікна</li>
+    </ul>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-8)">⬡ Мультиплексування та демультиплексування</div>
+    <p><span class="key-term">Мультиплексування (відправник):</span> дані від кількох додатків (HTTP:80, SSH:22, DNS:53) збираються на транспортному рівні, кожен отримує заголовок з номером порту джерела та призначення.</p>
+    <p style="margin-top:8px"><span class="key-term">Демультиплексування (отримувач):</span> транспортний рівень читає порт призначення і направляє сегмент до правильного додатку. Сокет = IP + порт + протокол.</p>
+  </div>
+</section>
+
+<!-- CHAPTER 9 -->
+<section class="chapter" id="ch9">
+  <div class="chapter-header">
+    <span class="chapter-num" style="background:rgba(210,168,255,0.15);color:var(--chapter-9)">РОЗДІЛ 09</span>
+    <h2 class="chapter-title">Прикладний рівень</h2>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-9)">⬡ Ключові протоколи прикладного рівня</div>
+    <div class="proto-grid">
+      <div class="proto-card"><div class="name">HTTP / HTTPS</div><div class="desc">Веб-трафік. HTTPS = HTTP + TLS шифрування. Порти 80 / 443</div></div>
+      <div class="proto-card"><div class="name">DNS</div><div class="desc">Ім'я домену → IP-адреса. Ієрархічна система. UDP порт 53</div></div>
+      <div class="proto-card"><div class="name">DHCP</div><div class="desc">Автоматичне призначення IP, маски, шлюзу, DNS. Порти 67/68</div></div>
+      <div class="proto-card"><div class="name">SMTP / POP / IMAP</div><div class="desc">Відправка (SMTP:25) та отримання пошти (POP:110, IMAP:143)</div></div>
+      <div class="proto-card"><div class="name">FTP / SMB</div><div class="desc">Передача файлів. FTP:20/21 (дані/контроль). SMB — Windows-шари</div></div>
+      <div class="proto-card"><div class="name">SSH / Telnet</div><div class="desc">Віддалений доступ. SSH:22 (шифрований). Telnet:23 (відкритий — застарілий)</div></div>
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-9)">⬡ Процес DNS-резолюції</div>
+    <p>Клієнт → Локальний DNS-кеш → Рекурсивний DNS-сервер → Кореневий сервер → TLD-сервер (.com, .ua) → Авторитетний сервер → IP-адреса → Відповідь клієнту.</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-9)">⬡ DHCP — 4 кроки (DORA)</div>
+    <div class="ip-visual">
+      1. <span style="color:var(--accent)">Discover</span> — клієнт шукає DHCP-сервер (broadcast)<br>
+      2. <span style="color:var(--accent2)">Offer</span> — сервер пропонує IP-адресу<br>
+      3. <span style="color:var(--accent3)">Request</span> — клієнт приймає пропозицію<br>
+      4. <span style="color:var(--accent4)">Acknowledge</span> — сервер підтверджує оренду
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-9)">⬡ HTTP — методи та структура запиту (Lab 6)</div>
+    <div class="ip-visual">
+      <span style="color:var(--accent)">GET</span> /index.html HTTP/1.1<br>
+      Host: example.com<br>
+      User-Agent: Mozilla/5.0<br>
+      Accept: text/html
+    </div>
+    <ul>
+      <li><span class="key-term">GET</span> — отримати ресурс (ідемпотентний, кешується, параметри в URL)</li>
+      <li><span class="key-term">POST</span> — надіслати дані (форми, файли; дані в тілі запиту)</li>
+      <li><span class="key-term">PUT</span> — замінити ресурс · <span class="key-term">DELETE</span> — видалити ресурс</li>
+    </ul>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-9)">⬡ HTTP — коди стану відповіді</div>
+    <table class="comparison">
+      <tr><th>Код</th><th>Значення</th><th>Приклад</th></tr>
+      <tr><td>200</td><td>OK — запит успішний</td><td>Сторінка завантажена</td></tr>
+      <tr><td>301/302</td><td>Redirect — перенаправлення</td><td>Сайт переїхав на нову URL</td></tr>
+      <tr><td>304</td><td>Not Modified — використати кеш</td><td>Повторний запит (If-Modified-Since)</td></tr>
+      <tr><td>401</td><td>Unauthorized — потрібна авторизація</td><td>Захищена сторінка</td></tr>
+      <tr><td>404</td><td>Not Found — ресурс не знайдено</td><td>Неіснуюча сторінка</td></tr>
+      <tr><td>500</td><td>Internal Server Error</td><td>Збій на сервері</td></tr>
+    </table>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-9)">⬡ HTTP vs HTTPS та TLS Handshake (Lab 6)</div>
+    <table class="comparison">
+      <tr><th>Параметр</th><th>HTTP</th><th>HTTPS</th></tr>
+      <tr><td>Порт</td><td>80</td><td>443</td></tr>
+      <tr><td>Шифрування</td><td>Немає — відкритий текст</td><td>TLS/SSL — зашифровані дані</td></tr>
+      <tr><td>Wireshark</td><td>Видно всі заголовки, URL, дані</td><td>Видно лише метадані (IP, порти), дані = "Encrypted"</td></tr>
+      <tr><td>Автентифікація</td><td>Немає (Base64 = НЕ шифрування!)</td><td>Цифровий сертифікат сервера</td></tr>
+    </table>
+    <div class="ip-visual">
+      <span style="color:var(--accent3)">TLS Handshake:</span><br>
+      1. Client Hello → (підтримувані алгоритми шифрування)<br>
+      2. Server Hello + Certificate → (обраний алгоритм + сертифікат)<br>
+      3. Клієнт перевіряє сертифікат, генерує session key<br>
+      4. Key Exchange → обмін ключами<br>
+      5. <span style="color:var(--accent2)">✓ Шифрований канал встановлено</span>
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-9)">⬡ Cookies, кешування та TCP-сегментація (Lab 6)</div>
+    <ul>
+      <li><span class="key-term">Cookies</span> — HTTP stateless → cookies зберігають стан між запитами (сесія, авторизація)</li>
+      <li><span class="key-term">Кешування</span> — браузер зберігає відповіді. Повторний запит → If-Modified-Since → сервер відповідає 304 (Not Modified) або новими даними</li>
+      <li><span class="key-term">TCP-сегментація</span> — великий HTTP-response (наприклад 4864 Б) не поміщається в один TCP-сегмент (MTU≈1460 Б). TCP розбиває на кілька сегментів → Wireshark: "TCP segment of a reassembled PDU"</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CHAPTER 10 -->
+<section class="chapter" id="ch10">
+  <div class="chapter-header">
+    <span class="chapter-num" style="background:rgba(255,123,114,0.15);color:var(--chapter-10)">РОЗДІЛ 10</span>
+    <h2 class="chapter-title">Безпека мереж</h2>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-10)">⬡ Основні загрози</div>
+    <ul>
+      <li><span class="key-term">Malware</span> — віруси, черв'яки, трояни, ransomware</li>
+      <li><span class="key-term">Phishing</span> — соціальна інженерія, підроблені сайти/листи</li>
+      <li><span class="key-term">DDoS</span> — перевантаження ресурсу масовими запитами</li>
+      <li><span class="key-term">Man-in-the-Middle</span> — перехоплення трафіку між сторонами</li>
+      <li><span class="key-term">Spoofing</span> — підробка IP/MAC/DNS адрес</li>
+      <li><span class="key-term">SQL Injection, XSS</span> — атаки на веб-додатки</li>
+    </ul>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-10)">⬡ Заходи безпеки</div>
+    <ul>
+      <li><span class="key-term">Брандмауер (Firewall)</span> — фільтрація трафіку за правилами (IP, порти, протоколи). Типи: пакетний фільтр (L3-L4), stateful (відстежує з'єднання), Application-level (L7)</li>
+      <li><span class="key-term">IDS / IPS</span> — виявлення (IDS = пасивне) / запобігання (IPS = блокує) вторгненням. Аналіз сигнатур та аномалій</li>
+      <li><span class="key-term">VPN</span> — шифрований тунель через публічну мережу. Типи: Site-to-Site (з'єднання мереж), Remote Access (віддалені працівники). Протоколи: IPsec, OpenVPN, WireGuard</li>
+      <li><span class="key-term">TLS/SSL</span> — шифрування на транспортному рівні (HTTPS = HTTP + TLS). TLS Handshake → обмін ключами → шифрований канал</li>
+      <li><span class="key-term">ACL (Access Control Lists)</span> — правила на маршрутизаторах: дозволити/заборонити трафік за IP, портом, протоколом. Використовують wildcard mask</li>
+      <li><span class="key-term">802.1X</span> — автентифікація на рівні порту комутатора (Supplicant → Authenticator → RADIUS-сервер)</li>
+      <li><span class="key-term">IPsec</span> — шифрування та автентифікація на мережевому рівні (L3). Режими: Transport (тільки дані) та Tunnel (весь пакет)</li>
+    </ul>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-10)">⬡ Безпека Wi-Fi</div>
+    <table class="comparison">
+      <tr><th>Протокол</th><th>Шифрування</th><th>Статус</th></tr>
+      <tr><td>WEP</td><td>RC4 (64/128 біт)</td><td>Зламаний — НЕ використовувати</td></tr>
+      <tr><td>WPA</td><td>TKIP</td><td>Застарілий</td></tr>
+      <tr><td>WPA2</td><td>AES-CCMP</td><td>Поточний стандарт</td></tr>
+      <tr><td>WPA3</td><td>SAE + AES-GCMP</td><td>Найновіший, найбезпечніший</td></tr>
+    </table>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title" style="color:var(--chapter-10)">⬡ Нові тенденції</div>
+    <ul>
+      <li><span class="key-term">Zero Trust</span> — ніколи не довіряй, завжди перевіряй</li>
+      <li><span class="key-term">AI/ML у безпеці</span> — автоматичне виявлення аномалій</li>
+      <li><span class="key-term">SASE</span> — об'єднання мережі та безпеки в хмарі</li>
+      <li><span class="key-term">Мікросегментація</span> — ізоляція трафіку всередині мережі</li>
+    </ul>
+  </div>
+</section>
+
+<!-- GLOSSARY -->
+<section class="chapter" id="glossary">
+  <div class="chapter-header">
+    <span class="chapter-num" style="background:rgba(139,148,158,0.15);color:var(--text-dim)">ГЛОСАРІЙ</span>
+    <h2 class="chapter-title">Розшифровка абревіатур</h2>
+  </div>
+
+  <div class="glossary-category">Мережі та топології</div>
+  <div class="glossary-grid">
+    <div class="abbr-card"><div class="abbr-key">PAN</div><div class="abbr-full">Personal Area Network</div><div class="abbr-desc">Персональна мережа (Bluetooth, USB) — радіус кілька метрів</div></div>
+    <div class="abbr-card"><div class="abbr-key">LAN</div><div class="abbr-full">Local Area Network</div><div class="abbr-desc">Локальна мережа — офіс, будинок, кампус</div></div>
+    <div class="abbr-card"><div class="abbr-key">MAN</div><div class="abbr-full">Metropolitan Area Network</div><div class="abbr-desc">Міська мережа — в межах міста або району</div></div>
+    <div class="abbr-card"><div class="abbr-key">WAN</div><div class="abbr-full">Wide Area Network</div><div class="abbr-desc">Глобальна мережа — між містами, країнами, континентами</div></div>
+    <div class="abbr-card"><div class="abbr-key">WLAN</div><div class="abbr-full">Wireless LAN</div><div class="abbr-desc">Бездротова локальна мережа (Wi-Fi)</div></div>
+    <div class="abbr-card"><div class="abbr-key">SAN</div><div class="abbr-full">Storage Area Network</div><div class="abbr-desc">Мережа зберігання даних — високошвидкісний доступ до дисків</div></div>
+    <div class="abbr-card"><div class="abbr-key">VPN</div><div class="abbr-full">Virtual Private Network</div><div class="abbr-desc">Віртуальна приватна мережа — шифрований тунель через Інтернет</div></div>
+    <div class="abbr-card"><div class="abbr-key">VLAN</div><div class="abbr-full">Virtual LAN</div><div class="abbr-desc">Віртуальна LAN — логічна сегментація на одному комутаторі</div></div>
+    <div class="abbr-card"><div class="abbr-key">P2P</div><div class="abbr-full">Peer-to-Peer</div><div class="abbr-desc">Однорангова мережа — всі пристрої рівноправні</div></div>
+    <div class="abbr-card"><div class="abbr-key">IXP</div><div class="abbr-full">Internet Exchange Point</div><div class="abbr-desc">Точка обміну трафіком між інтернет-провайдерами</div></div>
+    <div class="abbr-card"><div class="abbr-key">ISP</div><div class="abbr-full">Internet Service Provider</div><div class="abbr-desc">Провайдер інтернет-послуг</div></div>
+    <div class="abbr-card"><div class="abbr-key">AS</div><div class="abbr-full">Autonomous System</div><div class="abbr-desc">Автономна система — велика мережа під єдиним управлінням (BGP)</div></div>
+  </div>
+
+  <div class="glossary-category">Моделі та рівні</div>
+  <div class="glossary-grid">
+    <div class="abbr-card"><div class="abbr-key">OSI</div><div class="abbr-full">Open Systems Interconnection</div><div class="abbr-desc">Еталонна модель взаємодії відкритих систем (7 рівнів)</div></div>
+    <div class="abbr-card"><div class="abbr-key">TCP/IP</div><div class="abbr-full">Transmission Control Protocol / Internet Protocol</div><div class="abbr-desc">Стек протоколів Інтернету (4 рівні)</div></div>
+    <div class="abbr-card"><div class="abbr-key">PDU</div><div class="abbr-full">Protocol Data Unit</div><div class="abbr-desc">Одиниця даних протоколу — різна на кожному рівні</div></div>
+    <div class="abbr-card"><div class="abbr-key">ISO</div><div class="abbr-full">International Organization for Standardization</div><div class="abbr-desc">Міжнародна організація стандартизації (створила OSI)</div></div>
+    <div class="abbr-card"><div class="abbr-key">IEEE</div><div class="abbr-full">Institute of Electrical and Electronics Engineers</div><div class="abbr-desc">Інститут інженерів з електротехніки — стандарти 802.x</div></div>
+    <div class="abbr-card"><div class="abbr-key">IETF</div><div class="abbr-full">Internet Engineering Task Force</div><div class="abbr-desc">Робоча група Інтернету — розробляє RFC</div></div>
+    <div class="abbr-card"><div class="abbr-key">W3C</div><div class="abbr-full">World Wide Web Consortium</div><div class="abbr-desc">Консорціум розробки веб-стандартів (HTML, CSS)</div></div>
+    <div class="abbr-card"><div class="abbr-key">RFC</div><div class="abbr-full">Request for Comments</div><div class="abbr-desc">Документи-стандарти Інтернету (RFC 791 = IPv4, RFC 1918 = приватні IP)</div></div>
+    <div class="abbr-card"><div class="abbr-key">IANA</div><div class="abbr-full">Internet Assigned Numbers Authority</div><div class="abbr-desc">Орган розподілу IP-адрес та номерів портів</div></div>
+    <div class="abbr-card"><div class="abbr-key">ICANN</div><div class="abbr-full">Internet Corporation for Assigned Names and Numbers</div><div class="abbr-desc">Корпорація з присвоєння імен та номерів в Інтернеті</div></div>
+  </div>
+
+  <div class="glossary-category">Мережеве обладнання</div>
+  <div class="glossary-grid">
+    <div class="abbr-card"><div class="abbr-key">NIC</div><div class="abbr-full">Network Interface Card</div><div class="abbr-desc">Мережева карта/адаптер — підключає ПК до мережі</div></div>
+    <div class="abbr-card"><div class="abbr-key">MAC</div><div class="abbr-full">Media Access Control</div><div class="abbr-desc">Керування доступом до середовища. Також: MAC-адреса (48 біт)</div></div>
+    <div class="abbr-card"><div class="abbr-key">LLC</div><div class="abbr-full">Logical Link Control</div><div class="abbr-desc">Підрівень керування логічним каналом (IEEE 802.2)</div></div>
+    <div class="abbr-card"><div class="abbr-key">OUI</div><div class="abbr-full">Organizationally Unique Identifier</div><div class="abbr-desc">Унікальний ідентифікатор виробника (перші 3 байти MAC)</div></div>
+    <div class="abbr-card"><div class="abbr-key">NAS</div><div class="abbr-full">Network Attached Storage</div><div class="abbr-desc">Мережеве сховище даних</div></div>
+    <div class="abbr-card"><div class="abbr-key">DSL</div><div class="abbr-full">Digital Subscriber Line</div><div class="abbr-desc">Цифрова абонентська лінія — інтернет через телефон</div></div>
+    <div class="abbr-card"><div class="abbr-key">AP</div><div class="abbr-full">Access Point</div><div class="abbr-desc">Точка доступу Wi-Fi</div></div>
+    <div class="abbr-card"><div class="abbr-key">PoE</div><div class="abbr-full">Power over Ethernet</div><div class="abbr-desc">Живлення пристроїв через кабель Ethernet (IEEE 802.3af/at)</div></div>
+  </div>
+
+  <div class="glossary-category">Ethernet та канальний рівень</div>
+  <div class="glossary-grid">
+    <div class="abbr-card"><div class="abbr-key">CSMA/CD</div><div class="abbr-full">Carrier Sense Multiple Access with Collision Detection</div><div class="abbr-desc">Множинний доступ з виявленням колізій — старі Ethernet мережі</div></div>
+    <div class="abbr-card"><div class="abbr-key">CSMA/CA</div><div class="abbr-full">Carrier Sense Multiple Access with Collision Avoidance</div><div class="abbr-desc">Множинний доступ з уникненням колізій — Wi-Fi</div></div>
+    <div class="abbr-card"><div class="abbr-key">SFD</div><div class="abbr-full">Start Frame Delimiter</div><div class="abbr-desc">Роздільник початку кадру (1 байт: 10101011)</div></div>
+    <div class="abbr-card"><div class="abbr-key">FCS</div><div class="abbr-full">Frame Check Sequence</div><div class="abbr-desc">Контрольна послідовність кадру (CRC-32)</div></div>
+    <div class="abbr-card"><div class="abbr-key">CRC</div><div class="abbr-full">Cyclic Redundancy Check</div><div class="abbr-desc">Циклічна надлишкова перевірка — виявлення помилок</div></div>
+    <div class="abbr-card"><div class="abbr-key">MTU</div><div class="abbr-full">Maximum Transmission Unit</div><div class="abbr-desc">Макс. розмір кадру (Ethernet = 1500 Б, Jumbo = 9000 Б)</div></div>
+    <div class="abbr-card"><div class="abbr-key">DIX</div><div class="abbr-full">Digital, Intel, Xerox</div><div class="abbr-desc">Ethernet II — стандарт кадру від трьох компаній</div></div>
+    <div class="abbr-card"><div class="abbr-key">ARP</div><div class="abbr-full">Address Resolution Protocol</div><div class="abbr-desc">Протокол розпізнавання MAC за IP</div></div>
+    <div class="abbr-card"><div class="abbr-key">RARP</div><div class="abbr-full">Reverse ARP</div><div class="abbr-desc">Зворотний ARP: MAC → IP (застарілий)</div></div>
+    <div class="abbr-card"><div class="abbr-key">STP</div><div class="abbr-full">Spanning Tree Protocol</div><div class="abbr-desc">Запобігання петлям між комутаторами (IEEE 802.1D)</div></div>
+    <div class="abbr-card"><div class="abbr-key">SVI</div><div class="abbr-full">Switched Virtual Interface</div><div class="abbr-desc">Віртуальний інтерфейс L3-комутатора для VLAN</div></div>
+  </div>
+
+  <div class="glossary-category">Wi-Fi (802.11)</div>
+  <div class="glossary-grid">
+    <div class="abbr-card"><div class="abbr-key">SSID</div><div class="abbr-full">Service Set Identifier</div><div class="abbr-desc">Назва Wi-Fi мережі (до 32 символів)</div></div>
+    <div class="abbr-card"><div class="abbr-key">BSS</div><div class="abbr-full">Basic Service Set</div><div class="abbr-desc">Одна точка доступу + клієнти</div></div>
+    <div class="abbr-card"><div class="abbr-key">BSSID</div><div class="abbr-full">Basic Service Set Identifier</div><div class="abbr-desc">MAC-адреса точки доступу</div></div>
+    <div class="abbr-card"><div class="abbr-key">ESS</div><div class="abbr-full">Extended Service Set</div><div class="abbr-desc">Кілька AP з одним SSID (роумінг)</div></div>
+    <div class="abbr-card"><div class="abbr-key">IBSS</div><div class="abbr-full">Independent BSS</div><div class="abbr-desc">Ad-hoc режим — без точки доступу</div></div>
+    <div class="abbr-card"><div class="abbr-key">AID</div><div class="abbr-full">Association Identifier</div><div class="abbr-desc">Логічний порт клієнта на AP</div></div>
+    <div class="abbr-card"><div class="abbr-key">RTS/CTS</div><div class="abbr-full">Request to Send / Clear to Send</div><div class="abbr-desc">Механізм резервування каналу (проблема прихованого вузла)</div></div>
+    <div class="abbr-card"><div class="abbr-key">DIFS</div><div class="abbr-full">Distributed Inter-Frame Space</div><div class="abbr-desc">Мінімальна пауза перед передачею в Wi-Fi</div></div>
+    <div class="abbr-card"><div class="abbr-key">DCF</div><div class="abbr-full">Distributed Coordination Function</div><div class="abbr-desc">Розподілене координування доступу в 802.11</div></div>
+    <div class="abbr-card"><div class="abbr-key">OFDM</div><div class="abbr-full">Orthogonal Frequency-Division Multiplexing</div><div class="abbr-desc">Ортогональне частотне розділення — метод модуляції</div></div>
+    <div class="abbr-card"><div class="abbr-key">WDS</div><div class="abbr-full">Wireless Distribution System</div><div class="abbr-desc">З'єднання кількох AP бездротово</div></div>
+    <div class="abbr-card"><div class="abbr-key">WEP</div><div class="abbr-full">Wired Equivalent Privacy</div><div class="abbr-desc">Застарілий протокол безпеки Wi-Fi (зламаний)</div></div>
+    <div class="abbr-card"><div class="abbr-key">WPA/WPA2/WPA3</div><div class="abbr-full">Wi-Fi Protected Access</div><div class="abbr-desc">Сучасні стандарти безпеки Wi-Fi (WPA2 = AES, WPA3 = найновіший)</div></div>
+  </div>
+
+  <div class="glossary-category">Мережевий рівень (IP)</div>
+  <div class="glossary-grid">
+    <div class="abbr-card"><div class="abbr-key">IP</div><div class="abbr-full">Internet Protocol</div><div class="abbr-desc">Міжмережевий протокол</div></div>
+    <div class="abbr-card"><div class="abbr-key">IPv4 / IPv6</div><div class="abbr-full">Internet Protocol version 4 / 6</div><div class="abbr-desc">32-бітні (4.3 млрд адрес) та 128-бітні (340 ундеціліонів)</div></div>
+    <div class="abbr-card"><div class="abbr-key">ICMP</div><div class="abbr-full">Internet Control Message Protocol</div><div class="abbr-desc">Протокол керуючих повідомлень (ping, traceroute)</div></div>
+    <div class="abbr-card"><div class="abbr-key">TTL</div><div class="abbr-full">Time To Live</div><div class="abbr-desc">Лічильник часу життя пакета (в IPv6 — Hop Limit)</div></div>
+    <div class="abbr-card"><div class="abbr-key">TOS / DSCP</div><div class="abbr-full">Type of Service / Differentiated Services Code Point</div><div class="abbr-desc">Пріоритет/клас трафіку для QoS</div></div>
+    <div class="abbr-card"><div class="abbr-key">ECN</div><div class="abbr-full">Explicit Congestion Notification</div><div class="abbr-desc">Повідомлення про перевантаження мережі</div></div>
+    <div class="abbr-card"><div class="abbr-key">IHL</div><div class="abbr-full">Internet Header Length</div><div class="abbr-desc">Довжина заголовка IP (у 32-бітних словах)</div></div>
+    <div class="abbr-card"><div class="abbr-key">DF / MF</div><div class="abbr-full">Don't Fragment / More Fragments</div><div class="abbr-desc">Прапорці фрагментації в IPv4</div></div>
+    <div class="abbr-card"><div class="abbr-key">CIDR</div><div class="abbr-full">Classless Inter-Domain Routing</div><div class="abbr-desc">Безкласова міждоменна маршрутизація (/24 нотація)</div></div>
+    <div class="abbr-card"><div class="abbr-key">FLSM</div><div class="abbr-full">Fixed Length Subnet Mask</div><div class="abbr-desc">Маска підмережі фіксованої довжини</div></div>
+    <div class="abbr-card"><div class="abbr-key">VLSM</div><div class="abbr-full">Variable Length Subnet Mask</div><div class="abbr-desc">Маска підмережі змінної довжини</div></div>
+    <div class="abbr-card"><div class="abbr-key">NAT</div><div class="abbr-full">Network Address Translation</div><div class="abbr-desc">Трансляція мережевих адрес</div></div>
+    <div class="abbr-card"><div class="abbr-key">PAT</div><div class="abbr-full">Port Address Translation</div><div class="abbr-desc">Трансляція адрес портів (NAT Overload)</div></div>
+    <div class="abbr-card"><div class="abbr-key">ULA</div><div class="abbr-full">Unique Local Address</div><div class="abbr-desc">Приватна адреса IPv6 (fc00::/7)</div></div>
+    <div class="abbr-card"><div class="abbr-key">SLAAC</div><div class="abbr-full">Stateless Address Autoconfiguration</div><div class="abbr-desc">Автоконфігурація IPv6-адрес без сервера</div></div>
+    <div class="abbr-card"><div class="abbr-key">GRE</div><div class="abbr-full">Generic Routing Encapsulation</div><div class="abbr-desc">Універсальна інкапсуляція для тунелів</div></div>
+  </div>
+
+  <div class="glossary-category">Маршрутизація</div>
+  <div class="glossary-grid">
+    <div class="abbr-card"><div class="abbr-key">RIP</div><div class="abbr-full">Routing Information Protocol</div><div class="abbr-desc">Простий distance-vector протокол (макс. 15 hops)</div></div>
+    <div class="abbr-card"><div class="abbr-key">OSPF</div><div class="abbr-full">Open Shortest Path First</div><div class="abbr-desc">Link-state протокол, алгоритм Дейкстри</div></div>
+    <div class="abbr-card"><div class="abbr-key">BGP</div><div class="abbr-full">Border Gateway Protocol</div><div class="abbr-desc">Протокол між автономними системами (основа Інтернету)</div></div>
+    <div class="abbr-card"><div class="abbr-key">eBGP / iBGP</div><div class="abbr-full">External / Internal BGP</div><div class="abbr-desc">BGP між AS / всередині AS</div></div>
+    <div class="abbr-card"><div class="abbr-key">SPF</div><div class="abbr-full">Shortest Path First</div><div class="abbr-desc">Алгоритм Дейкстри для знаходження найкоротшого шляху</div></div>
+    <div class="abbr-card"><div class="abbr-key">LSA</div><div class="abbr-full">Link State Advertisement</div><div class="abbr-desc">Оголошення про стан зв'язку в OSPF</div></div>
+    <div class="abbr-card"><div class="abbr-key">ACL</div><div class="abbr-full">Access Control List</div><div class="abbr-desc">Список контролю доступу (правила на маршрутизаторі)</div></div>
+    <div class="abbr-card"><div class="abbr-key">MPLS</div><div class="abbr-full">Multiprotocol Label Switching</div><div class="abbr-desc">Багатопротокольна комутація міток (ISP, VPN)</div></div>
+    <div class="abbr-card"><div class="abbr-key">SD-WAN</div><div class="abbr-full">Software-Defined WAN</div><div class="abbr-desc">Програмно-визначена глобальна мережа</div></div>
+    <div class="abbr-card"><div class="abbr-key">SDN</div><div class="abbr-full">Software-Defined Networking</div><div class="abbr-desc">Програмно-визначені мережі</div></div>
+  </div>
+
+  <div class="glossary-category">Транспортний рівень</div>
+  <div class="glossary-grid">
+    <div class="abbr-card"><div class="abbr-key">TCP</div><div class="abbr-full">Transmission Control Protocol</div><div class="abbr-desc">Надійний протокол з з'єднанням (порт 6)</div></div>
+    <div class="abbr-card"><div class="abbr-key">UDP</div><div class="abbr-full">User Datagram Protocol</div><div class="abbr-desc">Швидкий протокол без з'єднання (порт 17)</div></div>
+    <div class="abbr-card"><div class="abbr-key">MSS</div><div class="abbr-full">Maximum Segment Size</div><div class="abbr-desc">Макс. розмір даних у TCP-сегменті (1460 Б)</div></div>
+    <div class="abbr-card"><div class="abbr-key">SYN / ACK / FIN / RST</div><div class="abbr-full">Synchronize / Acknowledge / Finish / Reset</div><div class="abbr-desc">Прапорці TCP-сегмента</div></div>
+    <div class="abbr-card"><div class="abbr-key">Seq / ACK</div><div class="abbr-full">Sequence / Acknowledgment Number</div><div class="abbr-desc">Номери байтів для порядку та підтвердження</div></div>
+    <div class="abbr-card"><div class="abbr-key">RTT</div><div class="abbr-full">Round-Trip Time</div><div class="abbr-desc">Час туди-назад між двома вузлами</div></div>
+    <div class="abbr-card"><div class="abbr-key">QoS</div><div class="abbr-full">Quality of Service</div><div class="abbr-desc">Якість обслуговування — пріоритизація трафіку</div></div>
+  </div>
+
+  <div class="glossary-category">Прикладний рівень</div>
+  <div class="glossary-grid">
+    <div class="abbr-card"><div class="abbr-key">HTTP / HTTPS</div><div class="abbr-full">HyperText Transfer Protocol (Secure)</div><div class="abbr-desc">Веб-протокол (80) / захищений TLS (443)</div></div>
+    <div class="abbr-card"><div class="abbr-key">DNS</div><div class="abbr-full">Domain Name System</div><div class="abbr-desc">Система доменних імен (домен → IP)</div></div>
+    <div class="abbr-card"><div class="abbr-key">DDNS</div><div class="abbr-full">Dynamic DNS</div><div class="abbr-desc">Динамічний DNS — оновлення IP для домену</div></div>
+    <div class="abbr-card"><div class="abbr-key">DHCP</div><div class="abbr-full">Dynamic Host Configuration Protocol</div><div class="abbr-desc">Автоматичне призначення IP (порти 67/68)</div></div>
+    <div class="abbr-card"><div class="abbr-key">SMTP</div><div class="abbr-full">Simple Mail Transfer Protocol</div><div class="abbr-desc">Відправка пошти (порт 25)</div></div>
+    <div class="abbr-card"><div class="abbr-key">POP3</div><div class="abbr-full">Post Office Protocol v3</div><div class="abbr-desc">Отримання пошти (порт 110) — завантажує локально</div></div>
+    <div class="abbr-card"><div class="abbr-key">IMAP</div><div class="abbr-full">Internet Message Access Protocol</div><div class="abbr-desc">Отримання пошти (порт 143) — синхронізація з сервером</div></div>
+    <div class="abbr-card"><div class="abbr-key">FTP</div><div class="abbr-full">File Transfer Protocol</div><div class="abbr-desc">Передача файлів (порти 20/21)</div></div>
+    <div class="abbr-card"><div class="abbr-key">SFTP</div><div class="abbr-full">SSH File Transfer Protocol</div><div class="abbr-desc">Захищений FTP через SSH (порт 22)</div></div>
+    <div class="abbr-card"><div class="abbr-key">SMB</div><div class="abbr-full">Server Message Block</div><div class="abbr-desc">Протокол спільного доступу Windows (порт 445)</div></div>
+    <div class="abbr-card"><div class="abbr-key">SSH</div><div class="abbr-full">Secure Shell</div><div class="abbr-desc">Захищений віддалений доступ (порт 22)</div></div>
+    <div class="abbr-card"><div class="abbr-key">Telnet</div><div class="abbr-full">Telecommunication Network</div><div class="abbr-desc">Віддалений доступ (порт 23) — НЕ захищений</div></div>
+    <div class="abbr-card"><div class="abbr-key">VoIP</div><div class="abbr-full">Voice over IP</div><div class="abbr-desc">Голосовий зв'язок через Інтернет</div></div>
+    <div class="abbr-card"><div class="abbr-key">URL</div><div class="abbr-full">Uniform Resource Locator</div><div class="abbr-desc">Адреса ресурсу в Інтернеті</div></div>
+    <div class="abbr-card"><div class="abbr-key">URI</div><div class="abbr-full">Uniform Resource Identifier</div><div class="abbr-desc">Ідентифікатор ресурсу (ширше поняття, ніж URL)</div></div>
+    <div class="abbr-card"><div class="abbr-key">API</div><div class="abbr-full">Application Programming Interface</div><div class="abbr-desc">Інтерфейс програмування додатків</div></div>
+    <div class="abbr-card"><div class="abbr-key">TLD</div><div class="abbr-full">Top-Level Domain</div><div class="abbr-desc">Домен верхнього рівня (.com, .ua, .org)</div></div>
+  </div>
+
+  <div class="glossary-category">Безпека</div>
+  <div class="glossary-grid">
+    <div class="abbr-card"><div class="abbr-key">TLS / SSL</div><div class="abbr-full">Transport Layer Security / Secure Sockets Layer</div><div class="abbr-desc">Шифрування транспортного рівня (TLS — сучасний, SSL — застарілий)</div></div>
+    <div class="abbr-card"><div class="abbr-key">IPsec</div><div class="abbr-full">Internet Protocol Security</div><div class="abbr-desc">Шифрування на мережевому рівні (L3)</div></div>
+    <div class="abbr-card"><div class="abbr-key">IDS / IPS</div><div class="abbr-full">Intrusion Detection / Prevention System</div><div class="abbr-desc">Система виявлення / запобігання вторгненням</div></div>
+    <div class="abbr-card"><div class="abbr-key">DDoS</div><div class="abbr-full">Distributed Denial of Service</div><div class="abbr-desc">Розподілена атака відмови в обслуговуванні</div></div>
+    <div class="abbr-card"><div class="abbr-key">MITM</div><div class="abbr-full">Man-in-the-Middle</div><div class="abbr-desc">Атака "людина посередині" — перехоплення трафіку</div></div>
+    <div class="abbr-card"><div class="abbr-key">XSS</div><div class="abbr-full">Cross-Site Scripting</div><div class="abbr-desc">Міжсайтовий скриптинг — атака на веб-додатки</div></div>
+    <div class="abbr-card"><div class="abbr-key">AES</div><div class="abbr-full">Advanced Encryption Standard</div><div class="abbr-desc">Сучасний стандарт симетричного шифрування</div></div>
+    <div class="abbr-card"><div class="abbr-key">RADIUS</div><div class="abbr-full">Remote Authentication Dial-In User Service</div><div class="abbr-desc">Сервер централізованої автентифікації</div></div>
+    <div class="abbr-card"><div class="abbr-key">SASE</div><div class="abbr-full">Secure Access Service Edge</div><div class="abbr-desc">Хмарна модель мережевої безпеки</div></div>
+  </div>
+
+  <div class="glossary-category">Хмарні технології та інше</div>
+  <div class="glossary-grid">
+    <div class="abbr-card"><div class="abbr-key">IaaS</div><div class="abbr-full">Infrastructure as a Service</div><div class="abbr-desc">Інфраструктура як послуга (AWS EC2)</div></div>
+    <div class="abbr-card"><div class="abbr-key">PaaS</div><div class="abbr-full">Platform as a Service</div><div class="abbr-desc">Платформа як послуга (Heroku)</div></div>
+    <div class="abbr-card"><div class="abbr-key">SaaS</div><div class="abbr-full">Software as a Service</div><div class="abbr-desc">ПЗ як послуга (Gmail, Slack)</div></div>
+    <div class="abbr-card"><div class="abbr-key">CLI</div><div class="abbr-full">Command-Line Interface</div><div class="abbr-desc">Інтерфейс командного рядка (Cisco IOS, PowerShell)</div></div>
+    <div class="abbr-card"><div class="abbr-key">GUI</div><div class="abbr-full">Graphical User Interface</div><div class="abbr-desc">Графічний інтерфейс</div></div>
+    <div class="abbr-card"><div class="abbr-key">CPT</div><div class="abbr-full">Cisco Packet Tracer</div><div class="abbr-desc">Емулятор мереж Cisco для навчання</div></div>
+    <div class="abbr-card"><div class="abbr-key">CCNA</div><div class="abbr-full">Cisco Certified Network Associate</div><div class="abbr-desc">Базовий сертифікат Cisco для мережевих інженерів</div></div>
+    <div class="abbr-card"><div class="abbr-key">ASCII</div><div class="abbr-full">American Standard Code for Information Interchange</div><div class="abbr-desc">Стандартне кодування символів (7 біт)</div></div>
+    <div class="abbr-card"><div class="abbr-key">UTF-8</div><div class="abbr-full">Unicode Transformation Format, 8-bit</div><div class="abbr-desc">Універсальне кодування символів (1–4 байти)</div></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>Стислий посібник на основі: Влах-Вигриновська Г.І., Наконечний Р.А. «Комп'ютерні мережі» — Львів, СПОЛОМ, 2024</p>
+</footer>
+
+</main>
+
+<script>
+// Navigation
+function scrollTo(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  // Close sidebar on mobile
+  if (window.innerWidth <= 900) {
+    document.getElementById('sidebar').classList.remove('open');
+  }
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+// Active nav tracking
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      const id = entry.target.id;
+      const mapping = {
+        'hero': 0, 'ch1': 1, 'ch2': 2, 'ch3': 3, 'ch4': 4,
+        'ch5': 5, 'ch6': 6, 'ch7': 7, 'ch8': 8, 'ch9': 9, 'ch10': 10,
+        'glossary': 11
+      };
+      if (mapping[id] !== undefined) {
+        document.querySelectorAll('.nav-item')[mapping[id]].classList.add('active');
+      }
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.chapter, .hero').forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
