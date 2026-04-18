@@ -5,7 +5,7 @@ layout: default
 {{ content }}
 
 <script>
-function scrollTo(id) {
+function scrollToSection(id) {
   document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
   if (window.innerWidth <= 900) {
     document.getElementById('sidebar').classList.remove('open');

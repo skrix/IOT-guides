@@ -24,6 +24,7 @@
   --chapter-8: #ffa657;
   --chapter-9: #d2a8ff;
   --chapter-10: #ff7b72;
+  --chapter-11: #58a6ff;
   --hero-gradient: linear-gradient(135deg, rgba(88,166,255,0.08) 0%, rgba(210,168,255,0.05) 100%);
   --nav-active-bg: rgba(88,166,255,0.06);
   --table-hover: rgba(88,166,255,0.04);
@@ -59,6 +60,7 @@
   --chapter-8: #bc4c00;
   --chapter-9: #8250df;
   --chapter-10: #cf222e;
+  --chapter-11: #0969da;
   --hero-gradient: linear-gradient(135deg, rgba(9,105,218,0.06) 0%, rgba(130,80,223,0.04) 100%);
   --nav-active-bg: rgba(9,105,218,0.06);
   --table-hover: rgba(9,105,218,0.04);
@@ -84,6 +86,17 @@ body {
 
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
+
+/* Inline code */
+code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85em;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 6px;
+  color: var(--accent);
+}
 
 /* ===== Theme Toggle ===== */
 .theme-toggle {
@@ -445,6 +458,9 @@ a:hover { text-decoration: underline; }
   font-size: 13px;
   border: 1px solid var(--border);
   transition: background 0.3s, border-color 0.3s;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-x: auto;
 }
 
 .ip-net { color: var(--accent); font-weight: 700; }

@@ -10,43 +10,43 @@ title: "Мікроконтролери"
     <h1><a href="{{ '/' | relative_url }}">МК</a></h1>
     <p>Мікроконтролери · Львівська політехніка</p>
   </div>
-  <div class="nav-item active" data-target="hero" onclick="scrollTo('hero')">
+  <div class="nav-item active" data-target="hero" onclick="scrollToSection('hero')">
     <div class="nav-dot" style="background:var(--text-dim)"></div> Огляд / Overview
   </div>
-  <div class="nav-item" data-target="ch1" onclick="scrollTo('ch1')">
+  <div class="nav-item" data-target="ch1" onclick="scrollToSection('ch1')">
     <div class="nav-dot" style="background:var(--chapter-1)"></div> 1. Основні поняття
   </div>
-  <div class="nav-item" data-target="ch2" onclick="scrollTo('ch2')">
+  <div class="nav-item" data-target="ch2" onclick="scrollToSection('ch2')">
     <div class="nav-dot" style="background:var(--chapter-2)"></div> 2. ATmega32A та ядро AVR
   </div>
-  <div class="nav-item" data-target="ch3" onclick="scrollTo('ch3')">
+  <div class="nav-item" data-target="ch3" onclick="scrollToSection('ch3')">
     <div class="nav-dot" style="background:var(--chapter-3)"></div> 3. Асемблер AVR
   </div>
-  <div class="nav-item" data-target="ch4" onclick="scrollTo('ch4')">
+  <div class="nav-item" data-target="ch4" onclick="scrollToSection('ch4')">
     <div class="nav-dot" style="background:var(--chapter-4)"></div> 4. Порти вводу/виводу
   </div>
-  <div class="nav-item" data-target="ch5" onclick="scrollTo('ch5')">
+  <div class="nav-item" data-target="ch5" onclick="scrollToSection('ch5')">
     <div class="nav-dot" style="background:var(--chapter-5)"></div> 5. Переривання та пам'ять
   </div>
-  <div class="nav-item" data-target="ch6" onclick="scrollTo('ch6')">
+  <div class="nav-item" data-target="ch6" onclick="scrollToSection('ch6')">
     <div class="nav-dot" style="background:var(--chapter-6)"></div> 6. Таймери та ШІМ
   </div>
-  <div class="nav-item" data-target="ch7" onclick="scrollTo('ch7')">
+  <div class="nav-item" data-target="ch7" onclick="scrollToSection('ch7')">
     <div class="nav-dot" style="background:var(--chapter-7)"></div> 7. Програмування мовою C
   </div>
-  <div class="nav-item" data-target="ch8" onclick="scrollTo('ch8')">
+  <div class="nav-item" data-target="ch8" onclick="scrollToSection('ch8')">
     <div class="nav-dot" style="background:var(--chapter-8)"></div> 8. Arduino framework
   </div>
-  <div class="nav-item" data-target="ch9" onclick="scrollTo('ch9')">
+  <div class="nav-item" data-target="ch9" onclick="scrollToSection('ch9')">
     <div class="nav-dot" style="background:var(--chapter-9)"></div> 9. UART, RS-232, RS-485
   </div>
-  <div class="nav-item" data-target="ch10" onclick="scrollTo('ch10')">
+  <div class="nav-item" data-target="ch10" onclick="scrollToSection('ch10')">
     <div class="nav-dot" style="background:var(--chapter-10)"></div> 10. АЦП
   </div>
-  <div class="nav-item" data-target="ch11" onclick="scrollTo('ch11')">
+  <div class="nav-item" data-target="ch11" onclick="scrollToSection('ch11')">
     <div class="nav-dot" style="background:var(--chapter-11)"></div> 11. SPI та I²C
   </div>
-  <div class="nav-item" data-target="glossary" onclick="scrollTo('glossary')">
+  <div class="nav-item" data-target="glossary" onclick="scrollToSection('glossary')">
     <div class="nav-dot" style="background:var(--text-dim)"></div> Глосарій
   </div>
 </nav>
@@ -70,7 +70,7 @@ title: "Мікроконтролери"
   <!-- ============================================================ -->
   <section class="chapter" id="ch1">
     <div class="chapter-header">
-      <div class="chapter-num" style="background:var(--chapter-1)">1</div>
+      <span class="chapter-num" style="background:rgba(88,166,255,0.15);color:var(--chapter-1)">РОЗДІЛ 01</span>
       <h2 class="chapter-title">Основні поняття</h2>
     </div>
 
@@ -150,7 +150,7 @@ title: "Мікроконтролери"
   <!-- ============================================================ -->
   <section class="chapter" id="ch2">
     <div class="chapter-header">
-      <div class="chapter-num" style="background:var(--chapter-2)">2</div>
+      <span class="chapter-num" style="background:rgba(63,185,80,0.15);color:var(--chapter-2)">РОЗДІЛ 02</span>
       <h2 class="chapter-title">ATmega32A та ядро AVR</h2>
     </div>
 
@@ -356,7 +356,7 @@ avrdude -c usbasp -p m2560 -U lfuse:w:0xFF:m \
   <!-- ============================================================ -->
   <section class="chapter" id="ch3">
     <div class="chapter-header">
-      <div class="chapter-num" style="background:var(--chapter-3)">3</div>
+      <span class="chapter-num" style="background:rgba(210,168,255,0.15);color:var(--chapter-3)">РОЗДІЛ 03</span>
       <h2 class="chapter-title">Програмування AVR мовою асемблер</h2>
     </div>
 
@@ -823,7 +823,7 @@ pressed:
   <!-- ============================================================ -->
   <section class="chapter" id="ch4">
     <div class="chapter-header">
-      <div class="chapter-num" style="background:var(--chapter-4)">4</div>
+      <span class="chapter-num" style="background:rgba(240,136,62,0.15);color:var(--chapter-4)">РОЗДІЛ 04</span>
       <h2 class="chapter-title">Паралельні порти вводу/виводу</h2>
     </div>
 
@@ -956,8 +956,8 @@ const uint8_t seq[] = {0,1,2,3,4,5,6,7};
 const unsigned long DELAY_MS = 400;
 
 void runAlgorithm1() {
-    for (uint8_t i = 0; i < 8; i++) {
-        PORTA = (1 << seq[i]);    // запалити один LED
+    for (uint8_t i = 0; i &lt; 8; i++) {
+        PORTA = (1 &lt;&lt; seq[i]);    // запалити один LED
         delay(DELAY_MS);
     }
     PORTA = 0x00;                 // погасити всі
@@ -971,7 +971,7 @@ void runAlgorithm1() {
   <!-- ============================================================ -->
   <section class="chapter" id="ch5">
     <div class="chapter-header">
-      <div class="chapter-num" style="background:var(--chapter-5)">5</div>
+      <span class="chapter-num" style="background:rgba(121,192,255,0.15);color:var(--chapter-5)">РОЗДІЛ 05</span>
       <h2 class="chapter-title">Переривання та пам'ять</h2>
     </div>
 
@@ -1062,7 +1062,7 @@ RESET — найвищий, SPM_RDY — найнижчий.
 
 // Рядок у FLASH (економимо SRAM):
 const char msg[] PROGMEM = "Hello";
-char c = pgm_read_byte(&msg[0]);
+char c = pgm_read_byte(&amp;msg[0]);
 
 // EEPROM:
 uint8_t val = eeprom_read_byte((uint8_t*)10);
@@ -1127,7 +1127,7 @@ ISR(TIMER0_OVF_vect) {
     <div class="concept">
       <h3 class="concept-title" style="color:var(--chapter-5)">Індексні регістри X, Y, Z та непряма адресація SRAM</h3>
       <p>Для доступу до SRAM через змінну адресу AVR використовує три <strong>регістрові пари</strong>, кожна формує 16-бітний покажчик:</p>
-      <p style="font-size:0.9em;opacity:0.75;">↪ Регістр Z окремо використовується у команді <code>LPM</code> (читання з FLASH, наступний концепт) і у <code>IJMP</code>/<code>ICALL</code> — див. <a href="#ch3" onclick="scrollTo('ch3')">Розділ 3, «Безумовні переходи»</a>.</p>
+      <p style="font-size:0.9em;opacity:0.75;">↪ Регістр Z окремо використовується у команді <code>LPM</code> (читання з FLASH, наступний концепт) і у <code>IJMP</code>/<code>ICALL</code> — див. <a href="#ch3" onclick="scrollToSection('ch3')">Розділ 3, «Безумовні переходи»</a>.</p>
       <table class="comparison">
         <thead>
           <tr><th>ПАРА</th><th>МОЛОДШИЙ БАЙТ (L)</th><th>СТАРШИЙ БАЙТ (H)</th><th>ПРИЗНАЧЕННЯ</th></tr>
@@ -1293,7 +1293,7 @@ uint16_t cnt = TCNT1;    // компілятор згенерує правиль
   <!-- ============================================================ -->
   <section class="chapter" id="ch6">
     <div class="chapter-header">
-      <div class="chapter-num" style="background:var(--chapter-6)">6</div>
+      <span class="chapter-num" style="background:rgba(248,81,73,0.15);color:var(--chapter-6)">РОЗДІЛ 06</span>
       <h2 class="chapter-title">Таймери та ШІМ</h2>
     </div>
 
@@ -1364,14 +1364,14 @@ OCR1A = 31 250 − 1 = 31 249 = 0x7A11
 
 // C (avr-libc):
 TCCR1A = 0;                  // нормальний режим WGM
-TCCR1B = (1 << WGM12)        // CTC, TOP = OCR1A
-       | (1 << CS12);        // prescaler = 256
+TCCR1B = (1 &lt;&lt; WGM12)        // CTC, TOP = OCR1A
+       | (1 &lt;&lt; CS12);        // prescaler = 256
 OCR1A = 31249;               // period = 500 мс
-TIMSK1 |= (1 << OCIE1A);     // дозвіл Compare A
+TIMSK1 |= (1 &lt;&lt; OCIE1A);     // дозвіл Compare A
 sei();
 
 ISR(TIMER1_COMPA_vect) {
-    PORTA ^= (1 << 0);       // моргання LED кожні 500 мс
+    PORTA ^= (1 &lt;&lt; 0);       // моргання LED кожні 500 мс
 }
       </div>
     </div>
@@ -1386,9 +1386,9 @@ ISR(TIMER1_COMPA_vect) {
 
 ISR(TIMER2_OVF_vect) {
     seconds++;
-    if (seconds >= 60) { seconds = 0; minutes++; }
-    if (minutes >= 60) { minutes = 0; hours++; }
-    if (hours >= 24)   { hours   = 0; }
+    if (seconds &gt;= 60) { seconds = 0; minutes++; }
+    if (minutes &gt;= 60) { minutes = 0; hours++; }
+    if (hours &gt;= 24)   { hours   = 0; }
 }
       </div>
       <div class="note-block important">
@@ -1432,7 +1432,7 @@ ISR(TIMER2_OVF_vect) {
     <div class="concept">
       <h3 class="concept-title" style="color:var(--chapter-6)">Сторожовий таймер (WatchDog)</h3>
       <p><span class="key-term">WDT</span> — незалежний таймер на власному осциляторі (~1 МГц у AVR). Призначення: якщо основна програма «зависла», WDT через заданий час (15 мс – 2 сек) автоматично скидає МК.</p>
-      <p style="font-size:0.9em;opacity:0.75;">↪ WDT також продовжує працювати у всіх sleep-режимах і може бути джерелом пробудження — див. <a href="#ch2" onclick="scrollTo('ch2')">Розділ 2, «Режими сну»</a>.</p>
+      <p style="font-size:0.9em;opacity:0.75;">↪ WDT також продовжує працювати у всіх sleep-режимах і може бути джерелом пробудження — див. <a href="#ch2" onclick="scrollToSection('ch2')">Розділ 2, «Режими сну»</a>.</p>
       <div class="ip-visual">
 // Увімкнути WDT з періодом 1 сек
 wdt_enable(WDTO_1S);
@@ -1639,7 +1639,7 @@ uint8_t scanKeypad() {
   <!-- ============================================================ -->
   <section class="chapter" id="ch7">
     <div class="chapter-header">
-      <div class="chapter-num" style="background:var(--chapter-7)">7</div>
+      <span class="chapter-num" style="background:rgba(126,231,135,0.15);color:var(--chapter-7)">РОЗДІЛ 07</span>
       <h2 class="chapter-title">Програмування AVR мовою C</h2>
     </div>
 
@@ -1824,7 +1824,7 @@ void func(void) {
     <div class="concept">
       <h3 class="concept-title" style="color:var(--chapter-7)">Константи у FLASH: повний патерн PROGMEM</h3>
       <p>Розміщення константних даних (таблиці кодів, рядки, ноти мелодій, таблиці CRC) у FLASH замість SRAM — ключова техніка економії пам'яті. ATmega32A має 2 КБ SRAM, але 32 КБ FLASH.</p>
-      <p style="font-size:0.9em;opacity:0.75;">↪ Асемблерний еквівалент (команда <code>LPM</code> через регістр Z) описаний у <a href="#ch5" onclick="scrollTo('ch5')">Розділі 5, «Читання з FLASH у асемблері»</a>.</p>
+      <p style="font-size:0.9em;opacity:0.75;">↪ Асемблерний еквівалент (команда <code>LPM</code> через регістр Z) описаний у <a href="#ch5" onclick="scrollToSection('ch5')">Розділі 5, «Читання з FLASH у асемблері»</a>.</p>
       <p>Макрос <code>PROGMEM</code> з <code>&lt;avr/pgmspace.h&gt;</code> вказує компілятору розмістити дані у програмній пам'яті. Доступ — тільки через спеціальні макроси читання, бо прості звернення <code>arr[i]</code> читали б з SRAM.</p>
       <table class="comparison">
         <thead>
@@ -1930,7 +1930,7 @@ SREG = sreg;                      // відновлюємо попередній
   <!-- ============================================================ -->
   <section class="chapter" id="ch8">
     <div class="chapter-header">
-      <div class="chapter-num" style="background:var(--chapter-8)">8</div>
+      <span class="chapter-num" style="background:rgba(255,166,87,0.15);color:var(--chapter-8)">РОЗДІЛ 08</span>
       <h2 class="chapter-title">Arduino framework у контексті курсу</h2>
     </div>
 
@@ -2181,7 +2181,7 @@ void loop() {
     <div class="concept">
       <h3 class="concept-title" style="color:var(--chapter-8)">Таймери у Arduino (Lab 3, Lab 4)</h3>
       <p>У лабораторних 3 і 4 завдання явно вимагає «реалізувати відлік інтервалів часу за допомогою таймера T1/T3/T4/T5/T2-асинхронного». Бібліотечних обгорток на таймери Arduino Core <em>не надає</em> (окрім прихованого T0 для millis і T1 для частини analogWrite). Тому ці лабораторні пишуться у скетчі <strong>через прямі регістри</strong>:</p>
-      <p style="font-size:0.9em;opacity:0.75;">↪ Повний перелік режимів WGM (всі 16 для 16-бітних таймерів), формули частоти PWM та CTC-приклад 500 мс — див. <a href="#ch6" onclick="scrollTo('ch6')">Розділ 6, «Таймери та ШІМ»</a>.</p>
+      <p style="font-size:0.9em;opacity:0.75;">↪ Повний перелік режимів WGM (всі 16 для 16-бітних таймерів), формули частоти PWM та CTC-приклад 500 мс — див. <a href="#ch6" onclick="scrollToSection('ch6')">Розділ 6, «Таймери та ШІМ»</a>.</p>
       <div class="ip-visual">
 // Lab 3, варіант 1: T1 CTC, 1 сек → переривання для «годинника»
 // F_CPU = 16 МГц, prescaler = 256 → 62500 Гц → OCR1A = 62499 для 1 сек
@@ -2279,7 +2279,7 @@ void loop() {
   <!-- ============================================================ -->
   <section class="chapter" id="ch9">
     <div class="chapter-header">
-      <div class="chapter-num" style="background:var(--chapter-9)">9</div>
+      <span class="chapter-num" style="background:rgba(210,168,255,0.15);color:var(--chapter-9)">РОЗДІЛ 09</span>
       <h2 class="chapter-title">UART / USART, RS-232, RS-485</h2>
     </div>
 
@@ -2626,7 +2626,7 @@ Master:                         Slave (addr=55):
           <tr><td>CRC-16/USB</td><td>0x8005</td><td>0xFFFF</td><td>true</td><td>true</td><td>0xFFFF</td></tr>
         </tbody>
       </table>
-      <p style="font-size:0.9em;opacity:0.75;">↪ CRC-8/MAXIM — саме той, що використовується у протоколі 1-Wire для DS18B20 та iButton; див. <a href="#ch11" onclick="scrollTo('ch11')">Розділ 11, «Протокол 1-Wire»</a>.</p>
+      <p style="font-size:0.9em;opacity:0.75;">↪ CRC-8/MAXIM — саме той, що використовується у протоколі 1-Wire для DS18B20 та iButton; див. <a href="#ch11" onclick="scrollToSection('ch11')">Розділ 11, «Протокол 1-Wire»</a>.</p>
       <div class="ip-visual">
 // CRC-8 алгоритмічна реалізація (poly=0x07, без реверсій)
 uint8_t crc8(const uint8_t *data, uint8_t len) {
@@ -2691,7 +2691,7 @@ uint8_t crc8_tab(const uint8_t *data, uint8_t len) {
   <!-- ============================================================ -->
   <section class="chapter" id="ch10">
     <div class="chapter-header">
-      <div class="chapter-num" style="background:var(--chapter-10)">10</div>
+      <span class="chapter-num" style="background:rgba(255,123,114,0.15);color:var(--chapter-10)">РОЗДІЛ 10</span>
       <h2 class="chapter-title">Аналогово-цифровий перетворювач</h2>
     </div>
 
@@ -2954,7 +2954,7 @@ EMPTY_INTERRUPT(ADC_vect);
   <!-- ============================================================ -->
   <section class="chapter" id="ch11">
     <div class="chapter-header">
-      <div class="chapter-num" style="background:var(--chapter-11)">11</div>
+      <span class="chapter-num" style="background:rgba(88,166,255,0.15);color:var(--chapter-11)">РОЗДІЛ 11</span>
       <h2 class="chapter-title">SPI та I²C (TWI)</h2>
     </div>
 
@@ -3142,7 +3142,7 @@ uint8_t spi_exchange(uint8_t out_byte) {
     <div class="concept">
       <h3 class="concept-title" style="color:var(--chapter-11)">Коди стану TWSR — «мова» I²C</h3>
       <p>Модуль TWI — це скінченний автомат. Після кожної події (START, передача адреси, передача байта, прийом ACK/NACK тощо) апаратура встановлює <strong>код стану у старших 5 бітах TWSR</strong> і виставляє прапор TWINT. Програма має перевірити цей код і вирішити, що робити далі.</p>
-      <p style="font-size:0.9em;opacity:0.75;">↪ Найефективніше обробляти TWI у перериванні TWI_vect замість опитування — принцип переривань описаний у <a href="#ch5" onclick="scrollTo('ch5')">Розділі 5, «Механізм переривань»</a>.</p>
+      <p style="font-size:0.9em;opacity:0.75;">↪ Найефективніше обробляти TWI у перериванні TWI_vect замість опитування — принцип переривань описаний у <a href="#ch5" onclick="scrollToSection('ch5')">Розділі 5, «Механізм переривань»</a>.</p>
       <table class="comparison">
         <thead>
           <tr><th>TWSR</th><th>СТАН</th><th>ЩО РОБИТИ ДАЛІ</th></tr>
@@ -3386,7 +3386,7 @@ float ds18b20_read(void) {
   <!-- ============================================================ -->
   <section class="chapter" id="glossary">
     <div class="chapter-header">
-      <div class="chapter-num" style="background:var(--text-dim)">§</div>
+      <span class="chapter-num" style="background:rgba(139,148,158,0.15);color:var(--text-dim)">ГЛОСАРІЙ</span>
       <h2 class="chapter-title">Глосарій</h2>
     </div>
 
@@ -4481,40 +4481,9 @@ float ds18b20_read(void) {
 
   </section>
 
-</main>
-
 <footer class="footer">
-  <p>За матеріалами конспекту лекцій «Програмування мікроконтролерів систем автоматики», А.Г. Павельчак, В.В. Самотий, Ю.В. Яцук (Національний університет «Львівська політехніка», 2012) та лабораторних робіт курсу. · <a href="{{ '/' | relative_url }}">← Всі посібники / All guides</a></p>
+  <p>За матеріалами конспекту лекцій «Програмування мікроконтролерів систем автоматики», А.Г. Павельчак, В.В. Самотий, Ю.В. Яцук (Національний університет «Львівська політехніка», 2012) та лабораторних робіт курсу. · <a href="{{ '/' | relative_url }}">← Всі посібники</a></p>
 </footer>
 
-<script>
-  function scrollTo(id) {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
+</main>
 
-  function toggleSidebar() {
-    const sb = document.getElementById('sidebar');
-    sb.classList.toggle('open');
-  }
-
-  // Scroll-spy — highlight active nav item based on visible section
-  const sections = document.querySelectorAll('.main section[id]');
-  const navItems = document.querySelectorAll('.nav-item');
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.id;
-        navItems.forEach(item => {
-          item.classList.toggle('active', item.dataset.target === id);
-        });
-      }
-    });
-  }, {
-    rootMargin: '-30% 0px -60% 0px',
-    threshold: 0
-  });
-
-  sections.forEach(s => observer.observe(s));
-</script>
