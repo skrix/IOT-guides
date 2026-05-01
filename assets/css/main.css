@@ -1,4 +1,3 @@
-/* ===== Theme Variables ===== */
 :root,
 [data-theme="dark"] {
   --bg: #0e1117;
@@ -702,4 +701,324 @@ code {
   .footer { padding: 24px; }
   .home-container { padding: 40px 20px; }
   .home-header h1 { font-size: 28px; }
+}
+
+/* ===== MathML elements ===== */
+math {
+  font-size: 1.05em;
+  font-family: 'Cambria Math', 'STIX Two Math', 'Latin Modern Math', 'Times New Roman', serif;
+  color: var(--text);
+}
+
+math[display="block"] {
+  display: block;
+  margin: 0.9em auto;
+  text-align: center;
+  font-size: 1.18em;
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  padding: 0.3em 0;
+}
+
+math[display="inline"] {
+  display: inline-block;
+  vertical-align: -0.25em;
+  margin: 0 0.1em;
+}
+
+mfrac {
+  font-size: 1em;
+}
+
+msub,
+msup,
+msubsup {
+  font-size: 0.92em;
+}
+
+mn {
+  font-style: normal;
+}
+
+mi {
+  font-style: italic;
+}
+
+mi[mathvariant="normal"] {
+  font-style: normal;
+}
+
+mo {
+  padding: 0 0.05em;
+}
+
+mtext {
+  font-family: 'DM Sans', sans-serif;
+  font-style: normal;
+  color: var(--text-dim);
+  font-size: 0.9em;
+}
+
+mfenced {
+  font-style: normal;
+}
+
+munderover,
+munder,
+mover {
+  vertical-align: middle;
+}
+
+/* ===== Formula container blocks ===== */
+.formula-block {
+  background: var(--surface2);
+  border-left: 3px solid var(--text-dim);
+  padding: 14px 20px;
+  margin: 14px 0;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+
+.formula-block math[display="block"] {
+  margin: 0.6em auto;
+}
+
+.formula-block math[display="block"]:first-child {
+  margin-top: 0.2em;
+}
+
+.formula-block math[display="block"]:last-child {
+  margin-bottom: 0.2em;
+}
+
+.formula-label {
+  color: var(--text-dim);
+  font-size: 0.82em;
+  text-align: right;
+  margin-top: -0.3em;
+  margin-bottom: 0.5em;
+  font-style: italic;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.formula-where {
+  font-size: 13px;
+  margin: 0.5em 0;
+  color: var(--text-dim);
+  font-family: 'DM Sans', sans-serif;
+  line-height: 1.7;
+}
+
+.formula-where strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.formula-where code {
+  font-size: 0.85em;
+}
+
+.ip-visual {
+  white-space: pre;
+  font-size: 0.85em;
+  line-height: 1.55;
+}
+
+.formula-block .ip-visual {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  margin: 0.5em 0;
+  padding: 10px 14px;
+}
+
+math,
+math * {
+  box-sizing: content-box !important;
+}
+
+math {
+  display: inline-block !important;
+}
+
+math[display="block"] {
+  display: block !important;
+}
+
+mfrac {
+  display: inline-block !important;
+  vertical-align: middle;
+  text-align: center;
+}
+
+mrow {
+  display: inline !important;
+}
+
+msub,
+msup,
+msubsup {
+  display: inline-block !important;
+  vertical-align: middle;
+}
+
+mi,
+mn,
+mo,
+mtext {
+  display: inline !important;
+}
+
+mfrac {
+  display: inline-flex !important;
+  flex-direction: column;
+  vertical-align: middle;
+  text-align: center;
+  margin: 0 0.15em;
+  line-height: 1;
+}
+
+mfrac>* {
+  padding: 0.1em 0.25em;
+  display: block !important;
+}
+
+mfrac>*:first-child {
+  border-bottom: 1px solid currentColor;
+}
+
+msub {
+  display: inline-block !important;
+  position: relative;
+  vertical-align: baseline;
+}
+
+msub>*:first-child {
+  display: inline !important;
+}
+
+msub>*:nth-child(2) {
+  display: inline-block !important;
+  font-size: 0.75em;
+  vertical-align: sub;
+  margin-left: 0.05em;
+}
+
+msup {
+  display: inline-block !important;
+  position: relative;
+}
+
+msup>*:first-child {
+  display: inline !important;
+}
+
+msup>*:nth-child(2) {
+  display: inline-block !important;
+  font-size: 0.75em;
+  vertical-align: super;
+  margin-left: 0.05em;
+}
+
+msubsup {
+  display: inline-block !important;
+  position: relative;
+}
+
+msubsup>*:first-child {
+  display: inline !important;
+}
+
+msubsup>*:nth-child(2) {
+  display: inline-block !important;
+  font-size: 0.75em;
+  vertical-align: sub;
+}
+
+msubsup>*:nth-child(3) {
+  display: inline-block !important;
+  font-size: 0.75em;
+  vertical-align: super;
+  margin-left: -0.5em;
+}
+
+munderover {
+  display: inline-flex !important;
+  flex-direction: column;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 1em;
+}
+
+munderover>*:nth-child(1) {
+  font-size: 1.4em;
+  order: 2;
+}
+
+munderover>*:nth-child(2) {
+  font-size: 0.7em;
+  order: 3;
+}
+
+munderover>*:nth-child(3) {
+  font-size: 0.7em;
+  order: 1;
+}
+
+munder,
+mover {
+  display: inline-flex !important;
+  flex-direction: column;
+  text-align: center;
+  vertical-align: middle;
+}
+
+munder>*:nth-child(2),
+mover>*:nth-child(2) {
+  font-size: 0.75em;
+}
+
+mfenced::before {
+  content: attr(open);
+}
+
+mfenced::after {
+  content: attr(close);
+}
+
+mfenced:not([open])::before {
+  content: "(";
+}
+
+mfenced:not([close])::after {
+  content: ")";
+}
+
+msqrt {
+  display: inline-block !important;
+  position: relative;
+  padding-left: 0.7em;
+}
+
+msqrt::before {
+  content: "√";
+  position: absolute;
+  left: 0;
+  font-size: 1.2em;
+}
+
+msqrt>* {
+  border-top: 1px solid currentColor;
+  padding: 0 0.2em;
+}
+
+mrow {
+  display: inline !important;
+}
+
+mi,
+mn,
+mo,
+mtext {
+  display: inline !important;
 }
