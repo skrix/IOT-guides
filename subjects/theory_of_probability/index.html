@@ -1,0 +1,6357 @@
+---
+layout: guide
+title: "Теорія ймовірностей"
+---
+
+<button class="sidebar-toggle" onclick="toggleSidebar()">&#9776;</button>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <h1><a href="{{ '/' | relative_url }}">ТЙ</a></h1>
+    <p>Теорія ймовірностей · Конспект</p>
+  </div>
+  <div class="nav-item active" data-target="hero" onclick="scrollToSection('hero')">
+    <div class="nav-dot" style="background:var(--text-dim)"></div> Огляд
+  </div>
+  <div class="nav-item" data-target="ch1" onclick="scrollToSection('ch1')">
+    <div class="nav-dot" style="background:var(--chapter-1)"></div> 1. Події та простір Ω
+  </div>
+  <div class="nav-item" data-target="ch2" onclick="scrollToSection('ch2')">
+    <div class="nav-dot" style="background:var(--chapter-2)"></div> 2. Операції та аксіоми
+  </div>
+  <div class="nav-item" data-target="ch3" onclick="scrollToSection('ch3')">
+    <div class="nav-dot" style="background:var(--chapter-3)"></div> 3. Означення ймовірності
+  </div>
+  <div class="nav-item" data-target="ch4" onclick="scrollToSection('ch4')">
+    <div class="nav-dot" style="background:var(--chapter-4)"></div> 4. Умовна ймовірність
+  </div>
+  <div class="nav-item" data-target="ch5" onclick="scrollToSection('ch5')">
+    <div class="nav-dot" style="background:var(--chapter-5)"></div> 5. Повна ймовірність. Байєс
+  </div>
+  <div class="nav-item" data-target="ch6" onclick="scrollToSection('ch6')">
+    <div class="nav-dot" style="background:var(--chapter-6)"></div> 6. Схема Бернуллі
+  </div>
+  <div class="nav-item" data-target="ch7" onclick="scrollToSection('ch7')">
+    <div class="nav-dot" style="background:var(--chapter-7)"></div> 7. Випадкові величини
+  </div>
+  <div class="nav-item" data-target="ch8" onclick="scrollToSection('ch8')">
+    <div class="nav-dot" style="background:var(--chapter-8)"></div> 8. Числові характеристики
+  </div>
+  <div class="nav-item" data-target="ch9" onclick="scrollToSection('ch9')">
+    <div class="nav-dot" style="background:var(--chapter-9)"></div> 9. Закони розподілів
+  </div>
+  <div class="nav-item" data-target="glossary" onclick="scrollToSection('glossary')">
+    <div class="nav-dot" style="background:var(--text-dim)"></div> Глосарій
+  </div>
+</nav>
+
+<main class="main" id="main">
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <h1>Теорія <span>ймовірностей</span></h1>
+    <p class="subtitle">Стислий екзаменаційний конспект: від простору елементарних подій до законів розподілу
+      цілочислових випадкових величин — з формулами, доведеннями і робочими прикладами.</p>
+    <div class="meta">
+      <span>9 розділів</span>
+      <span>Класична · Геометрична · Статистична</span>
+      <span>Бернуллі · Пуассон · Муавр–Лаплас</span>
+      <span>M(X) · D(X) · σ(X)</span>
+    </div>
+  </section>
+
+  <!-- CHAPTER 1 -->
+  <section class="chapter" id="ch1">
+    <div class="chapter-header">
+      <span class="chapter-num" style="background:rgba(88,166,255,0.15);color:var(--chapter-1)">РОЗДІЛ 01</span>
+      <h2 class="chapter-title">Події та простір елементарних подій</h2>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-1)">⬡ Експеримент і подія</div>
+      <p><span class="key-term">Експеримент (дослід, спроба)</span> — послідовність операцій, виконуваних з додержанням
+        певного комплексу умов. <span class="key-term">Подія</span> — наслідок експерименту. Експеримент необов'язково
+        виконує людина: його може проводити прилад чи комп'ютер, а людина лише фіксує наслідок.</p>
+      <p>Теорія ймовірностей вивчає закономірності масових випадкових подій — таких, наслідки яких неоднозначні через
+        дію численних дрібних факторів, які експериментатор не в змозі врахувати.</p>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-1)">⬡ Класифікація подій</div>
+      <table class="comparison">
+        <tr>
+          <th>Тип</th>
+          <th>Позначення</th>
+          <th>Означення</th>
+          <th>Приклад</th>
+        </tr>
+        <tr>
+          <td>Вірогідна</td>
+          <td>Ω</td>
+          <td>Настає завжди за заданого комплексу умов</td>
+          <td>Кулька, навмання взята з урни з номерами 1–10, має номер 1–10</td>
+        </tr>
+        <tr>
+          <td>Неможлива</td>
+          <td>∅</td>
+          <td>Не настає ніколи за заданого комплексу умов</td>
+          <td>Поява кульки з номером 12 в урні з номерами 1–10</td>
+        </tr>
+        <tr>
+          <td>Випадкова</td>
+          <td>A, B, C…</td>
+          <td>Може настати або не настати залежно від численних дрібних факторів</td>
+          <td>Поява герба при підкиданні монети</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-1)">⬡ Прості та складені події</div>
+      <p><span class="key-term">Проста (елементарна) подія</span> ω<sub>i</sub> — подія, що може відбутися внаслідок
+        проведення однієї і лише однієї спроби. Не поділяється на простіші складові (як точка в геометрії).</p>
+      <p><span class="key-term">Складена подія</span> A — її можна розкласти на елементарні події. Записується як
+        підмножина простору: A ⊂ Ω. Елементарні події ω<sub>i</sub> ∈ A називають такими, що <span
+          class="key-term">сприяють появі</span> події A.</p>
+      <div class="ip-visual">Приклад: монету підкидають тричі — простір елементарних подій
+        містить 8 елементів (кожне підкидання дає 2 наслідки, 2³ = 8):
+
+        ω₁ = ггг ω₂ = ццц ω₃ = ггц ω₄ = гцг
+        ω₅ = цгг ω₆ = гцц ω₇ = цгц ω₈ = ццг
+
+        Складена подія A = "герб випав двічі" = {ω₃, ω₄, ω₅}
+        ↑ ↑ ↑
+        ггц гцг цгг
+
+        Елементарні події ω₃, ω₄, ω₅ сприяють появі A.</div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-1)">⬡ Простір елементарних подій</div>
+      <p><span class="key-term">Простір елементарних подій</span> Ω — множина всіх ω<sub>i</sub>, що можуть відбутися в
+        експерименті. Це математична модель ідеалізованого експерименту: будь-який його наслідок описується однією і
+        лише однією елементарною подією.</p>
+      <p>Елементарні події задовольняють три твердження:</p>
+      <ul>
+        <li><span class="key-term">Несумісність попарно:</span> ω<sub>i</sub> ∩ ω<sub>j</sub> = ∅ при i ≠ j</li>
+        <li><span class="key-term">Утворюють повну групу:</span> ⋃ ω<sub>i</sub> = Ω</li>
+        <li><span class="key-term">Рівноможливі</span> (для класичної моделі)</li>
+      </ul>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-1)">⬡ Дискретний vs неперервний простір</div>
+      <table class="comparison">
+        <tr>
+          <th>Тип Ω</th>
+          <th>Властивість</th>
+          <th>Приклад</th>
+        </tr>
+        <tr>
+          <td>Дискретний</td>
+          <td>Множина зчисленна — елементи можна перелічити або пронумерувати натуральними числами</td>
+          <td>Підкидання кубика: Ω = {1,2,3,4,5,6}</td>
+        </tr>
+        <tr>
+          <td>Неперервний</td>
+          <td>Множина незчисленна — між будь-якими двома елементами є нескінченно багато інших</td>
+          <td>Розмір деталі (діаметр), покази вольтметра</td>
+        </tr>
+      </table>
+      <p>Дискретний простір може бути обмеженим (n елементів) чи необмеженим (нескінченна послідовність).</p>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-1)">⬡ Канонічний приклад: пари чисел з двох множин</div>
+      <p>Дано Ω₁ = {1, 2, 3} і Ω₂ = {1, 2, 3, 4}. Із кожної множини беруть навмання по одному числу. Простір
+        елементарних подій містить 3·4 = 12 пар:</p>
+      <div class="ip-visual"> ω₁ = (1,1) ω₅ = (2,1) ω₉ = (3,1)
+        ω₂ = (1,2) ω₆ = (2,2) ω₁₀ = (3,2)
+        ω₃ = (1,3) ω₇ = (2,3) ω₁₁ = (3,3)
+        ω₄ = (1,4) ω₈ = (2,4) ω₁₂ = (3,4)
+
+        |Ω| = 12 елементарних подій</div>
+    </div>
+
+    <div class="note-block important">Природа елементарних подій у теорії ймовірностей неістотна — як точка в геометрії.
+      Важливі лише їх кількість і структурні відношення (несумісність, повнота групи, рівноможливість).</div>
+  </section>
+
+  <!-- CHAPTER 2 -->
+  <section class="chapter" id="ch2">
+    <div class="chapter-header">
+      <span class="chapter-num" style="background:rgba(63,185,80,0.15);color:var(--chapter-2)">РОЗДІЛ 02</span>
+      <h2 class="chapter-title">Операції над подіями та аксіоми</h2>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-2)">⬡ Три базові операції</div>
+      <table class="comparison">
+        <tr>
+          <th>Операція</th>
+          <th>Запис</th>
+          <th>Зміст</th>
+        </tr>
+        <tr>
+          <td>Сума (об'єднання)</td>
+          <td>A ∪ B</td>
+          <td>Настає принаймні одна з подій A або B</td>
+        </tr>
+        <tr>
+          <td>Добуток (переріз)</td>
+          <td>A ∩ B</td>
+          <td>Одночасно настають обидві події A і B</td>
+        </tr>
+        <tr>
+          <td>Різниця</td>
+          <td>A \ B</td>
+          <td>Настає A і одночасно не настає B</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-2)">⬡ Канонічний приклад: операції на множині чисел</div>
+      <p>Ω = {1, 2, …, 15}. A — число, кратне 2. B — число, кратне 3.</p>
+      <div class="ip-visual"> A = {2, 4, 6, 8, 10, 12, 14}
+        B = {3, 6, 9, 12, 15}
+
+        A ∪ B = {2, 3, 4, 6, 8, 9, 10, 12, 14, 15} ← хоча б одна з умов
+        A ∩ B = {6, 12} ← обидві умови (кратне 6)
+        A \ B = {2, 4, 8, 10, 14} ← кратне 2, але не 3</div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-2)">⬡ Сумісні vs несумісні. Повна група. Протилежні</div>
+      <ul>
+        <li><span class="key-term">Сумісні:</span> A ∩ B ≠ ∅</li>
+        <li><span class="key-term">Несумісні:</span> A ∩ B = ∅</li>
+        <li><span class="key-term">Повна група:</span> A₁ ∪ A₂ ∪ … ∪ A<sub>n</sub> = Ω. Якась з подій A<sub>i</sub>
+          обов'язково настане.</li>
+        <li><span class="key-term">Протилежні</span> A та A̅: дві несумісні події, що утворюють повну групу. Виконується
+          A ∪ A̅ = Ω, A ∩ A̅ = ∅.</li>
+      </ul>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-2)">⬡ Закони алгебри подій</div>
+      <p>Для подій A, B, C ⊂ Ω виконуються:</p>
+      <table class="comparison">
+        <tr>
+          <th>Назва</th>
+          <th>Тотожність</th>
+        </tr>
+        <tr>
+          <td>Ідемпотентність</td>
+          <td>A ∪ A = A; A ∩ A = A</td>
+        </tr>
+        <tr>
+          <td>Комутативність ∪</td>
+          <td>A ∪ B = B ∪ A</td>
+        </tr>
+        <tr>
+          <td>Комутативність ∩</td>
+          <td>A ∩ B = B ∩ A</td>
+        </tr>
+        <tr>
+          <td>Асоціативність ∪</td>
+          <td>(A ∪ B) ∪ C = A ∪ (B ∪ C)</td>
+        </tr>
+        <tr>
+          <td>Асоціативність ∩</td>
+          <td>(A ∩ B) ∩ C = A ∩ (B ∩ C)</td>
+        </tr>
+        <tr>
+          <td>Дистрибутивність 1</td>
+          <td>(A ∪ B) ∩ C = (A ∩ C) ∪ (B ∩ C)</td>
+        </tr>
+        <tr>
+          <td>Дистрибутивність 2</td>
+          <td>(A ∩ B) ∪ C = (A ∪ C) ∩ (B ∪ C)</td>
+        </tr>
+        <tr>
+          <td>З Ω і ∅</td>
+          <td>A ∪ Ω = Ω; A ∩ Ω = A; A ∪ ∅ = A; A ∩ ∅ = ∅</td>
+        </tr>
+        <tr>
+          <td>Доповнення</td>
+          <td>A̅ = Ω \ A; ∅̅ = Ω; Ω̅ = ∅</td>
+        </tr>
+        <tr>
+          <td>Закон де Моргана 1</td>
+          <td><span style="text-decoration:overline">A ∪ B</span> = A̅ ∩ B̅</td>
+        </tr>
+        <tr>
+          <td>Закон де Моргана 2</td>
+          <td><span style="text-decoration:overline">A ∩ B</span> = A̅ ∪ B̅</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-2)">⬡ Алгебра подій</div>
+      <p><span class="key-term">Алгебра подій</span> Θ — система випадкових подій, замкнена відносно операцій ∪, ∩, \.
+        Формально:</p>
+      <ul>
+        <li>Ω ∈ Θ</li>
+        <li>Якщо A ∈ Θ і B ∈ Θ, то A ∪ B ∈ Θ, A ∩ B ∈ Θ, A \ B ∈ Θ</li>
+      </ul>
+      <p>Звідси випливає, що ∅ = Ω \ Ω ∈ Θ. Для скінченного Ω з n елементів кількість підмножин (потужність алгебри)
+        становить 2<sup>n</sup>.</p>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-2)">⬡ Аксіоми Колмогорова</div>
+      <p>Числова функція P, визначена на алгебрі подій Θ, називається <span class="key-term">ймовірністю</span>, якщо:
+      </p>
+      <ol>
+        <li>Θ є алгеброю подій</li>
+        <li>Для будь-якого A ∈ Θ існує P(A) ≥ 0</li>
+        <li>P(Ω) = 1</li>
+        <li><span class="key-term">Аксіома адитивності:</span> якщо A ∩ B = ∅, то P(A ∪ B) = P(A) + P(B)</li>
+        <li><span class="key-term">Аксіома неперервності</span> (для нескінченних послідовностей): для будь-якої спадної
+          послідовності A₁ ⊃ A₂ ⊃ … з ⋂ A<sub>i</sub> = ∅ виконується lim P(A<sub>n</sub>) = 0</li>
+      </ol>
+      <p>Трійка (Θ, Ω, P), де Θ — алгебра подій і P задовольняє аксіоми, називається <span class="key-term">простором
+          ймовірностей</span>.</p>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-2)">⬡ Наслідки аксіом</div>
+      <p>Якщо A₁, A₂, …, A<sub>n</sub> попарно несумісні:</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <munderover>
+              <mo>⋃</mo>
+              <mrow>
+                <mi>i</mi>
+                <mo>=</mo>
+                <mn>1</mn>
+              </mrow>
+              <mi>n</mi>
+            </munderover>
+            <msub>
+              <mi>A</mi>
+              <mi>i</mi>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <munderover>
+            <mo>∑</mo>
+            <mrow>
+              <mi>i</mi>
+              <mo>=</mo>
+              <mn>1</mn>
+            </mrow>
+            <mi>n</mi>
+          </munderover>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <msub>
+              <mi>A</mi>
+              <mi>i</mi>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+        </math>
+        <div class="formula-label">(7) адитивність для попарно несумісних</div>
+      </div>
+      <p>Якщо A₁, …, A<sub>n</sub> утворюють повну групу:</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <munderover>
+              <mo>⋃</mo>
+              <mrow>
+                <mi>i</mi>
+                <mo>=</mo>
+                <mn>1</mn>
+              </mrow>
+              <mi>n</mi>
+            </munderover>
+            <msub>
+              <mi>A</mi>
+              <mi>i</mi>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>1</mn>
+        </math>
+        <div class="formula-label">(8) повна група</div>
+      </div>
+      <p>Імовірність протилежної події:</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mover>
+              <mi>A</mi>
+              <mo>―</mo>
+            </mover>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>1</mn>
+          <mo>−</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>
+        <div class="formula-label">(9) ймовірність доповнення</div>
+      </div>
+      <p>Сума двох сумісних подій (формула включень/виключень):</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>∪</mo>
+            <mi>B</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>+</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>B</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>−</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>∩</mo>
+            <mi>B</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>
+        <div class="formula-label">(10) формула для двох сумісних подій</div>
+      </div>
+      <p>Для трьох сумісних подій:</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>∪</mo>
+            <mi>B</mi>
+            <mo>∪</mo>
+            <mi>C</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>+</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>B</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>+</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>C</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>
+        <math display="block">
+          <mo>−</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>∩</mo>
+            <mi>B</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>−</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>∩</mo>
+            <mi>C</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>−</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>B</mi>
+            <mo>∩</mo>
+            <mi>C</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>+</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>∩</mo>
+            <mi>B</mi>
+            <mo>∩</mo>
+            <mi>C</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>
+        <div class="formula-label">(13) формула для трьох сумісних подій</div>
+      </div>
+      <p>Монотонність: якщо A ⊂ B, то P(A) ≤ P(B).</p>
+    </div>
+
+    <div class="note-block exam">★ <strong>Пам'ятайте різницю:</strong> для несумісних A ∪ B працює проста сума P(A) +
+      P(B). Для сумісних — обов'язково віднімаємо перетин: P(A) + P(B) − P(A ∩ B). Найчастіша помилка на іспиті — забути
+      цей член.</div>
+  </section>
+
+  <!-- CHAPTER 3 -->
+  <section class="chapter" id="ch3">
+    <div class="chapter-header">
+      <span class="chapter-num" style="background:rgba(210,168,255,0.15);color:var(--chapter-3)">РОЗДІЛ 03</span>
+      <h2 class="chapter-title">Означення ймовірності</h2>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-3)">⬡ Класичне означення</div>
+      <p>Імовірністю випадкової події A називається невід'ємне число P(A), що дорівнює відношенню кількості елементарних
+        подій m, які <span class="key-term">сприяють</span> появі A, до кількості всіх n рівноможливих елементарних
+        подій простору Ω:</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mi>m</mi>
+            <mi>n</mi>
+          </mfrac>
+        </math>
+        <div class="formula-label">(1) класичне означення ймовірності</div>
+        <div class="formula-where"><strong>де:</strong> <math display="inline">
+            <mi>m</mi>
+          </math> — число елементарних подій, які сприяють A; <math display="inline">
+            <mi>n</mi>
+          </math> — загальне число рівноможливих елементарних подій.</div>
+      </div>
+      <p>Властивості: для неможливої події P(∅) = 0 (m = 0); для вірогідної P(Ω) = 1 (m = n); для довільної 0 ≤ P(A) ≤
+        1.</p>
+      <p>Працює лише за обмеженого числа рівноможливих елементарних подій.</p>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-3)">⬡ Канонічний приклад: бракована/стандартна деталь</div>
+      <p>У ящику 15 однотипних деталей: 6 бракованих, 9 стандартних. Навмання беруть одну. Ймовірність вибрати
+        стандартну?</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>n</mi>
+          <mo>=</mo>
+          <mn>15</mn>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <mi>m</mi>
+          <mo>=</mo>
+          <mn>9</mn>
+          <mspace width="1.5em" ></mspace>
+          <mo>⇒</mo>
+          <mspace width="1em" ></mspace>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mn>9</mn>
+            <mn>15</mn>
+          </mfrac>
+          <mo>=</mo>
+          <mfrac>
+            <mn>3</mn>
+            <mn>5</mn>
+          </mfrac>
+          <mo>=</mo>
+          <mn>0.6</mn>
+        </math>
+        <div class="formula-label">розв'язання</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-3)">⬡ Приклад на сполучення</div>
+      <p>У ящику 13 деталей: 8 стандартних, 5 бракованих. Навмання беруть 4. Знайти P(A ∪ B), де A — всі 4 стандартні, B
+        — всі 4 браковані.</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>n</mi>
+          <mo>=</mo>
+          <msubsup>
+            <mi>C</mi>
+            <mn>13</mn>
+            <mn>4</mn>
+          </msubsup>
+          <mo>=</mo>
+          <mfrac>
+            <mrow>
+              <mn>13</mn>
+              <mo>!</mo>
+            </mrow>
+            <mrow>
+              <mn>4</mn>
+              <mo>!</mo>
+              <mo>·</mo>
+              <mn>9</mn>
+              <mo>!</mo>
+            </mrow>
+          </mfrac>
+          <mo>=</mo>
+          <mn>715</mn>
+        </math>
+        <math display="block">
+          <msub>
+            <mi>m</mi>
+            <mn>1</mn>
+          </msub>
+          <mo>=</mo>
+          <msubsup>
+            <mi>C</mi>
+            <mn>8</mn>
+            <mn>4</mn>
+          </msubsup>
+          <mo>=</mo>
+          <mn>70</mn>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <msub>
+            <mi>m</mi>
+            <mn>2</mn>
+          </msub>
+          <mo>=</mo>
+          <msubsup>
+            <mi>C</mi>
+            <mn>5</mn>
+            <mn>4</mn>
+          </msubsup>
+          <mo>=</mo>
+          <mn>5</mn>
+        </math>
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>∪</mo>
+            <mi>B</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mn>70</mn>
+            <mn>715</mn>
+          </mfrac>
+          <mo>+</mo>
+          <mfrac>
+            <mn>5</mn>
+            <mn>715</mn>
+          </mfrac>
+          <mo>=</mo>
+          <mfrac>
+            <mn>15</mn>
+            <mn>143</mn>
+          </mfrac>
+          <mo>≈</mo>
+          <mn>0.105</mn>
+        </math>
+        <div class="formula-label">несумісні події A ∩ B = ∅, тому додавання просте</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-3)">⬡ Геометрична ймовірність</div>
+      <p>Коли простір Ω неперервний (нескінченне число рівноможливих наслідків), класичне означення не працює. Замість
+        підрахунку сприятливих елементів — порівняння <span class="key-term">мір</span> множин:</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mrow>
+              <mi>m</mi>
+              <mo>(</mo>
+              <mi>A</mi>
+              <mo>)</mo>
+            </mrow>
+            <mrow>
+              <mi>m</mi>
+              <mo>(</mo>
+              <mi mathvariant="normal">Ω</mi>
+              <mo>)</mo>
+            </mrow>
+          </mfrac>
+        </math>
+        <div class="formula-label">(15) геометрична ймовірність</div>
+        <div class="formula-where"><strong>де:</strong> <math display="inline">
+            <mi>m</mi>
+          </math> — лінійна довжина, площа або об'єм залежно від розмірності Ω.</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-3)">⬡ Канонічний приклад: пошкодження трубопроводу</div>
+      <p>По трубопроводу довжиною 2 км перекачують нафту. Знайти ймовірність того, що пошкодження станеться на ділянці
+        100 м.</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi mathvariant="normal">Ω</mi>
+          <mo>=</mo>
+          <mrow>
+            <mo>{</mo>
+            <mn>0</mn>
+            <mo>≤</mo>
+            <mi>ℓ</mi>
+            <mo>≤</mo>
+            <mn>2</mn>
+            <mtext> км</mtext>
+            <mo>}</mo>
+          </mrow>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <mi>A</mi>
+          <mo>=</mo>
+          <mrow>
+            <mo>{</mo>
+            <mn>0</mn>
+            <mo>≤</mo>
+            <mi>ℓ</mi>
+            <mo>≤</mo>
+            <mn>0.1</mn>
+            <mtext> км</mtext>
+            <mo>}</mo>
+          </mrow>
+        </math>
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mrow>
+              <mi>m</mi>
+              <mo>(</mo>
+              <mi>A</mi>
+              <mo>)</mo>
+            </mrow>
+            <mrow>
+              <mi>m</mi>
+              <mo>(</mo>
+              <mi mathvariant="normal">Ω</mi>
+              <mo>)</mo>
+            </mrow>
+          </mfrac>
+          <mo>=</mo>
+          <mfrac>
+            <mn>0.1</mn>
+            <mn>2</mn>
+          </mfrac>
+          <mo>=</mo>
+          <mfrac>
+            <mn>1</mn>
+            <mn>20</mn>
+          </mfrac>
+          <mo>=</mo>
+          <mn>0.05</mn>
+        </math>
+        <div class="formula-label">розв'язання — відношення довжин</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-3)">⬡ Канонічний приклад: точка в області під логарифмом
+      </div>
+      <p>Ω = {0 ≤ x ≤ e, 0 ≤ y ≤ 1}. Знайти ймовірність, що навмання обрана точка потрапить в A = {1 ≤ x ≤ e, 0 ≤ y ≤ ln
+        x}.</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>S</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi mathvariant="normal">Ω</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mi>e</mi>
+          <mo>·</mo>
+          <mn>1</mn>
+          <mo>=</mo>
+          <mi>e</mi>
+        </math>
+        <math display="block">
+          <mi>S</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <msubsup>
+            <mo>∫</mo>
+            <mn>1</mn>
+            <mi>e</mi>
+          </msubsup>
+          <mi mathvariant="normal">ln</mi>
+          <mi>x</mi>
+          <mspace width="0.2em" ></mspace>
+          <mi>d</mi>
+          <mi>x</mi>
+          <mo>=</mo>
+          <msubsup>
+            <mrow>
+              <mo>[</mo>
+              <mi>x</mi>
+              <mi mathvariant="normal">ln</mi>
+              <mi>x</mi>
+              <mo>−</mo>
+              <mi>x</mi>
+              <mo>]</mo>
+            </mrow>
+            <mn>1</mn>
+            <mi>e</mi>
+          </msubsup>
+          <mo>=</mo>
+          <mi>e</mi>
+          <mo>−</mo>
+          <mi>e</mi>
+          <mo>+</mo>
+          <mn>1</mn>
+          <mo>=</mo>
+          <mn>1</mn>
+        </math>
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mrow>
+              <mi>S</mi>
+              <mo>(</mo>
+              <mi>A</mi>
+              <mo>)</mo>
+            </mrow>
+            <mrow>
+              <mi>S</mi>
+              <mo>(</mo>
+              <mi mathvariant="normal">Ω</mi>
+              <mo>)</mo>
+            </mrow>
+          </mfrac>
+          <mo>=</mo>
+          <mfrac>
+            <mn>1</mn>
+            <mi>e</mi>
+          </mfrac>
+        </math>
+        <div class="formula-label">розв'язання — відношення площ</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-3)">⬡ Статистична ймовірність</div>
+      <p>Для більшості реальних задач (особливо економічних) обчислити P(A) теоретично неможливо. У цьому разі
+        використовують <span class="key-term">статистичну ймовірність</span>, яка базується на спостереженнях.</p>
+      <p><span class="key-term">Відносна частота</span> події A після n експериментів:</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>W</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mi>m</mi>
+            <mi>n</mi>
+          </mfrac>
+        </math>
+        <div class="formula-label">(16) відносна частота</div>
+        <div class="formula-where"><strong>де:</strong> <math display="inline">
+            <mi>m</mi>
+          </math> — кількість експериментів, у яких подія A спостерігалась; <math display="inline">
+            <mi>n</mi>
+          </math> — загальна кількість проведених експериментів. Завжди виконується 0 ≤ W(A) ≤ 1.</div>
+      </div>
+      <p>За статистичну ймовірність береться значення W<sub>i</sub> на кроці серії експериментів, де виконується
+        |W<sub>i</sub> − W<sub>i−1</sub>| &lt; ε для малого ε &gt; 0. Передумова — стабільність відносних частот: при
+        зростанні n значення W<sub>i</sub>(A) групуються навколо деякої константи P(A).</p>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-3)">⬡ Три означення в порівнянні</div>
+      <table class="comparison">
+        <tr>
+          <th>Означення</th>
+          <th>Коли працює</th>
+          <th>Як обчислюємо</th>
+        </tr>
+        <tr>
+          <td>Класичне</td>
+          <td>Скінченне Ω, рівноможливі ω<sub>i</sub></td>
+          <td>P(A) = m / n</td>
+        </tr>
+        <tr>
+          <td>Геометричне</td>
+          <td>Неперервне Ω, квадровна множина</td>
+          <td>P(A) = m(A) / m(Ω)</td>
+        </tr>
+        <tr>
+          <td>Статистичне</td>
+          <td>Складні задачі, де теоретичне Ω недоступне</td>
+          <td>P(A) ≈ W(A) = m / n при великому n</td>
+        </tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- CHAPTER 4 -->
+  <section class="chapter" id="ch4">
+    <div class="chapter-header">
+      <span class="chapter-num" style="background:rgba(240,136,62,0.15);color:var(--chapter-4)">РОЗДІЛ 04</span>
+      <h2 class="chapter-title">Умовна ймовірність. Залежні та незалежні події</h2>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-4)">⬡ Залежні vs незалежні події</div>
+      <p>Події A та B називають <span class="key-term">залежними</span>, якщо поява однієї впливає на ймовірність появи
+        іншої. Інакше — <span class="key-term">незалежними</span>.</p>
+      <table class="comparison">
+        <tr>
+          <th>Сценарій</th>
+          <th>Залежність</th>
+          <th>Чому</th>
+        </tr>
+        <tr>
+          <td>Дві кульки з урни без повернення</td>
+          <td>Залежні</td>
+          <td>Перший вибір змінює склад урни — змінюється ймовірність другого</td>
+        </tr>
+        <tr>
+          <td>Дві кульки з урни з поверненням</td>
+          <td>Незалежні</td>
+          <td>Склад урни той самий перед кожним вийманням</td>
+        </tr>
+        <tr>
+          <td>Підкидання кубика і монети</td>
+          <td>Незалежні</td>
+          <td>Експерименти фізично роз'єднані</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-4)">⬡ Умовна ймовірність</div>
+      <p><span class="key-term">Умовна ймовірність</span> P(A/B) — імовірність події A за умови, що B вже відбулася:</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>/</mo>
+            <mi>B</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mrow>
+              <mi>P</mi>
+              <mo>(</mo>
+              <mi>A</mi>
+              <mo>∩</mo>
+              <mi>B</mi>
+              <mo>)</mo>
+            </mrow>
+            <mrow>
+              <mi>P</mi>
+              <mo>(</mo>
+              <mi>B</mi>
+              <mo>)</mo>
+            </mrow>
+          </mfrac>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>B</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>≠</mo>
+          <mn>0</mn>
+        </math>
+        <div class="formula-label">(17) умовна ймовірність A відносно B</div>
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>B</mi>
+            <mo>/</mo>
+            <mi>A</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mrow>
+              <mi>P</mi>
+              <mo>(</mo>
+              <mi>A</mi>
+              <mo>∩</mo>
+              <mi>B</mi>
+              <mo>)</mo>
+            </mrow>
+            <mrow>
+              <mi>P</mi>
+              <mo>(</mo>
+              <mi>A</mi>
+              <mo>)</mo>
+            </mrow>
+          </mfrac>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>≠</mo>
+          <mn>0</mn>
+        </math>
+        <div class="formula-label">(18) умовна ймовірність B відносно A</div>
+      </div>
+      <p>Властивості: P(A/B) = 0, якщо A ∩ B = ∅; P(A/B) = 1, якщо A ∩ B = B (тобто B ⊂ A); 0 &lt; P(A/B) &lt; 1 в інших
+        випадках. Якщо P(A) = P(A/B), то A та B незалежні. Інакше — залежні.</p>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-4)">⬡ Канонічний приклад: число кратне 3 за умови непарності
+      </div>
+      <p>Ω = {1, 2, …, 12}. Навмання беруть число. Знайти P(A/B), де A — кратне 3, B — непарне.</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>A</mi>
+          <mo>=</mo>
+          <mrow>
+            <mo>{</mo>
+            <mn>3</mn>
+            <mo>,</mo>
+            <mn>6</mn>
+            <mo>,</mo>
+            <mn>9</mn>
+            <mo>,</mo>
+            <mn>12</mn>
+            <mo>}</mo>
+          </mrow>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mn>4</mn>
+            <mn>12</mn>
+          </mfrac>
+          <mo>=</mo>
+          <mfrac>
+            <mn>1</mn>
+            <mn>3</mn>
+          </mfrac>
+        </math>
+        <math display="block">
+          <mi>B</mi>
+          <mo>=</mo>
+          <mrow>
+            <mo>{</mo>
+            <mn>1</mn>
+            <mo>,</mo>
+            <mn>3</mn>
+            <mo>,</mo>
+            <mn>5</mn>
+            <mo>,</mo>
+            <mn>7</mn>
+            <mo>,</mo>
+            <mn>9</mn>
+            <mo>,</mo>
+            <mn>11</mn>
+            <mo>}</mo>
+          </mrow>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>B</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mn>1</mn>
+            <mn>2</mn>
+          </mfrac>
+        </math>
+        <math display="block">
+          <mi>A</mi>
+          <mo>∩</mo>
+          <mi>B</mi>
+          <mo>=</mo>
+          <mrow>
+            <mo>{</mo>
+            <mn>3</mn>
+            <mo>,</mo>
+            <mn>9</mn>
+            <mo>}</mo>
+          </mrow>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>∩</mo>
+            <mi>B</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mn>1</mn>
+            <mn>6</mn>
+          </mfrac>
+        </math>
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>/</mo>
+            <mi>B</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mrow>
+              <mn>1</mn>
+              <mo>/</mo>
+              <mn>6</mn>
+            </mrow>
+            <mrow>
+              <mn>1</mn>
+              <mo>/</mo>
+              <mn>2</mn>
+            </mrow>
+          </mfrac>
+          <mo>=</mo>
+          <mfrac>
+            <mn>1</mn>
+            <mn>3</mn>
+          </mfrac>
+          <mo>=</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>
+        <div class="formula-label">P(A) = P(A/B) ⇒ події A та B незалежні</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-4)">⬡ Формули множення ймовірностей</div>
+      <p>Із означення умовної ймовірності — формули множення:</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>∩</mo>
+            <mi>B</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>·</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>B</mi>
+            <mo>/</mo>
+            <mi>A</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>B</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>·</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>/</mo>
+            <mi>B</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>
+        <div class="formula-label">(19) формула множення для двох залежних подій</div>
+      </div>
+      <p>Для n залежних подій (ланцюгове правило):</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <munderover>
+              <mo>⋂</mo>
+              <mrow>
+                <mi>i</mi>
+                <mo>=</mo>
+                <mn>1</mn>
+              </mrow>
+              <mi>n</mi>
+            </munderover>
+            <msub>
+              <mi>A</mi>
+              <mi>i</mi>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <msub>
+              <mi>A</mi>
+              <mn>1</mn>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+          <mo>·</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <msub>
+              <mi>A</mi>
+              <mn>2</mn>
+            </msub>
+            <mo>/</mo>
+            <msub>
+              <mi>A</mi>
+              <mn>1</mn>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+          <mo>·</mo>
+          <mo>…</mo>
+          <mo>·</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <msub>
+              <mi>A</mi>
+              <mi>n</mi>
+            </msub>
+            <mo>/</mo>
+            <msub>
+              <mi>A</mi>
+              <mn>1</mn>
+            </msub>
+            <mo>…</mo>
+            <msub>
+              <mi>A</mi>
+              <mrow>
+                <mi>n</mi>
+                <mo>−</mo>
+                <mn>1</mn>
+              </mrow>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+        </math>
+        <div class="formula-label">(20) ланцюгове правило для n залежних подій</div>
+      </div>
+      <p>Для незалежних подій умовні дорівнюють безумовним, тому:</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>∩</mo>
+            <mi>B</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>·</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>B</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>,</mo>
+          <mspace width="1.5em" ></mspace>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <munderover>
+              <mo>⋂</mo>
+              <mrow>
+                <mi>i</mi>
+                <mo>=</mo>
+                <mn>1</mn>
+              </mrow>
+              <mi>n</mi>
+            </munderover>
+            <msub>
+              <mi>A</mi>
+              <mi>i</mi>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <munderover>
+            <mo>∏</mo>
+            <mrow>
+              <mi>i</mi>
+              <mo>=</mo>
+              <mn>1</mn>
+            </mrow>
+            <mi>n</mi>
+          </munderover>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <msub>
+              <mi>A</mi>
+              <mi>i</mi>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+        </math>
+        <div class="formula-label">(21–22) формули множення для незалежних подій</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-4)">⬡ Канонічний приклад: 3 деталі без повернення</div>
+      <p>У ящику 15 деталей: 9 стандартних, 6 бракованих. Виймають по одній без повернення. Знайти P(A) = три
+        стандартні, P(B) = три браковані, P(C) = дві стандартні і одна бракована.</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mn>9</mn>
+            <mn>15</mn>
+          </mfrac>
+          <mo>·</mo>
+          <mfrac>
+            <mn>8</mn>
+            <mn>14</mn>
+          </mfrac>
+          <mo>·</mo>
+          <mfrac>
+            <mn>7</mn>
+            <mn>13</mn>
+          </mfrac>
+          <mo>=</mo>
+          <mfrac>
+            <mn>12</mn>
+            <mn>65</mn>
+          </mfrac>
+        </math>
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>B</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mn>6</mn>
+            <mn>15</mn>
+          </mfrac>
+          <mo>·</mo>
+          <mfrac>
+            <mn>5</mn>
+            <mn>14</mn>
+          </mfrac>
+          <mo>·</mo>
+          <mfrac>
+            <mn>4</mn>
+            <mn>13</mn>
+          </mfrac>
+          <mo>=</mo>
+          <mfrac>
+            <mn>6</mn>
+            <mn>91</mn>
+          </mfrac>
+        </math>
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>C</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>3</mn>
+          <mo>·</mo>
+          <mfrac>
+            <mn>9</mn>
+            <mn>15</mn>
+          </mfrac>
+          <mo>·</mo>
+          <mfrac>
+            <mn>8</mn>
+            <mn>14</mn>
+          </mfrac>
+          <mo>·</mo>
+          <mfrac>
+            <mn>6</mn>
+            <mn>13</mn>
+          </mfrac>
+          <mo>=</mo>
+          <mfrac>
+            <mn>216</mn>
+            <mn>455</mn>
+          </mfrac>
+        </math>
+        <div class="formula-label">множник 3 — три позиції бракованої деталі</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-4)">⬡ Канонічний приклад: три екзамени (незалежні)</div>
+      <p>Імовірності здати екзамен трьома студентами: 0.9, 0.8, 0.7. Події незалежні. Знайти ймовірності трьох
+        сценаріїв.</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>P</mi>
+          <mtext>(всі здали)</mtext>
+          <mo>=</mo>
+          <mn>0.9</mn>
+          <mo>·</mo>
+          <mn>0.8</mn>
+          <mo>·</mo>
+          <mn>0.7</mn>
+          <mo>=</mo>
+          <mn>0.504</mn>
+        </math>
+        <math display="block">
+          <mi>P</mi>
+          <mtext>(всі не здали)</mtext>
+          <mo>=</mo>
+          <mn>0.1</mn>
+          <mo>·</mo>
+          <mn>0.2</mn>
+          <mo>·</mo>
+          <mn>0.3</mn>
+          <mo>=</mo>
+          <mn>0.006</mn>
+        </math>
+        <math display="block">
+          <mi>P</mi>
+          <mtext>(рівно двоє)</mtext>
+          <mo>=</mo>
+          <mn>0.9</mn>
+          <mo>·</mo>
+          <mn>0.8</mn>
+          <mo>·</mo>
+          <mn>0.3</mn>
+          <mo>+</mo>
+          <mn>0.9</mn>
+          <mo>·</mo>
+          <mn>0.2</mn>
+          <mo>·</mo>
+          <mn>0.7</mn>
+          <mo>+</mo>
+          <mn>0.1</mn>
+          <mo>·</mo>
+          <mn>0.8</mn>
+          <mo>·</mo>
+          <mn>0.7</mn>
+          <mo>=</mo>
+          <mn>0.398</mn>
+        </math>
+        <div class="formula-label">три сценарії на основі незалежності</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-4)">⬡ Поява хоча б один раз при n незалежних спробах</div>
+      <p>Нехай в n незалежних спробах подія A<sub>i</sub> має ймовірність p<sub>i</sub>, а q<sub>i</sub> = 1 −
+        p<sub>i</sub>. Подія C = "A<sub>i</sub> з'явиться принаймні один раз". Прийом: рахуємо ймовірність протилежної
+        події (жодного разу) і віднімаємо від 1.</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>C</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>1</mn>
+          <mo>−</mo>
+          <munderover>
+            <mo>∏</mo>
+            <mrow>
+              <mi>i</mi>
+              <mo>=</mo>
+              <mn>1</mn>
+            </mrow>
+            <mi>n</mi>
+          </munderover>
+          <msub>
+            <mi>q</mi>
+            <mi>i</mi>
+          </msub>
+        </math>
+        <div class="formula-label">(23) загальний випадок різних p<sub>i</sub></div>
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>C</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>1</mn>
+          <mo>−</mo>
+          <msup>
+            <mi>q</mi>
+            <mi>n</mi>
+          </msup>
+        </math>
+        <div class="formula-label">(24) при сталій ймовірності p<sub>i</sub> = p</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-4)">⬡ Приклад: працездатність приладу</div>
+      <p>Прилад має 4 елементи з імовірностями працездатності p₁ = 0.95, p₂ = 0.9, p₃ = 0.85, p₄ = 0.8. Знайти
+        ймовірність, що принаймні один не вийде з ладу.</p>
+      <div class="formula-block">
+        <math display="block">
+          <msub>
+            <mi>q</mi>
+            <mn>1</mn>
+          </msub>
+          <mo>=</mo>
+          <mn>0.05</mn>
+          <mo>,</mo>
+          <msub>
+            <mi>q</mi>
+            <mn>2</mn>
+          </msub>
+          <mo>=</mo>
+          <mn>0.1</mn>
+          <mo>,</mo>
+          <msub>
+            <mi>q</mi>
+            <mn>3</mn>
+          </msub>
+          <mo>=</mo>
+          <mn>0.15</mn>
+          <mo>,</mo>
+          <msub>
+            <mi>q</mi>
+            <mn>4</mn>
+          </msub>
+          <mo>=</mo>
+          <mn>0.2</mn>
+        </math>
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>C</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>1</mn>
+          <mo>−</mo>
+          <mn>0.05</mn>
+          <mo>·</mo>
+          <mn>0.1</mn>
+          <mo>·</mo>
+          <mn>0.15</mn>
+          <mo>·</mo>
+          <mn>0.2</mn>
+          <mo>=</mo>
+          <mn>1</mn>
+          <mo>−</mo>
+          <mn>0.00015</mn>
+          <mo>=</mo>
+          <mn>0.99985</mn>
+        </math>
+        <div class="formula-label">розв'язання</div>
+      </div>
+    </div>
+
+    <div class="note-block exam">★ <strong>Стратегія "хоча б один":</strong> якщо в задачі є слова "хоча б",
+      "принаймні", "не менше одного" — рахуйте ймовірність протилежної події (жодного разу) і віднімайте від одиниці. Це
+      майже завжди простіше, ніж сумувати окремі випадки.</div>
+  </section>
+
+  <!-- CHAPTER 5 -->
+  <section class="chapter" id="ch5">
+    <div class="chapter-header">
+      <span class="chapter-num" style="background:rgba(121,192,255,0.15);color:var(--chapter-5)">РОЗДІЛ 05</span>
+      <h2 class="chapter-title">Формула повної ймовірності. Формула Байєса</h2>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-5)">⬡ Гіпотези — повна група попарно несумісних подій</div>
+      <p>Нехай події B₁, B₂, …, B<sub>n</sub> утворюють <span class="key-term">повну групу</span> попарно несумісних:
+      </p>
+      <ul>
+        <li>B<sub>i</sub> ∩ B<sub>j</sub> = ∅ при i ≠ j</li>
+        <li>⋃ B<sub>i</sub> = Ω</li>
+      </ul>
+      <p>Такі B<sub>i</sub> називають <span class="key-term">гіпотезами</span>: внаслідок експерименту обов'язково
+        настає одна і тільки одна з них.</p>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-5)">⬡ Формула повної ймовірності</div>
+      <p>Якщо подія A може відбутися лише за умови настання однієї з гіпотез B<sub>i</sub>:</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <munderover>
+            <mo>∑</mo>
+            <mrow>
+              <mi>i</mi>
+              <mo>=</mo>
+              <mn>1</mn>
+            </mrow>
+            <mi>n</mi>
+          </munderover>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <msub>
+              <mi>B</mi>
+              <mi>i</mi>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+          <mo>·</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>/</mo>
+            <msub>
+              <mi>B</mi>
+              <mi>i</mi>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+        </math>
+        <div class="formula-label">(25) формула повної ймовірності</div>
+        <div class="formula-where"><strong>де:</strong> <math display="inline">
+            <mi>P</mi>
+            <mrow>
+              <mo>(</mo>
+              <msub>
+                <mi>B</mi>
+                <mi>i</mi>
+              </msub>
+              <mo>)</mo>
+            </mrow>
+          </math> — апріорна ймовірність гіпотези до експерименту; <math display="inline">
+            <mi>P</mi>
+            <mrow>
+              <mo>(</mo>
+              <mi>A</mi>
+              <mo>/</mo>
+              <msub>
+                <mi>B</mi>
+                <mi>i</mi>
+              </msub>
+              <mo>)</mo>
+            </mrow>
+          </math> — умовна ймовірність A при справдженні гіпотези B<sub>i</sub>; <math display="inline">
+            <mi>P</mi>
+            <mrow>
+              <mo>(</mo>
+              <mi>A</mi>
+              <mo>)</mo>
+            </mrow>
+          </math> — повна (середня по всіх гіпотезах).</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-5)">⬡ Канонічний приклад: 3 цехи постачають деталі</div>
+      <p>Цехи постачають у складальний 45%, 35% і 20% деталей. Браку допускають 6%, 2%, 8% відповідно. Знайти P(A) —
+        імовірність, що навмання взята деталь стандартна.</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <msub>
+              <mi>B</mi>
+              <mn>1</mn>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>0.45</mn>
+          <mo>,</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <msub>
+              <mi>B</mi>
+              <mn>2</mn>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>0.35</mn>
+          <mo>,</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <msub>
+              <mi>B</mi>
+              <mn>3</mn>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>0.20</mn>
+        </math>
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>/</mo>
+            <msub>
+              <mi>B</mi>
+              <mn>1</mn>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>0.94</mn>
+          <mo>,</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>/</mo>
+            <msub>
+              <mi>B</mi>
+              <mn>2</mn>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>0.98</mn>
+          <mo>,</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>/</mo>
+            <msub>
+              <mi>B</mi>
+              <mn>3</mn>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>0.92</mn>
+        </math>
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>0.45</mn>
+          <mo>·</mo>
+          <mn>0.94</mn>
+          <mo>+</mo>
+          <mn>0.35</mn>
+          <mo>·</mo>
+          <mn>0.98</mn>
+          <mo>+</mo>
+          <mn>0.20</mn>
+          <mo>·</mo>
+          <mn>0.92</mn>
+          <mo>=</mo>
+          <mn>0.95</mn>
+        </math>
+        <div class="formula-label">розв'язання — формула повної ймовірності</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-5)">⬡ Формула Байєса (переоцінка гіпотез)</div>
+      <p>Із формули множення для залежних подій A та B<sub>i</sub>: P(A) · P(B<sub>i</sub>/A) = P(B<sub>i</sub>) ·
+        P(A/B<sub>i</sub>). Звідси:</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <msub>
+              <mi>B</mi>
+              <mi>i</mi>
+            </msub>
+            <mo>/</mo>
+            <mi>A</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mrow>
+              <mi>P</mi>
+              <mrow>
+                <mo>(</mo>
+                <msub>
+                  <mi>B</mi>
+                  <mi>i</mi>
+                </msub>
+                <mo>)</mo>
+              </mrow>
+              <mo>·</mo>
+              <mi>P</mi>
+              <mrow>
+                <mo>(</mo>
+                <mi>A</mi>
+                <mo>/</mo>
+                <msub>
+                  <mi>B</mi>
+                  <mi>i</mi>
+                </msub>
+                <mo>)</mo>
+              </mrow>
+            </mrow>
+            <mrow>
+              <munderover>
+                <mo>∑</mo>
+                <mrow>
+                  <mi>j</mi>
+                  <mo>=</mo>
+                  <mn>1</mn>
+                </mrow>
+                <mi>n</mi>
+              </munderover>
+              <mi>P</mi>
+              <mrow>
+                <mo>(</mo>
+                <msub>
+                  <mi>B</mi>
+                  <mi>j</mi>
+                </msub>
+                <mo>)</mo>
+              </mrow>
+              <mo>·</mo>
+              <mi>P</mi>
+              <mrow>
+                <mo>(</mo>
+                <mi>A</mi>
+                <mo>/</mo>
+                <msub>
+                  <mi>B</mi>
+                  <mi>j</mi>
+                </msub>
+                <mo>)</mo>
+              </mrow>
+            </mrow>
+          </mfrac>
+        </math>
+        <div class="formula-label">(26) формула Байєса</div>
+        <div class="formula-where"><strong>де:</strong> чисельник — "вклад" гіпотези B<sub>i</sub> у настання A;
+          знаменник — повна ймовірність A; результат — апостеріорна ймовірність B<sub>i</sub> після того, як A
+          відбулася.</div>
+      </div>
+      <p>Перевірка: Σ P(B<sub>i</sub>/A) = 1 (апостеріорні теж утворюють повну групу).</p>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-5)">⬡ Канонічний приклад: переоцінка походження ящика</div>
+      <p>Три групи ящиків: I — 5 ящиків (7 ст. + 3 бр.), II — 9 (5 + 5), III — 3 (3 + 7). Із випадкового ящика взяли 3
+        деталі — всі стандартні. Знайти P(B₃/A) — імовірність, що ящик з III групи.</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <msub>
+              <mi>B</mi>
+              <mn>1</mn>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mn>5</mn>
+            <mn>17</mn>
+          </mfrac>
+          <mo>,</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <msub>
+              <mi>B</mi>
+              <mn>2</mn>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mn>9</mn>
+            <mn>17</mn>
+          </mfrac>
+          <mo>,</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <msub>
+              <mi>B</mi>
+              <mn>3</mn>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mn>3</mn>
+            <mn>17</mn>
+          </mfrac>
+        </math>
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>/</mo>
+            <msub>
+              <mi>B</mi>
+              <mn>1</mn>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <msubsup>
+              <mi>C</mi>
+              <mn>7</mn>
+              <mn>3</mn>
+            </msubsup>
+            <msubsup>
+              <mi>C</mi>
+              <mn>10</mn>
+              <mn>3</mn>
+            </msubsup>
+          </mfrac>
+          <mo>=</mo>
+          <mfrac>
+            <mn>21</mn>
+            <mn>120</mn>
+          </mfrac>
+          <mo>,</mo>
+          <mspace width="0.5em" ></mspace>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>/</mo>
+            <msub>
+              <mi>B</mi>
+              <mn>2</mn>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mn>10</mn>
+            <mn>120</mn>
+          </mfrac>
+          <mo>,</mo>
+          <mspace width="0.5em" ></mspace>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>A</mi>
+            <mo>/</mo>
+            <msub>
+              <mi>B</mi>
+              <mn>3</mn>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mn>1</mn>
+            <mn>120</mn>
+          </mfrac>
+        </math>
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <msub>
+              <mi>B</mi>
+              <mn>3</mn>
+            </msub>
+            <mo>/</mo>
+            <mi>A</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mrow>
+              <mfrac>
+                <mn>3</mn>
+                <mn>17</mn>
+              </mfrac>
+              <mo>·</mo>
+              <mfrac>
+                <mn>1</mn>
+                <mn>120</mn>
+              </mfrac>
+            </mrow>
+            <mrow>
+              <mfrac>
+                <mn>5</mn>
+                <mn>17</mn>
+              </mfrac>
+              <mo>·</mo>
+              <mfrac>
+                <mn>21</mn>
+                <mn>120</mn>
+              </mfrac>
+              <mo>+</mo>
+              <mfrac>
+                <mn>9</mn>
+                <mn>17</mn>
+              </mfrac>
+              <mo>·</mo>
+              <mfrac>
+                <mn>10</mn>
+                <mn>120</mn>
+              </mfrac>
+              <mo>+</mo>
+              <mfrac>
+                <mn>3</mn>
+                <mn>17</mn>
+              </mfrac>
+              <mo>·</mo>
+              <mfrac>
+                <mn>1</mn>
+                <mn>120</mn>
+              </mfrac>
+            </mrow>
+          </mfrac>
+          <mo>=</mo>
+          <mfrac>
+            <mn>3</mn>
+            <mn>198</mn>
+          </mfrac>
+          <mo>=</mo>
+          <mfrac>
+            <mn>1</mn>
+            <mn>66</mn>
+          </mfrac>
+        </math>
+        <div class="formula-label">апостеріорі: ймовірність зменшилася з 3/17 ≈ 0.176 до 1/66 ≈ 0.015</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-5)">⬡ Коли застосовувати: повна vs Байєса</div>
+      <table class="comparison">
+        <tr>
+          <th>Питання</th>
+          <th>Формула</th>
+        </tr>
+        <tr>
+          <td>Яка ймовірність події A взагалі?</td>
+          <td>Повної ймовірності</td>
+        </tr>
+        <tr>
+          <td>Подія A відбулася — звідки вона походить?</td>
+          <td>Байєса</td>
+        </tr>
+        <tr>
+          <td>Деталь надійшла — стандартна?</td>
+          <td>Повної</td>
+        </tr>
+        <tr>
+          <td>Деталь стандартна — з якого цеху?</td>
+          <td>Байєса</td>
+        </tr>
+        <tr>
+          <td>Тест позитивний — чи є хвороба?</td>
+          <td>Байєса</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="note-block important">Формула Байєса — основа сучасної статистики, машинного навчання (наївний баєсів
+      класифікатор), медичної діагностики (тести на захворювання) і фільтрації спаму. Ключова ідея — використання нової
+      інформації для уточнення апріорної ймовірності гіпотези.</div>
+  </section>
+
+  <!-- CHAPTER 6 -->
+  <section class="chapter" id="ch6">
+    <div class="chapter-header">
+      <span class="chapter-num" style="background:rgba(248,81,73,0.15);color:var(--chapter-6)">РОЗДІЛ 06</span>
+      <h2 class="chapter-title">Схема Бернуллі та асимптотичні теореми</h2>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-6)">⬡ Схема Бернуллі</div>
+      <p>Послідовність n незалежних експериментів, кожен з яких має лише два несумісні наслідки зі сталими
+        ймовірностями. Імовірність появи події в одному експерименті — p, протилежної — q = 1 − p.</p>
+      <ul>
+        <li>Простір елементарних подій одного експерименту містить 2 події</li>
+        <li>Простір для n експериментів — 2<sup>n</sup> подій</li>
+      </ul>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-6)">⬡ Формула Бернуллі</div>
+      <p>Імовірність того, що в n незалежних експериментах подія A з'явиться рівно m разів:</p>
+      <div class="formula-block">
+        <math display="block">
+          <msub>
+            <mi>P</mi>
+            <mi>n</mi>
+          </msub>
+          <mrow>
+            <mo>(</mo>
+            <mi>m</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <msubsup>
+            <mi>C</mi>
+            <mi>n</mi>
+            <mi>m</mi>
+          </msubsup>
+          <msup>
+            <mi>p</mi>
+            <mi>m</mi>
+          </msup>
+          <msup>
+            <mi>q</mi>
+            <mrow>
+              <mi>n</mi>
+              <mo>−</mo>
+              <mi>m</mi>
+            </mrow>
+          </msup>
+          <mo>=</mo>
+          <mfrac>
+            <mrow>
+              <mi>n</mi>
+              <mo>!</mo>
+            </mrow>
+            <mrow>
+              <mi>m</mi>
+              <mo>!</mo>
+              <mrow>
+                <mo>(</mo>
+                <mi>n</mi>
+                <mo>−</mo>
+                <mi>m</mi>
+                <mo>)</mo>
+              </mrow>
+              <mo>!</mo>
+            </mrow>
+          </mfrac>
+          <msup>
+            <mi>p</mi>
+            <mi>m</mi>
+          </msup>
+          <msup>
+            <mi>q</mi>
+            <mrow>
+              <mi>n</mi>
+              <mo>−</mo>
+              <mi>m</mi>
+            </mrow>
+          </msup>
+        </math>
+        <div class="formula-label">(1) формула Бернуллі</div>
+      </div>
+      <p>Імовірність появи від m<sub>i</sub> до m<sub>j</sub> разів:</p>
+      <div class="formula-block">
+        <math display="block">
+          <msub>
+            <mi>P</mi>
+            <mi>n</mi>
+          </msub>
+          <mrow>
+            <mo>(</mo>
+            <msub>
+              <mi>m</mi>
+              <mi>i</mi>
+            </msub>
+            <mo>≤</mo>
+            <mi>m</mi>
+            <mo>≤</mo>
+            <msub>
+              <mi>m</mi>
+              <mi>j</mi>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <munderover>
+            <mo>∑</mo>
+            <mrow>
+              <mi>m</mi>
+              <mo>=</mo>
+              <msub>
+                <mi>m</mi>
+                <mi>i</mi>
+              </msub>
+            </mrow>
+            <msub>
+              <mi>m</mi>
+              <mi>j</mi>
+            </msub>
+          </munderover>
+          <msubsup>
+            <mi>C</mi>
+            <mi>n</mi>
+            <mi>m</mi>
+          </msubsup>
+          <msup>
+            <mi>p</mi>
+            <mi>m</mi>
+          </msup>
+          <msup>
+            <mi>q</mi>
+            <mrow>
+              <mi>n</mi>
+              <mo>−</mo>
+              <mi>m</mi>
+            </mrow>
+          </msup>
+        </math>
+        <div class="formula-label">(2) сума по інтервалу значень m</div>
+      </div>
+      <p>Сума по всіх m від 0 до n рівна 1 (умова нормування): Σ C(n,m) pᵐ qⁿ⁻ᵐ = (q + p)ⁿ = 1 — звідси й назва
+        «біноміальний».</p>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-6)">⬡ Канонічний приклад: лампочки в електромережі</div>
+      <p>P(не перегорить) = 0.9. n = 5 ламп. Знайти P(рівно 2 не перегорять), P(не більш як 2), P(не менш як 2). Маємо p
+        = 0.9, q = 0.1, n = 5.</p>
+      <div class="formula-block">
+        <math display="block">
+          <msub>
+            <mi>P</mi>
+            <mn>5</mn>
+          </msub>
+          <mrow>
+            <mo>(</mo>
+            <mn>2</mn>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <msubsup>
+            <mi>C</mi>
+            <mn>5</mn>
+            <mn>2</mn>
+          </msubsup>
+          <msup>
+            <mn>0.9</mn>
+            <mn>2</mn>
+          </msup>
+          <msup>
+            <mn>0.1</mn>
+            <mn>3</mn>
+          </msup>
+          <mo>=</mo>
+          <mn>10</mn>
+          <mo>·</mo>
+          <mn>0.81</mn>
+          <mo>·</mo>
+          <mn>0.001</mn>
+          <mo>=</mo>
+          <mn>0.0081</mn>
+        </math>
+        <math display="block">
+          <msub>
+            <mi>P</mi>
+            <mn>5</mn>
+          </msub>
+          <mrow>
+            <mo>(</mo>
+            <mn>0</mn>
+            <mo>≤</mo>
+            <mi>m</mi>
+            <mo>≤</mo>
+            <mn>2</mn>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <msup>
+            <mi>q</mi>
+            <mn>5</mn>
+          </msup>
+          <mo>+</mo>
+          <mn>5</mn>
+          <mi>p</mi>
+          <msup>
+            <mi>q</mi>
+            <mn>4</mn>
+          </msup>
+          <mo>+</mo>
+          <mn>10</mn>
+          <msup>
+            <mi>p</mi>
+            <mn>2</mn>
+          </msup>
+          <msup>
+            <mi>q</mi>
+            <mn>3</mn>
+          </msup>
+          <mo>=</mo>
+          <mn>0.00856</mn>
+        </math>
+        <math display="block">
+          <msub>
+            <mi>P</mi>
+            <mn>5</mn>
+          </msub>
+          <mrow>
+            <mo>(</mo>
+            <mn>2</mn>
+            <mo>≤</mo>
+            <mi>m</mi>
+            <mo>≤</mo>
+            <mn>5</mn>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>1</mn>
+          <mo>−</mo>
+          <msub>
+            <mi>P</mi>
+            <mn>5</mn>
+          </msub>
+          <mrow>
+            <mo>(</mo>
+            <mn>0</mn>
+            <mo>)</mo>
+          </mrow>
+          <mo>−</mo>
+          <msub>
+            <mi>P</mi>
+            <mn>5</mn>
+          </msub>
+          <mrow>
+            <mo>(</mo>
+            <mn>1</mn>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>0.99954</mn>
+        </math>
+        <div class="formula-label">розв'язання трьох сценаріїв</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-6)">⬡ Найімовірніше число появ (мода)</div>
+      <p><span class="key-term">Найімовірніше число</span> m₀ — таке значення, при якому P<sub>n</sub>(m₀) є максимумом
+        серед усіх P<sub>n</sub>(m). Розглядаючи відношення P<sub>n</sub>(m₀)/P<sub>n</sub>(m₀ ± 1) ≥ 1, отримують
+        подвійну нерівність:</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>n</mi>
+          <mi>p</mi>
+          <mo>−</mo>
+          <mi>q</mi>
+          <mo>≤</mo>
+          <msub>
+            <mi>m</mi>
+            <mn>0</mn>
+          </msub>
+          <mo>≤</mo>
+          <mi>n</mi>
+          <mi>p</mi>
+          <mo>+</mo>
+          <mi>p</mi>
+        </math>
+        <div class="formula-label">(6) межі найімовірнішого числа</div>
+      </div>
+      <p>Інтервал має довжину 1, тому містить рівно одне ціле значення (інколи — два сусідні). Це і є мода.</p>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-6)">⬡ Приклад: найімовірніше число виробів вищого сорту
+      </div>
+      <p>За технологією 90% виробів вищого сорту. У партії n = 200. Знайти m₀.</p>
+      <div class="formula-block">
+        <math display="block">
+          <mn>200</mn>
+          <mo>·</mo>
+          <mn>0.9</mn>
+          <mo>−</mo>
+          <mn>0.1</mn>
+          <mo>≤</mo>
+          <msub>
+            <mi>m</mi>
+            <mn>0</mn>
+          </msub>
+          <mo>≤</mo>
+          <mn>200</mn>
+          <mo>·</mo>
+          <mn>0.9</mn>
+          <mo>+</mo>
+          <mn>0.9</mn>
+        </math>
+        <math display="block">
+          <mn>179.9</mn>
+          <mo>≤</mo>
+          <msub>
+            <mi>m</mi>
+            <mn>0</mn>
+          </msub>
+          <mo>≤</mo>
+          <mn>180.9</mn>
+          <mspace width="1em" ></mspace>
+          <mo>⇒</mo>
+          <mspace width="1em" ></mspace>
+          <msub>
+            <mi>m</mi>
+            <mn>0</mn>
+          </msub>
+          <mo>=</mo>
+          <mn>180</mn>
+          <mtext> виробів</mtext>
+        </math>
+        <div class="formula-label">розв'язання — підставлення в подвійну нерівність</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-6)">⬡ Локальна теорема Муавра–Лапласа</div>
+      <p>При великих n обчислення за формулою Бернуллі стає громіздким. Якщо p сталe (0 &lt; p &lt; 1), то для великих n
+        і m:</p>
+      <div class="formula-block">
+        <math display="block">
+          <msub>
+            <mi>P</mi>
+            <mi>n</mi>
+          </msub>
+          <mrow>
+            <mo>(</mo>
+            <mi>m</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>≈</mo>
+          <mfrac>
+            <mrow>
+              <mi>φ</mi>
+              <mo>(</mo>
+              <mi>x</mi>
+              <mo>)</mo>
+            </mrow>
+            <msqrt>
+              <mi>n</mi>
+              <mi>p</mi>
+              <mi>q</mi>
+            </msqrt>
+          </mfrac>
+        </math>
+        <div class="formula-label">(7) локальна теорема Муавра–Лапласа</div>
+        <math display="block">
+          <mi>φ</mi>
+          <mo>(</mo>
+          <mi>x</mi>
+          <mo>)</mo>
+          <mo>=</mo>
+          <mfrac>
+            <mn>1</mn>
+            <msqrt>
+              <mn>2</mn>
+              <mi>π</mi>
+            </msqrt>
+          </mfrac>
+          <msup>
+            <mi>e</mi>
+            <mrow>
+              <mo>−</mo>
+              <msup>
+                <mi>x</mi>
+                <mn>2</mn>
+              </msup>
+              <mo>/</mo>
+              <mn>2</mn>
+            </mrow>
+          </msup>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <mi>x</mi>
+          <mo>=</mo>
+          <mfrac>
+            <mrow>
+              <mi>m</mi>
+              <mo>−</mo>
+              <mi>n</mi>
+              <mi>p</mi>
+            </mrow>
+            <msqrt>
+              <mi>n</mi>
+              <mi>p</mi>
+              <mi>q</mi>
+            </msqrt>
+          </mfrac>
+        </math>
+        <div class="formula-label">(8) функція Гауса (табульована)</div>
+      </div>
+      <p>Властивості функції Гауса: парна (φ(−x) = φ(x)), завжди додатна, з максимумом φ(0) = 1/√(2π) ≈ 0.3989; точки
+        перегину при x = ±1; lim<sub>x→±∞</sub> φ(x) = 0. Практично φ(x) ≈ 0 при |x| &gt; 4.</p>
+      <p><strong>Доведення</strong> базується на формулі Стірлінга n! ≈ √(2πn) · n<sup>n</sup> · e<sup>−n</sup>; розклад
+        у ряд Тейлора логарифмів дає в границі −x²/2.</p>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-6)">⬡ Приклад: ймовірність найімовірнішого числа</div>
+      <p>P(зерно проросте) = 0.9. Посіяно 700 зерен. Знайти m₀ і P(m₀).</p>
+      <div class="formula-block">
+        <math display="block">
+          <mn>700</mn>
+          <mo>·</mo>
+          <mn>0.9</mn>
+          <mo>−</mo>
+          <mn>0.1</mn>
+          <mo>≤</mo>
+          <msub>
+            <mi>m</mi>
+            <mn>0</mn>
+          </msub>
+          <mo>≤</mo>
+          <mn>700</mn>
+          <mo>·</mo>
+          <mn>0.9</mn>
+          <mo>+</mo>
+          <mn>0.9</mn>
+          <mspace width="1em" ></mspace>
+          <mo>⇒</mo>
+          <mspace width="1em" ></mspace>
+          <msub>
+            <mi>m</mi>
+            <mn>0</mn>
+          </msub>
+          <mo>=</mo>
+          <mn>630</mn>
+        </math>
+        <math display="block">
+          <msqrt>
+            <mi>n</mi>
+            <mi>p</mi>
+            <mi>q</mi>
+          </msqrt>
+          <mo>=</mo>
+          <msqrt>
+            <mn>700</mn>
+            <mo>·</mo>
+            <mn>0.9</mn>
+            <mo>·</mo>
+            <mn>0.1</mn>
+          </msqrt>
+          <mo>=</mo>
+          <msqrt>
+            <mn>63</mn>
+          </msqrt>
+          <mo>≈</mo>
+          <mn>7.94</mn>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <mi>x</mi>
+          <mo>=</mo>
+          <mfrac>
+            <mrow>
+              <mn>630</mn>
+              <mo>−</mo>
+              <mn>630</mn>
+            </mrow>
+            <mn>7.94</mn>
+          </mfrac>
+          <mo>=</mo>
+          <mn>0</mn>
+        </math>
+        <math display="block">
+          <msub>
+            <mi>P</mi>
+            <mn>700</mn>
+          </msub>
+          <mrow>
+            <mo>(</mo>
+            <mn>630</mn>
+            <mo>)</mo>
+          </mrow>
+          <mo>≈</mo>
+          <mfrac>
+            <mrow>
+              <mi>φ</mi>
+              <mo>(</mo>
+              <mn>0</mn>
+              <mo>)</mo>
+            </mrow>
+            <mn>7.94</mn>
+          </mfrac>
+          <mo>=</mo>
+          <mfrac>
+            <mn>0.3989</mn>
+            <mn>7.94</mn>
+          </mfrac>
+          <mo>≈</mo>
+          <mn>0.05</mn>
+        </math>
+        <div class="formula-label">розв'язання — локальна теорема</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-6)">⬡ Інтегральна теорема Муавра–Лапласа</div>
+      <p>Імовірність появи від m<sub>i</sub> до m<sub>j</sub> разів при великих n:</p>
+      <div class="formula-block">
+        <math display="block">
+          <msub>
+            <mi>P</mi>
+            <mi>n</mi>
+          </msub>
+          <mrow>
+            <mo>(</mo>
+            <msub>
+              <mi>m</mi>
+              <mi>i</mi>
+            </msub>
+            <mo>≤</mo>
+            <mi>m</mi>
+            <mo>≤</mo>
+            <msub>
+              <mi>m</mi>
+              <mi>j</mi>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+          <mo>≈</mo>
+          <mi mathvariant="normal">Φ</mi>
+          <mrow>
+            <mo>(</mo>
+            <msub>
+              <mi>x</mi>
+              <mi>j</mi>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+          <mo>−</mo>
+          <mi mathvariant="normal">Φ</mi>
+          <mrow>
+            <mo>(</mo>
+            <msub>
+              <mi>x</mi>
+              <mi>i</mi>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+        </math>
+        <div class="formula-label">(17) інтегральна теорема Муавра–Лапласа</div>
+        <math display="block">
+          <msub>
+            <mi>x</mi>
+            <mi>i</mi>
+          </msub>
+          <mo>=</mo>
+          <mfrac>
+            <mrow>
+              <msub>
+                <mi>m</mi>
+                <mi>i</mi>
+              </msub>
+              <mo>−</mo>
+              <mi>n</mi>
+              <mi>p</mi>
+            </mrow>
+            <msqrt>
+              <mi>n</mi>
+              <mi>p</mi>
+              <mi>q</mi>
+            </msqrt>
+          </mfrac>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <msub>
+            <mi>x</mi>
+            <mi>j</mi>
+          </msub>
+          <mo>=</mo>
+          <mfrac>
+            <mrow>
+              <msub>
+                <mi>m</mi>
+                <mi>j</mi>
+              </msub>
+              <mo>−</mo>
+              <mi>n</mi>
+              <mi>p</mi>
+            </mrow>
+            <msqrt>
+              <mi>n</mi>
+              <mi>p</mi>
+              <mi>q</mi>
+            </msqrt>
+          </mfrac>
+        </math>
+        <math display="block">
+          <mi mathvariant="normal">Φ</mi>
+          <mo>(</mo>
+          <mi>x</mi>
+          <mo>)</mo>
+          <mo>=</mo>
+          <mfrac>
+            <mn>1</mn>
+            <msqrt>
+              <mn>2</mn>
+              <mi>π</mi>
+            </msqrt>
+          </mfrac>
+          <msubsup>
+            <mo>∫</mo>
+            <mn>0</mn>
+            <mi>x</mi>
+          </msubsup>
+          <msup>
+            <mi>e</mi>
+            <mrow>
+              <mo>−</mo>
+              <msup>
+                <mi>t</mi>
+                <mn>2</mn>
+              </msup>
+              <mo>/</mo>
+              <mn>2</mn>
+            </mrow>
+          </msup>
+          <mspace width="0.2em" ></mspace>
+          <mi>d</mi>
+          <mi>t</mi>
+        </math>
+        <div class="formula-label">функція Лапласа (табульована)</div>
+      </div>
+      <p>Властивості Φ(x): непарна Φ(−x) = −Φ(x); Φ(0) = 0; Φ(∞) = 0.5, Φ(−∞) = −0.5; неспадна; точка перегину при x =
+        0. Практично Φ(x) ≈ 0.5 при x &gt; 4 і Φ(x) ≈ −0.5 при x &lt; −4.</p>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-6)">⬡ Канонічний приклад: 500 електролампочок</div>
+      <p>n = 500, p = 0.8, q = 0.2. Знайти P(не більш як 380 не перегорять) і P(не менш як 390). Маємо np = 400, √(npq)
+        = √80 ≈ 8.9.</p>
+      <div class="formula-block">
+        <math display="block">
+          <msub>
+            <mi>x</mi>
+            <mi>i</mi>
+          </msub>
+          <mo>=</mo>
+          <mfrac>
+            <mrow>
+              <mn>0</mn>
+              <mo>−</mo>
+              <mn>400</mn>
+            </mrow>
+            <mn>8.9</mn>
+          </mfrac>
+          <mo>≈</mo>
+          <mo>−</mo>
+          <mn>45</mn>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <msub>
+            <mi>x</mi>
+            <mi>j</mi>
+          </msub>
+          <mo>=</mo>
+          <mfrac>
+            <mrow>
+              <mn>380</mn>
+              <mo>−</mo>
+              <mn>400</mn>
+            </mrow>
+            <mn>8.9</mn>
+          </mfrac>
+          <mo>≈</mo>
+          <mo>−</mo>
+          <mn>2.25</mn>
+        </math>
+        <math display="block">
+          <msub>
+            <mi>P</mi>
+            <mn>500</mn>
+          </msub>
+          <mrow>
+            <mo>(</mo>
+            <mn>0</mn>
+            <mo>≤</mo>
+            <mi>m</mi>
+            <mo>≤</mo>
+            <mn>380</mn>
+            <mo>)</mo>
+          </mrow>
+          <mo>≈</mo>
+          <mi mathvariant="normal">Φ</mi>
+          <mo>(</mo>
+          <mo>−</mo>
+          <mn>2.25</mn>
+          <mo>)</mo>
+          <mo>−</mo>
+          <mi mathvariant="normal">Φ</mi>
+          <mo>(</mo>
+          <mo>−</mo>
+          <mn>45</mn>
+          <mo>)</mo>
+          <mo>≈</mo>
+          <mo>−</mo>
+          <mn>0.4881</mn>
+          <mo>−</mo>
+          <mo>(</mo>
+          <mo>−</mo>
+          <mn>0.5</mn>
+          <mo>)</mo>
+          <mo>=</mo>
+          <mn>0.0119</mn>
+        </math>
+        <math display="block">
+          <msub>
+            <mi>P</mi>
+            <mn>500</mn>
+          </msub>
+          <mrow>
+            <mo>(</mo>
+            <mn>390</mn>
+            <mo>≤</mo>
+            <mi>m</mi>
+            <mo>≤</mo>
+            <mn>500</mn>
+            <mo>)</mo>
+          </mrow>
+          <mo>≈</mo>
+          <mi mathvariant="normal">Φ</mi>
+          <mo>(</mo>
+          <mn>11.23</mn>
+          <mo>)</mo>
+          <mo>−</mo>
+          <mi mathvariant="normal">Φ</mi>
+          <mo>(</mo>
+          <mo>−</mo>
+          <mn>1.12</mn>
+          <mo>)</mo>
+          <mo>≈</mo>
+          <mn>0.5</mn>
+          <mo>+</mo>
+          <mn>0.3686</mn>
+          <mo>=</mo>
+          <mn>0.8686</mn>
+        </math>
+        <div class="formula-label">розв'язання — інтегральна теорема</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-6)">⬡ Формула Пуассона (для малоймовірних подій)</div>
+      <p>Точність формул Муавра–Лапласа знижується при p → 0. Якщо n → ∞, p → 0, але np = λ = const:</p>
+      <div class="formula-block">
+        <math display="block">
+          <msub>
+            <mi>P</mi>
+            <mi>n</mi>
+          </msub>
+          <mrow>
+            <mo>(</mo>
+            <mi>m</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>≈</mo>
+          <mfrac>
+            <msup>
+              <mi>λ</mi>
+              <mi>m</mi>
+            </msup>
+            <mrow>
+              <mi>m</mi>
+              <mo>!</mo>
+            </mrow>
+          </mfrac>
+          <msup>
+            <mi>e</mi>
+            <mrow>
+              <mo>−</mo>
+              <mi>λ</mi>
+            </mrow>
+          </msup>
+          <mo>,</mo>
+          <mspace width="1.5em" ></mspace>
+          <mi>λ</mi>
+          <mo>=</mo>
+          <mi>n</mi>
+          <mi>p</mi>
+        </math>
+        <div class="formula-label">(19) формула Пуассона</div>
+        <div class="formula-where"><strong>Властивості:</strong> λ — єдиний параметр (інтенсивність); сума по m від 0 до
+          ∞ дорівнює e<sup>−λ</sup> · e<sup>λ</sup> = 1; значення табульовані за заданими m і λ.</div>
+      </div>
+      <p><strong>Доведення</strong> — переходом до границі у формулі Бернуллі з врахуванням lim<sub>n→∞</sub> (1 −
+        λ/n)<sup>n</sup> = e<sup>−λ</sup>.</p>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-6)">⬡ Канонічний приклад: мікроелементи приладу</div>
+      <p>n = 1000, p = 0.002. Імовірність вийти з ладу 3 мікроелементам? Від 3 до 6? λ = np = 1000 · 0.002 = 2 — мала, n
+        велике, тому Пуассон.</p>
+      <div class="formula-block">
+        <math display="block">
+          <msub>
+            <mi>P</mi>
+            <mn>1000</mn>
+          </msub>
+          <mrow>
+            <mo>(</mo>
+            <mn>3</mn>
+            <mo>)</mo>
+          </mrow>
+          <mo>≈</mo>
+          <mfrac>
+            <msup>
+              <mn>2</mn>
+              <mn>3</mn>
+            </msup>
+            <mrow>
+              <mn>3</mn>
+              <mo>!</mo>
+            </mrow>
+          </mfrac>
+          <msup>
+            <mi>e</mi>
+            <mrow>
+              <mo>−</mo>
+              <mn>2</mn>
+            </mrow>
+          </msup>
+          <mo>≈</mo>
+          <mn>0.18044</mn>
+        </math>
+        <math display="block">
+          <msub>
+            <mi>P</mi>
+            <mn>1000</mn>
+          </msub>
+          <mrow>
+            <mo>(</mo>
+            <mn>3</mn>
+            <mo>≤</mo>
+            <mi>m</mi>
+            <mo>≤</mo>
+            <mn>6</mn>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>0.18044</mn>
+          <mo>+</mo>
+          <mn>0.09022</mn>
+          <mo>+</mo>
+          <mn>0.03609</mn>
+          <mo>+</mo>
+          <mn>0.01203</mn>
+          <mo>=</mo>
+          <mn>0.31878</mn>
+        </math>
+        <div class="formula-label">розв'язання — формула Пуассона</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-6)">⬡ Коли яку формулу застосовувати</div>
+      <table class="comparison">
+        <tr>
+          <th>Ситуація</th>
+          <th>Формула</th>
+          <th>Чому</th>
+        </tr>
+        <tr>
+          <td>Малі n (≤ 20–30)</td>
+          <td>Бернуллі</td>
+          <td>Точна формула, обчислення помірне</td>
+        </tr>
+        <tr>
+          <td>Великі n, p помірне (npq &gt; 9)</td>
+          <td>Локальна Муавра–Лапласа</td>
+          <td>Гарне наближення біля моди</td>
+        </tr>
+        <tr>
+          <td>Великі n, потрібен інтервал</td>
+          <td>Інтегральна Муавра–Лапласа</td>
+          <td>Уникає підсумовування</td>
+        </tr>
+        <tr>
+          <td>Великі n, мале p (np ≤ 10)</td>
+          <td>Пуассон</td>
+          <td>Муавр–Лаплас неточний при p → 0</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="note-block exam">★ <strong>Орієнтири на іспит:</strong> npq &gt; 9 → Муавр–Лаплас; np &lt; 10 та n
+      велике, p мале → Пуассон. Якщо потрапили "посередині" — перевірте обома, відповіді мають бути близькі.</div>
+  </section>
+
+  <!-- CHAPTER 7 -->
+  <section class="chapter" id="ch7">
+    <div class="chapter-header">
+      <span class="chapter-num" style="background:rgba(126,231,135,0.15);color:var(--chapter-7)">РОЗДІЛ 07</span>
+      <h2 class="chapter-title">Випадкові величини. Закони розподілу</h2>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-7)">⬡ Випадкова величина як функція на Ω</div>
+      <p>Подія в теорії ймовірностей — модель якісної ознаки (відбулася / не відбулася). <span
+          class="key-term">Випадкова величина</span> — модель кількісної ознаки. Формально це функція α(ω<sub>i</sub>),
+        яка кожній елементарній події ставить у відповідність число (одновимірна) або кортеж чисел (n-вимірна).</p>
+      <p>Інакше кажучи: величина випадкова, якщо внаслідок експерименту під впливом випадкових факторів вона набуває
+        певного числового значення з певною ймовірністю.</p>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-7)">⬡ Дискретна vs неперервна випадкова величина</div>
+      <table class="comparison">
+        <tr>
+          <th>Тип</th>
+          <th>Множина значень</th>
+          <th>Приклад</th>
+        </tr>
+        <tr>
+          <td>Дискретна</td>
+          <td>Зчисленна (можна перелічити)</td>
+          <td>Число граней кубика, поява одного з чисел {1…10}</td>
+        </tr>
+        <tr>
+          <td>Неперервна</td>
+          <td>Незчисленна (інтервал на R)</td>
+          <td>Похибка вимірювання, час до події, розмір деталі</td>
+        </tr>
+      </table>
+      <p>Випадкові величини позначають великими латинськими літерами (X, Y, Z), їх можливі значення — малими (x, y, z).
+      </p>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-7)">⬡ Закон розподілу дискретної ВВ — таблиця</div>
+      <p><span class="key-term">Закон розподілу</span> встановлює зв'язок між можливими значеннями і відповідними
+        ймовірностями. Для дискретної ВВ найзручніше задати таблицею (рядом розподілу):</p>
+      <table class="comparison">
+        <tr>
+          <th>X = x<sub>i</sub></th>
+          <td>x₁</td>
+          <td>x₂</td>
+          <td>x₃</td>
+          <td>…</td>
+          <td>x<sub>k</sub></td>
+        </tr>
+        <tr>
+          <th>P = p<sub>i</sub></th>
+          <td>p₁</td>
+          <td>p₂</td>
+          <td>p₃</td>
+          <td>…</td>
+          <td>p<sub>k</sub></td>
+        </tr>
+      </table>
+      <div class="formula-block">
+        <math display="block">
+          <munderover>
+            <mo>∑</mo>
+            <mrow>
+              <mi>i</mi>
+              <mo>=</mo>
+              <mn>1</mn>
+            </mrow>
+            <mi>k</mi>
+          </munderover>
+          <msub>
+            <mi>p</mi>
+            <mi>i</mi>
+          </msub>
+          <mo>=</mo>
+          <mn>1</mn>
+        </math>
+        <div class="formula-label">(1) умова нормування для дискретної ВВ</div>
+        <div class="formula-where">Усі можливі значення утворюють повну групу несумісних подій.</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-7)">⬡ Канонічний приклад: знайти невідому p</div>
+      <p>Дано таблицю з невідомою p₄. Знайти її з умови нормування.</p>
+      <table class="comparison">
+        <tr>
+          <th>X</th>
+          <td>−4</td>
+          <td>1</td>
+          <td>2</td>
+          <td>5</td>
+          <td>9</td>
+        </tr>
+        <tr>
+          <th>P</th>
+          <td>0.1</td>
+          <td>0.1</td>
+          <td>0.5</td>
+          <td>p₄</td>
+          <td>0.2</td>
+        </tr>
+      </table>
+      <div class="formula-block">
+        <math display="block">
+          <munderover>
+            <mo>∑</mo>
+            <mrow>
+              <mi>i</mi>
+              <mo>=</mo>
+              <mn>1</mn>
+            </mrow>
+            <mn>5</mn>
+          </munderover>
+          <msub>
+            <mi>p</mi>
+            <mi>i</mi>
+          </msub>
+          <mo>=</mo>
+          <mn>0.1</mn>
+          <mo>+</mo>
+          <mn>0.1</mn>
+          <mo>+</mo>
+          <mn>0.5</mn>
+          <mo>+</mo>
+          <msub>
+            <mi>p</mi>
+            <mn>4</mn>
+          </msub>
+          <mo>+</mo>
+          <mn>0.2</mn>
+          <mo>=</mo>
+          <mn>1</mn>
+          <mspace width="1em" ></mspace>
+          <mo>⇒</mo>
+          <mspace width="1em" ></mspace>
+          <msub>
+            <mi>p</mi>
+            <mn>4</mn>
+          </msub>
+          <mo>=</mo>
+          <mn>0.1</mn>
+        </math>
+        <div class="formula-label">розв'язання</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-7)">⬡ Закон розподілу через події</div>
+      <p>Із заданого закону можна обчислювати ймовірності будь-яких подій типу "X &lt; a", "X ≥ a", "a ≤ X &lt; b" —
+        підсумовуючи p<sub>i</sub> по тих i, для яких x<sub>i</sub> задовольняє умову.</p>
+      <table class="comparison">
+        <tr>
+          <th>X</th>
+          <td>2.5</td>
+          <td>3</td>
+          <td>4.5</td>
+          <td>5</td>
+          <td>5.5</td>
+          <td>6</td>
+        </tr>
+        <tr>
+          <th>P</th>
+          <td>0.1</td>
+          <td>0.2</td>
+          <td>0.1</td>
+          <td>0.3</td>
+          <td>0.1</td>
+          <td>0.2</td>
+        </tr>
+      </table>
+      <div class="formula-block">
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>&lt;</mo>
+            <mn>3</mn>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>0.1</mn>
+          <mo>;</mo>
+          <mspace width="1em" ></mspace>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>≤</mo>
+            <mn>3</mn>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>0.3</mn>
+        </math>
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>&lt;</mo>
+            <mn>5</mn>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>0.4</mn>
+          <mo>;</mo>
+          <mspace width="1em" ></mspace>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>≤</mo>
+            <mn>5</mn>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>0.7</mn>
+        </math>
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mn>2.5</mn>
+            <mo>≤</mo>
+            <mi>X</mi>
+            <mo>≤</mo>
+            <mn>5.5</mn>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>0.8</mn>
+          <mo>;</mo>
+          <mspace width="1em" ></mspace>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>≥</mo>
+            <mn>5.5</mn>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>0.3</mn>
+        </math>
+        <div class="formula-label">сумування ймовірностей по інтервалах</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-7)">⬡ Імовірнісний многокутник</div>
+      <p>Графічна форма закону розподілу: точки (x<sub>i</sub>, p<sub>i</sub>) з'єднують відрізками. Сума ординат завжди
+        дорівнює 1.</p>
+      <div class="ip-visual"> pᵢ ↑
+        0.3│ ●
+        │ /│ \
+        0.2│ ● │ \
+        │ /│ │ \
+        0.1│ ● ● │ │ │ ●─────●
+        │ \ /│ │ │ │ │ │
+        │ \/ │ │ │ │ │ │
+        ┴───●──┴──┴─┴─┴───────●─────●─→ xᵢ
+        −2.5 1 3.5 5 6.5 8</div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-7)">⬡ Функція розподілу F(x) — універсальна форма</div>
+      <p><span class="key-term">Функція розподілу (інтегральна функція)</span> F(x) = P(X &lt; x) — універсальна для
+        дискретних і неперервних ВВ. Властивості:</p>
+      <div class="formula-block">
+        <math display="block">
+          <mn>0</mn>
+          <mo>≤</mo>
+          <mi>F</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>x</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>≤</mo>
+          <mn>1</mn>
+        </math>
+        <math display="block">
+          <msub>
+            <mi>x</mi>
+            <mn>2</mn>
+          </msub>
+          <mo>&gt;</mo>
+          <msub>
+            <mi>x</mi>
+            <mn>1</mn>
+          </msub>
+          <mspace width="1em" ></mspace>
+          <mo>⇒</mo>
+          <mspace width="1em" ></mspace>
+          <mi>F</mi>
+          <mrow>
+            <mo>(</mo>
+            <msub>
+              <mi>x</mi>
+              <mn>2</mn>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+          <mo>≥</mo>
+          <mi>F</mi>
+          <mrow>
+            <mo>(</mo>
+            <msub>
+              <mi>x</mi>
+              <mn>1</mn>
+            </msub>
+            <mo>)</mo>
+          </mrow>
+        </math>
+        <div class="formula-label">F(x) — неспадна функція</div>
+        <math display="block">
+          <mi>F</mi>
+          <mrow>
+            <mo>(</mo>
+            <mo>−</mo>
+            <mi>∞</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>0</mn>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <mi>F</mi>
+          <mrow>
+            <mo>(</mo>
+            <mo>+</mo>
+            <mi>∞</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>1</mn>
+        </math>
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>α</mi>
+            <mo>≤</mo>
+            <mi>X</mi>
+            <mo>&lt;</mo>
+            <mi>β</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mi>F</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>β</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>−</mo>
+          <mi>F</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>α</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>
+        <div class="formula-label">(5) головна робоча формула</div>
+      </div>
+      <p>Якщо X ∈ [a; b], то F(x) = 0 при x ≤ a, F(x) = 1 при x &gt; b. Для неперервної X виконується P(X =
+        x<sub>i</sub>) = 0 — імовірність попадання в одну точку нульова, тому в робочій формулі знаки ≤ і &lt;
+        взаємозамінні.</p>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-7)">⬡ F(x) для дискретної ВВ — східчаста функція</div>
+      <p>F(x) скочується вгору на p<sub>i</sub> у кожній точці x<sub>i</sub>. Графік — східчастий. Приклад:</p>
+      <table class="comparison">
+        <tr>
+          <th>X</th>
+          <td>−4</td>
+          <td>−1</td>
+          <td>2</td>
+          <td>6</td>
+          <td>9</td>
+          <td>13</td>
+        </tr>
+        <tr>
+          <th>P</th>
+          <td>0.1</td>
+          <td>0.2</td>
+          <td>0.1</td>
+          <td>0.3</td>
+          <td>0.1</td>
+          <td>0.2</td>
+        </tr>
+      </table>
+      <div class="formula-block">
+        <math display="block">
+          <mi>F</mi>
+          <mo>(</mo>
+          <mi>x</mi>
+          <mo>)</mo>
+          <mo>=</mo>
+          <mrow>
+            <mo>{</mo>
+            <mtable columnalign="left left">
+              <mtr>
+                <mtd>
+                  <mn>0</mn>
+                  <mo>,</mo>
+                </mtd>
+                <mtd>
+                  <mi>x</mi>
+                  <mo>≤</mo>
+                  <mo>−</mo>
+                  <mn>4</mn>
+                </mtd>
+              </mtr>
+              <mtr>
+                <mtd>
+                  <mn>0.1</mn>
+                  <mo>,</mo>
+                </mtd>
+                <mtd>
+                  <mo>−</mo>
+                  <mn>4</mn>
+                  <mo>&lt;</mo>
+                  <mi>x</mi>
+                  <mo>≤</mo>
+                  <mo>−</mo>
+                  <mn>1</mn>
+                </mtd>
+              </mtr>
+              <mtr>
+                <mtd>
+                  <mn>0.3</mn>
+                  <mo>,</mo>
+                </mtd>
+                <mtd>
+                  <mo>−</mo>
+                  <mn>1</mn>
+                  <mo>&lt;</mo>
+                  <mi>x</mi>
+                  <mo>≤</mo>
+                  <mn>2</mn>
+                </mtd>
+              </mtr>
+              <mtr>
+                <mtd>
+                  <mn>0.4</mn>
+                  <mo>,</mo>
+                </mtd>
+                <mtd>
+                  <mn>2</mn>
+                  <mo>&lt;</mo>
+                  <mi>x</mi>
+                  <mo>≤</mo>
+                  <mn>6</mn>
+                </mtd>
+              </mtr>
+              <mtr>
+                <mtd>
+                  <mn>0.7</mn>
+                  <mo>,</mo>
+                </mtd>
+                <mtd>
+                  <mn>6</mn>
+                  <mo>&lt;</mo>
+                  <mi>x</mi>
+                  <mo>≤</mo>
+                  <mn>9</mn>
+                </mtd>
+              </mtr>
+              <mtr>
+                <mtd>
+                  <mn>0.8</mn>
+                  <mo>,</mo>
+                </mtd>
+                <mtd>
+                  <mn>9</mn>
+                  <mo>&lt;</mo>
+                  <mi>x</mi>
+                  <mo>≤</mo>
+                  <mn>13</mn>
+                </mtd>
+              </mtr>
+              <mtr>
+                <mtd>
+                  <mn>1</mn>
+                  <mo>,</mo>
+                </mtd>
+                <mtd>
+                  <mi>x</mi>
+                  <mo>&gt;</mo>
+                  <mn>13</mn>
+                </mtd>
+              </mtr>
+            </mtable>
+          </mrow>
+        </math>
+        <div class="formula-label">кусково-задана функція розподілу</div>
+      </div>
+      <div class="ip-visual"> F(x) ↑
+        1.0 │ ┌────●─
+        │ ┌──●───┘
+        0.7 │ ┌──●───┘
+        0.4 │ ┌──●─┘
+        0.3 │ ┌──●──┘
+        0.1 │ ●──┘
+        └────────────────────────────────→ x</div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-7)">⬡ Щільність ймовірностей f(x) — для неперервних</div>
+      <p>Для неперервних ВВ зручно описувати закон не через F(x), а через її похідну:</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>f</mi>
+          <mo>(</mo>
+          <mi>x</mi>
+          <mo>)</mo>
+          <mo>=</mo>
+          <munder>
+            <mi mathvariant="normal">lim</mi>
+            <mrow>
+              <mi mathvariant="normal">Δ</mi>
+              <mi>x</mi>
+              <mo>→</mo>
+              <mn>0</mn>
+            </mrow>
+          </munder>
+          <mfrac>
+            <mrow>
+              <mi>F</mi>
+              <mrow>
+                <mo>(</mo>
+                <mi>x</mi>
+                <mo>+</mo>
+                <mi mathvariant="normal">Δ</mi>
+                <mi>x</mi>
+                <mo>)</mo>
+              </mrow>
+              <mo>−</mo>
+              <mi>F</mi>
+              <mrow>
+                <mo>(</mo>
+                <mi>x</mi>
+                <mo>)</mo>
+              </mrow>
+            </mrow>
+            <mrow>
+              <mi mathvariant="normal">Δ</mi>
+              <mi>x</mi>
+            </mrow>
+          </mfrac>
+          <mo>=</mo>
+          <mfrac>
+            <mrow>
+              <mi>d</mi>
+              <mi>F</mi>
+              <mo>(</mo>
+              <mi>x</mi>
+              <mo>)</mo>
+            </mrow>
+            <mrow>
+              <mi>d</mi>
+              <mi>x</mi>
+            </mrow>
+          </mfrac>
+        </math>
+        <div class="formula-label">(9) щільність ймовірностей як похідна F(x)</div>
+      </div>
+      <p>Геометрично: f(x) dx ≈ ймовірність попадання у вузький проміжок [x; x + dx]; це площа прямокутника під графіком
+        f. Властивості:</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>f</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>x</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>≥</mo>
+          <mn>0</mn>
+        </math>
+        <math display="block">
+          <msubsup>
+            <mo>∫</mo>
+            <mrow>
+              <mo>−</mo>
+              <mi>∞</mi>
+            </mrow>
+            <mi>∞</mi>
+          </msubsup>
+          <mi>f</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>x</mi>
+            <mo>)</mo>
+          </mrow>
+          <mspace width="0.2em" ></mspace>
+          <mi>d</mi>
+          <mi>x</mi>
+          <mo>=</mo>
+          <mn>1</mn>
+        </math>
+        <div class="formula-label">(10) умова нормування</div>
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>α</mi>
+            <mo>&lt;</mo>
+            <mi>X</mi>
+            <mo>&lt;</mo>
+            <mi>β</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <msubsup>
+            <mo>∫</mo>
+            <mi>α</mi>
+            <mi>β</mi>
+          </msubsup>
+          <mi>f</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>x</mi>
+            <mo>)</mo>
+          </mrow>
+          <mspace width="0.2em" ></mspace>
+          <mi>d</mi>
+          <mi>x</mi>
+        </math>
+        <div class="formula-label">(12) ймовірність попадання в інтервал</div>
+        <math display="block">
+          <mi>F</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>x</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <msubsup>
+            <mo>∫</mo>
+            <mrow>
+              <mo>−</mo>
+              <mi>∞</mi>
+            </mrow>
+            <mi>x</mi>
+          </msubsup>
+          <mi>f</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>t</mi>
+            <mo>)</mo>
+          </mrow>
+          <mspace width="0.2em" ></mspace>
+          <mi>d</mi>
+          <mi>t</mi>
+        </math>
+        <div class="formula-label">(13) відновлення F(x) інтегруванням f(x)</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-7)">⬡ Канонічний приклад: знайти f(x) із F(x)</div>
+      <p>F(x) = (x+1)³/64 на (−1, 3]; F(x) = 0 при x ≤ −1, F(x) = 1 при x &gt; 3.</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>f</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>x</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <msup>
+            <mi>F</mi>
+            <mo>′</mo>
+          </msup>
+          <mrow>
+            <mo>(</mo>
+            <mi>x</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mn>3</mn>
+            <mn>64</mn>
+          </mfrac>
+          <msup>
+            <mrow>
+              <mo>(</mo>
+              <mi>x</mi>
+              <mo>+</mo>
+              <mn>1</mn>
+              <mo>)</mo>
+            </mrow>
+            <mn>2</mn>
+          </msup>
+          <mtext> на </mtext>
+          <mrow>
+            <mo>(</mo>
+            <mo>−</mo>
+            <mn>1</mn>
+            <mo>,</mo>
+            <mn>3</mn>
+            <mo>]</mo>
+          </mrow>
+        </math>
+        <math display="block">
+          <msubsup>
+            <mo>∫</mo>
+            <mrow>
+              <mo>−</mo>
+              <mn>1</mn>
+            </mrow>
+            <mn>3</mn>
+          </msubsup>
+          <mfrac>
+            <mn>3</mn>
+            <mn>64</mn>
+          </mfrac>
+          <msup>
+            <mrow>
+              <mo>(</mo>
+              <mi>x</mi>
+              <mo>+</mo>
+              <mn>1</mn>
+              <mo>)</mo>
+            </mrow>
+            <mn>2</mn>
+          </msup>
+          <mspace width="0.2em" ></mspace>
+          <mi>d</mi>
+          <mi>x</mi>
+          <mo>=</mo>
+          <mfrac>
+            <mn>64</mn>
+            <mn>64</mn>
+          </mfrac>
+          <mo>=</mo>
+          <mn>1</mn>
+          <mspace width="1em" ></mspace>
+          <mtext>(нормування ✓)</mtext>
+        </math>
+        <math display="block">
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mn>0</mn>
+            <mo>&lt;</mo>
+            <mi>X</mi>
+            <mo>&lt;</mo>
+            <mn>2</mn>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mi>F</mi>
+          <mrow>
+            <mo>(</mo>
+            <mn>2</mn>
+            <mo>)</mo>
+          </mrow>
+          <mo>−</mo>
+          <mi>F</mi>
+          <mrow>
+            <mo>(</mo>
+            <mn>0</mn>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mn>27</mn>
+            <mn>64</mn>
+          </mfrac>
+          <mo>−</mo>
+          <mfrac>
+            <mn>1</mn>
+            <mn>64</mn>
+          </mfrac>
+          <mo>=</mo>
+          <mfrac>
+            <mn>13</mn>
+            <mn>32</mn>
+          </mfrac>
+        </math>
+        <div class="formula-label">розв'язання</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-7)">⬡ Канонічний приклад: знайти a в f(x)</div>
+      <p>f(x) = a√(x+2) на (−2, 7], f(x) = 0 поза. Знайти a і F(x).</p>
+      <div class="formula-block">
+        <math display="block">
+          <msubsup>
+            <mo>∫</mo>
+            <mrow>
+              <mo>−</mo>
+              <mn>2</mn>
+            </mrow>
+            <mn>7</mn>
+          </msubsup>
+          <mi>a</mi>
+          <msqrt>
+            <mi>x</mi>
+            <mo>+</mo>
+            <mn>2</mn>
+          </msqrt>
+          <mspace width="0.2em" ></mspace>
+          <mi>d</mi>
+          <mi>x</mi>
+          <mo>=</mo>
+          <mi>a</mi>
+          <mo>·</mo>
+          <mfrac>
+            <mn>2</mn>
+            <mn>3</mn>
+          </mfrac>
+          <msup>
+            <mrow>
+              <mo>(</mo>
+              <mi>x</mi>
+              <mo>+</mo>
+              <mn>2</mn>
+              <mo>)</mo>
+            </mrow>
+            <mrow>
+              <mn>3</mn>
+              <mo>/</mo>
+              <mn>2</mn>
+            </mrow>
+          </msup>
+          <msubsup>
+            <mrow></mrow>
+            <mrow>
+              <mo>−</mo>
+              <mn>2</mn>
+            </mrow>
+            <mn>7</mn>
+          </msubsup>
+          <mo>=</mo>
+          <mn>18</mn>
+          <mi>a</mi>
+          <mo>=</mo>
+          <mn>1</mn>
+          <mspace width="1em" ></mspace>
+          <mo>⇒</mo>
+          <mspace width="1em" ></mspace>
+          <mi>a</mi>
+          <mo>=</mo>
+          <mfrac>
+            <mn>1</mn>
+            <mn>18</mn>
+          </mfrac>
+        </math>
+        <math display="block">
+          <mi>F</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>x</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mn>1</mn>
+            <mn>18</mn>
+          </mfrac>
+          <msubsup>
+            <mo>∫</mo>
+            <mrow>
+              <mo>−</mo>
+              <mn>2</mn>
+            </mrow>
+            <mi>x</mi>
+          </msubsup>
+          <msqrt>
+            <mi>t</mi>
+            <mo>+</mo>
+            <mn>2</mn>
+          </msqrt>
+          <mspace width="0.2em" ></mspace>
+          <mi>d</mi>
+          <mi>t</mi>
+          <mo>=</mo>
+          <mfrac>
+            <mn>1</mn>
+            <mn>27</mn>
+          </mfrac>
+          <msqrt>
+            <msup>
+              <mrow>
+                <mo>(</mo>
+                <mi>x</mi>
+                <mo>+</mo>
+                <mn>2</mn>
+                <mo>)</mo>
+              </mrow>
+              <mn>3</mn>
+            </msup>
+          </msqrt>
+        </math>
+        <div class="formula-label">F(x) = √(x+2)³ / 27 на (−2, 7]</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-7)">⬡ Приклад: трикутна щільність</div>
+      <p>f(x) задана у вигляді трикутника з вершинами C(−2, 0), A(2, ?), B(5, 0). Знайти ординату A, f(x), F(x).</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>S</mi>
+          <mo>=</mo>
+          <mfrac>
+            <mn>1</mn>
+            <mn>2</mn>
+          </mfrac>
+          <mo>·</mo>
+          <mn>7</mn>
+          <mo>·</mo>
+          <mi>y</mi>
+          <mo>=</mo>
+          <mn>1</mn>
+          <mspace width="1em" ></mspace>
+          <mo>⇒</mo>
+          <mspace width="1em" ></mspace>
+          <mi>y</mi>
+          <mo>=</mo>
+          <mfrac>
+            <mn>2</mn>
+            <mn>7</mn>
+          </mfrac>
+        </math>
+        <math display="block">
+          <mi>f</mi>
+          <mo>(</mo>
+          <mi>x</mi>
+          <mo>)</mo>
+          <mo>=</mo>
+          <mrow>
+            <mo>{</mo>
+            <mtable columnalign="left left">
+              <mtr>
+                <mtd>
+                  <mfrac>
+                    <mrow>
+                      <mi>x</mi>
+                      <mo>+</mo>
+                      <mn>2</mn>
+                    </mrow>
+                    <mn>14</mn>
+                  </mfrac>
+                  <mo>,</mo>
+                </mtd>
+                <mtd>
+                  <mo>−</mo>
+                  <mn>2</mn>
+                  <mo>&lt;</mo>
+                  <mi>x</mi>
+                  <mo>≤</mo>
+                  <mn>2</mn>
+                </mtd>
+              </mtr>
+              <mtr>
+                <mtd>
+                  <mfrac>
+                    <mrow>
+                      <mn>2</mn>
+                      <mo>(</mo>
+                      <mn>5</mn>
+                      <mo>−</mo>
+                      <mi>x</mi>
+                      <mo>)</mo>
+                    </mrow>
+                    <mn>21</mn>
+                  </mfrac>
+                  <mo>,</mo>
+                </mtd>
+                <mtd>
+                  <mn>2</mn>
+                  <mo>&lt;</mo>
+                  <mi>x</mi>
+                  <mo>≤</mo>
+                  <mn>5</mn>
+                </mtd>
+              </mtr>
+              <mtr>
+                <mtd>
+                  <mn>0</mn>
+                  <mo>,</mo>
+                </mtd>
+                <mtd>
+                  <mtext>поза</mtext>
+                </mtd>
+              </mtr>
+            </mtable>
+          </mrow>
+        </math>
+        <math display="block">
+          <mi>F</mi>
+          <mo>(</mo>
+          <mi>x</mi>
+          <mo>)</mo>
+          <mo>=</mo>
+          <mrow>
+            <mo>{</mo>
+            <mtable columnalign="left left">
+              <mtr>
+                <mtd>
+                  <mfrac>
+                    <msup>
+                      <mrow>
+                        <mo>(</mo>
+                        <mi>x</mi>
+                        <mo>+</mo>
+                        <mn>2</mn>
+                        <mo>)</mo>
+                      </mrow>
+                      <mn>2</mn>
+                    </msup>
+                    <mn>28</mn>
+                  </mfrac>
+                  <mo>,</mo>
+                </mtd>
+                <mtd>
+                  <mo>−</mo>
+                  <mn>2</mn>
+                  <mo>&lt;</mo>
+                  <mi>x</mi>
+                  <mo>≤</mo>
+                  <mn>2</mn>
+                </mtd>
+              </mtr>
+              <mtr>
+                <mtd>
+                  <mn>1</mn>
+                  <mo>−</mo>
+                  <mfrac>
+                    <msup>
+                      <mrow>
+                        <mo>(</mo>
+                        <mn>5</mn>
+                        <mo>−</mo>
+                        <mi>x</mi>
+                        <mo>)</mo>
+                      </mrow>
+                      <mn>2</mn>
+                    </msup>
+                    <mn>21</mn>
+                  </mfrac>
+                  <mo>,</mo>
+                </mtd>
+                <mtd>
+                  <mn>2</mn>
+                  <mo>&lt;</mo>
+                  <mi>x</mi>
+                  <mo>≤</mo>
+                  <mn>5</mn>
+                </mtd>
+              </mtr>
+            </mtable>
+          </mrow>
+        </math>
+        <div class="formula-label">контрольно: F(2) = 16/28 = 4/7 ✓</div>
+      </div>
+    </div>
+
+    <div class="note-block important">Закон розподілу повністю описує випадкову величину. Дискретні ВВ найзручніше
+      задавати таблицею; неперервні — щільністю f(x). Функція розподілу F(x) — універсальна для обох випадків і базова
+      для подальших обчислень (характеристики, ймовірності інтервалів).</div>
+  </section>
+
+  <!-- CHAPTER 8 -->
+  <section class="chapter" id="ch8">
+    <div class="chapter-header">
+      <span class="chapter-num" style="background:rgba(255,166,87,0.15);color:var(--chapter-8)">РОЗДІЛ 08</span>
+      <h2 class="chapter-title">Числові характеристики випадкових величин</h2>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-8)">⬡ Навіщо числові характеристики</div>
+      <p>Закон розподілу містить повну інформацію, але для більшості задач достатньо кількох <span
+          class="key-term">параметрів</span>, що відбивають істотні ознаки: де "центр" розподілу і наскільки він
+        "розкиданий". Ці параметри і називають числовими характеристиками.</p>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-8)">⬡ Математичне сподівання M(X) — центр розподілу</div>
+      <p><span class="key-term">Математичне сподівання</span> — це середнє значення випадкової величини, зважене по
+        ймовірностях.</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>M</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <munderover>
+            <mo>∑</mo>
+            <mrow>
+              <mi>i</mi>
+              <mo>=</mo>
+              <mn>1</mn>
+            </mrow>
+            <mi>∞</mi>
+          </munderover>
+          <msub>
+            <mi>x</mi>
+            <mi>i</mi>
+          </msub>
+          <msub>
+            <mi>p</mi>
+            <mi>i</mi>
+          </msub>
+        </math>
+        <div class="formula-label">(1) дискретна, зчисленна Ω</div>
+        <math display="block">
+          <mi>M</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <munderover>
+            <mo>∑</mo>
+            <mrow>
+              <mi>i</mi>
+              <mo>=</mo>
+              <mn>1</mn>
+            </mrow>
+            <mi>n</mi>
+          </munderover>
+          <msub>
+            <mi>x</mi>
+            <mi>i</mi>
+          </msub>
+          <msub>
+            <mi>p</mi>
+            <mi>i</mi>
+          </msub>
+        </math>
+        <div class="formula-label">(2) дискретна, скінченна Ω</div>
+        <math display="block">
+          <mi>M</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <msubsup>
+            <mo>∫</mo>
+            <mrow>
+              <mo>−</mo>
+              <mi>∞</mi>
+            </mrow>
+            <mi>∞</mi>
+          </msubsup>
+          <mi>x</mi>
+          <mo>·</mo>
+          <mi>f</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>x</mi>
+            <mo>)</mo>
+          </mrow>
+          <mspace width="0.2em" ></mspace>
+          <mi>d</mi>
+          <mi>x</mi>
+        </math>
+        <div class="formula-label">(4) неперервна на (−∞, ∞)</div>
+        <math display="block">
+          <mi>M</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <msubsup>
+            <mo>∫</mo>
+            <mi>a</mi>
+            <mi>b</mi>
+          </msubsup>
+          <mi>x</mi>
+          <mo>·</mo>
+          <mi>f</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>x</mi>
+            <mo>)</mo>
+          </mrow>
+          <mspace width="0.2em" ></mspace>
+          <mi>d</mi>
+          <mi>x</mi>
+        </math>
+        <div class="formula-label">(5) неперервна на [a, b]</div>
+      </div>
+      <p>Властивості: M(C) = C; M(CX) = C · M(X); M(AX + B) = A · M(X) + B (лінійність). Якщо X ∈ [a, b], то M(X) ∈ [a,
+        b] — центр обов'язково всередині інтервалу можливих значень.</p>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-8)">⬡ Канонічний приклад: M(X) для дискретної ВВ</div>
+      <table class="comparison">
+        <tr>
+          <th>X</th>
+          <td>−6</td>
+          <td>−4</td>
+          <td>2</td>
+          <td>4</td>
+          <td>6</td>
+          <td>8</td>
+        </tr>
+        <tr>
+          <th>P</th>
+          <td>0.1</td>
+          <td>0.1</td>
+          <td>0.2</td>
+          <td>0.3</td>
+          <td>0.1</td>
+          <td>0.2</td>
+        </tr>
+      </table>
+      <div class="formula-block">
+        <math display="block">
+          <mi>M</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mo>(</mo>
+          <mo>−</mo>
+          <mn>6</mn>
+          <mo>)</mo>
+          <mo>·</mo>
+          <mn>0.1</mn>
+          <mo>+</mo>
+          <mo>(</mo>
+          <mo>−</mo>
+          <mn>4</mn>
+          <mo>)</mo>
+          <mo>·</mo>
+          <mn>0.1</mn>
+          <mo>+</mo>
+          <mn>2</mn>
+          <mo>·</mo>
+          <mn>0.2</mn>
+          <mo>+</mo>
+          <mn>4</mn>
+          <mo>·</mo>
+          <mn>0.3</mn>
+          <mo>+</mo>
+          <mn>6</mn>
+          <mo>·</mo>
+          <mn>0.1</mn>
+          <mo>+</mo>
+          <mn>8</mn>
+          <mo>·</mo>
+          <mn>0.2</mn>
+        </math>
+        <math display="block">
+          <mo>=</mo>
+          <mo>−</mo>
+          <mn>0.6</mn>
+          <mo>−</mo>
+          <mn>0.4</mn>
+          <mo>+</mo>
+          <mn>0.4</mn>
+          <mo>+</mo>
+          <mn>1.2</mn>
+          <mo>+</mo>
+          <mn>0.6</mn>
+          <mo>+</mo>
+          <mn>1.6</mn>
+          <mo>=</mo>
+          <mn>2.8</mn>
+        </math>
+        <div class="formula-label">розв'язання</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-8)">⬡ Мода Мо та медіана Ме</div>
+      <p><span class="key-term">Мода</span> — значення з максимальною ймовірністю (для дискретних) або з максимальним
+        f(x) (для неперервних). Розподіл буває одно-, дво-, багатомодальним або антимодальним.</p>
+      <p><span class="key-term">Медіана</span> Ме (для неперервної ВВ) — значення, що ділить ймовірнісну масу навпіл:
+      </p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>F</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi mathvariant="normal">Me</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>0.5</mn>
+        </math>
+        <div class="formula-label">(9) рівняння для медіани</div>
+        <math display="block">
+          <msubsup>
+            <mo>∫</mo>
+            <mrow>
+              <mo>−</mo>
+              <mi>∞</mi>
+            </mrow>
+            <mi mathvariant="normal">Me</mi>
+          </msubsup>
+          <mi>f</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>x</mi>
+            <mo>)</mo>
+          </mrow>
+          <mspace width="0.2em" ></mspace>
+          <mi>d</mi>
+          <mi>x</mi>
+          <mo>=</mo>
+          <msubsup>
+            <mo>∫</mo>
+            <mi mathvariant="normal">Me</mi>
+            <mi>∞</mi>
+          </msubsup>
+          <mi>f</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>x</mi>
+            <mo>)</mo>
+          </mrow>
+          <mspace width="0.2em" ></mspace>
+          <mi>d</mi>
+          <mi>x</mi>
+          <mo>=</mo>
+          <mn>0.5</mn>
+        </math>
+        <div class="formula-label">(10) еквівалентно через щільність</div>
+      </div>
+      <p>Геометрично: пряма x = Ме ділить площу під f(x) на дві рівні половини.</p>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-8)">⬡ Дисперсія D(X) — міра розсіювання</div>
+      <p>Чому не середнє відхилення? Бо M(X − M(X)) ≡ 0. Тому беруть квадрат відхилення:</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>D</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mi>M</mi>
+          <mrow>
+            <mo>[</mo>
+            <msup>
+              <mrow>
+                <mo>(</mo>
+                <mi>X</mi>
+                <mo>−</mo>
+                <mi>M</mi>
+                <mo>(</mo>
+                <mi>X</mi>
+                <mo>)</mo>
+                <mo>)</mo>
+              </mrow>
+              <mn>2</mn>
+            </msup>
+            <mo>]</mo>
+          </mrow>
+        </math>
+        <div class="formula-label">(12) означення дисперсії</div>
+        <math display="block">
+          <mi>D</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mi>M</mi>
+          <mrow>
+            <mo>(</mo>
+            <msup>
+              <mi>X</mi>
+              <mn>2</mn>
+            </msup>
+            <mo>)</mo>
+          </mrow>
+          <mo>−</mo>
+          <msup>
+            <mi>M</mi>
+            <mn>2</mn>
+          </msup>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>
+        <div class="formula-label">(19) робоча формула — зручніша для обчислень</div>
+        <math display="block">
+          <mi>D</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <munderover>
+            <mo>∑</mo>
+            <mrow>
+              <mi>i</mi>
+              <mo>=</mo>
+              <mn>1</mn>
+            </mrow>
+            <mi>n</mi>
+          </munderover>
+          <msup>
+            <msub>
+              <mi>x</mi>
+              <mi>i</mi>
+            </msub>
+            <mn>2</mn>
+          </msup>
+          <msub>
+            <mi>p</mi>
+            <mi>i</mi>
+          </msub>
+          <mo>−</mo>
+          <msup>
+            <mi>M</mi>
+            <mn>2</mn>
+          </msup>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>
+        <div class="formula-label">(20) дискретна</div>
+        <math display="block">
+          <mi>D</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <msubsup>
+            <mo>∫</mo>
+            <mrow>
+              <mo>−</mo>
+              <mi>∞</mi>
+            </mrow>
+            <mi>∞</mi>
+          </msubsup>
+          <msup>
+            <mi>x</mi>
+            <mn>2</mn>
+          </msup>
+          <mi>f</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>x</mi>
+            <mo>)</mo>
+          </mrow>
+          <mspace width="0.2em" ></mspace>
+          <mi>d</mi>
+          <mi>x</mi>
+          <mo>−</mo>
+          <msup>
+            <mi>M</mi>
+            <mn>2</mn>
+          </msup>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+        </math>
+        <div class="formula-label">(21) неперервна</div>
+      </div>
+      <p>Властивості: D(X) ≥ 0 (завжди невід'ємна); D(C) = 0 (стала не розсіяна); D(CX) = C² · D(X); D(AX + B) = A² ·
+        D(X) — зсув не впливає на розсіювання.</p>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-8)">⬡ Середнє квадратичне відхилення σ(X)</div>
+      <p>Дисперсія має розмірність "квадрату" самої величини. Зручно мати характеристику тієї ж розмірності, що й X:</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>σ</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <msqrt>
+            <mi>D</mi>
+            <mrow>
+              <mo>(</mo>
+              <mi>X</mi>
+              <mo>)</mo>
+            </mrow>
+          </msqrt>
+        </math>
+        <div class="formula-label">(23) середнє квадратичне відхилення</div>
+      </div>
+      <p>Інтерпретація: типове відхилення X від M(X) "у звичайних одиницях". Для нормального закону ~68% значень
+        потрапляють у [M − σ; M + σ], ~95% у [M − 2σ; M + 2σ].</p>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-8)">⬡ Канонічний приклад: D(X) і σ(X) для дискретної</div>
+      <table class="comparison">
+        <tr>
+          <th>X</th>
+          <td>−4</td>
+          <td>−2</td>
+          <td>1</td>
+          <td>2</td>
+          <td>4</td>
+          <td>6</td>
+        </tr>
+        <tr>
+          <th>P</th>
+          <td>0.1</td>
+          <td>0.2</td>
+          <td>0.3</td>
+          <td>0.2</td>
+          <td>0.1</td>
+          <td>0.1</td>
+        </tr>
+      </table>
+      <div class="formula-block">
+        <math display="block">
+          <mi>M</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mo>−</mo>
+          <mn>0.4</mn>
+          <mo>−</mo>
+          <mn>0.4</mn>
+          <mo>+</mo>
+          <mn>0.3</mn>
+          <mo>+</mo>
+          <mn>0.4</mn>
+          <mo>+</mo>
+          <mn>0.4</mn>
+          <mo>+</mo>
+          <mn>0.6</mn>
+          <mo>=</mo>
+          <mn>0.9</mn>
+        </math>
+        <math display="block">
+          <mi>M</mi>
+          <mrow>
+            <mo>(</mo>
+            <msup>
+              <mi>X</mi>
+              <mn>2</mn>
+            </msup>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>16</mn>
+          <mo>·</mo>
+          <mn>0.1</mn>
+          <mo>+</mo>
+          <mn>4</mn>
+          <mo>·</mo>
+          <mn>0.2</mn>
+          <mo>+</mo>
+          <mn>1</mn>
+          <mo>·</mo>
+          <mn>0.3</mn>
+          <mo>+</mo>
+          <mn>4</mn>
+          <mo>·</mo>
+          <mn>0.2</mn>
+          <mo>+</mo>
+          <mn>16</mn>
+          <mo>·</mo>
+          <mn>0.1</mn>
+          <mo>+</mo>
+          <mn>36</mn>
+          <mo>·</mo>
+          <mn>0.1</mn>
+          <mo>=</mo>
+          <mn>8.7</mn>
+        </math>
+        <math display="block">
+          <mi>D</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>8.7</mn>
+          <mo>−</mo>
+          <msup>
+            <mn>0.9</mn>
+            <mn>2</mn>
+          </msup>
+          <mo>=</mo>
+          <mn>7.89</mn>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <mi>σ</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <msqrt>
+            <mn>7.89</mn>
+          </msqrt>
+          <mo>≈</mo>
+          <mn>2.8</mn>
+        </math>
+        <div class="formula-label">розв'язання</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-8)">⬡ Приклад: характеристики неперервної з f(x) = ½ sin x
+      </div>
+      <p>f(x) = ½ sin x на (0, π]. Знайти M(X), D(X), σ(X), Mo, Me.</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>M</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <msubsup>
+            <mo>∫</mo>
+            <mn>0</mn>
+            <mi>π</mi>
+          </msubsup>
+          <mi>x</mi>
+          <mo>·</mo>
+          <mfrac>
+            <mn>1</mn>
+            <mn>2</mn>
+          </mfrac>
+          <mi mathvariant="normal">sin</mi>
+          <mi>x</mi>
+          <mspace width="0.2em" ></mspace>
+          <mi>d</mi>
+          <mi>x</mi>
+          <mo>=</mo>
+          <mfrac>
+            <mi>π</mi>
+            <mn>2</mn>
+          </mfrac>
+        </math>
+        <math display="block">
+          <mi>M</mi>
+          <mrow>
+            <mo>(</mo>
+            <msup>
+              <mi>X</mi>
+              <mn>2</mn>
+            </msup>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <msubsup>
+            <mo>∫</mo>
+            <mn>0</mn>
+            <mi>π</mi>
+          </msubsup>
+          <msup>
+            <mi>x</mi>
+            <mn>2</mn>
+          </msup>
+          <mo>·</mo>
+          <mfrac>
+            <mn>1</mn>
+            <mn>2</mn>
+          </mfrac>
+          <mi mathvariant="normal">sin</mi>
+          <mi>x</mi>
+          <mspace width="0.2em" ></mspace>
+          <mi>d</mi>
+          <mi>x</mi>
+          <mo>=</mo>
+          <mfrac>
+            <mrow>
+              <msup>
+                <mi>π</mi>
+                <mn>2</mn>
+              </msup>
+              <mo>−</mo>
+              <mn>4</mn>
+            </mrow>
+            <mn>2</mn>
+          </mfrac>
+        </math>
+        <math display="block">
+          <mi>D</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mrow>
+              <msup>
+                <mi>π</mi>
+                <mn>2</mn>
+              </msup>
+              <mo>−</mo>
+              <mn>4</mn>
+            </mrow>
+            <mn>2</mn>
+          </mfrac>
+          <mo>−</mo>
+          <mfrac>
+            <msup>
+              <mi>π</mi>
+              <mn>2</mn>
+            </msup>
+            <mn>4</mn>
+          </mfrac>
+          <mo>=</mo>
+          <mfrac>
+            <mrow>
+              <msup>
+                <mi>π</mi>
+                <mn>2</mn>
+              </msup>
+              <mo>−</mo>
+              <mn>8</mn>
+            </mrow>
+            <mn>4</mn>
+          </mfrac>
+          <mo>,</mo>
+          <mspace width="1em"></mspace>
+          <mi>σ</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <msqrt>
+              <msup>
+                <mi>π</mi>
+                <mn>2</mn>
+              </msup>
+              <mo>−</mo>
+              <mn>8</mn>
+            </msqrt>
+            <mn>2</mn>
+          </mfrac>
+        </math>
+        <div class="formula-label">інтегрування за частинами; Mo = Me = π/2 (розподіл симетричний)</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-8)">⬡ Початкові та центральні моменти</div>
+      <p>Узагальнення M(X) і D(X) — моменти k-го порядку:</p>
+      <div class="formula-block">
+        <math display="block">
+          <msub>
+            <mi>ν</mi>
+            <mi>k</mi>
+          </msub>
+          <mo>=</mo>
+          <mi>M</mi>
+          <mrow>
+            <mo>(</mo>
+            <msup>
+              <mi>X</mi>
+              <mi>k</mi>
+            </msup>
+            <mo>)</mo>
+          </mrow>
+        </math>
+        <div class="formula-label">(24) початковий момент k-го порядку</div>
+        <div class="formula-where">ν₁ = M(X); ν₂ = M(X²) — використовується в робочій формулі дисперсії.</div>
+        <math display="block">
+          <msub>
+            <mi>μ</mi>
+            <mi>k</mi>
+          </msub>
+          <mo>=</mo>
+          <mi>M</mi>
+          <mrow>
+            <mo>[</mo>
+            <msup>
+              <mrow>
+                <mo>(</mo>
+                <mi>X</mi>
+                <mo>−</mo>
+                <mi>M</mi>
+                <mo>(</mo>
+                <mi>X</mi>
+                <mo>)</mo>
+                <mo>)</mo>
+              </mrow>
+              <mi>k</mi>
+            </msup>
+            <mo>]</mo>
+          </mrow>
+        </math>
+        <div class="formula-label">(27) центральний момент k-го порядку</div>
+        <div class="formula-where">μ₁ = 0 завжди; μ₂ = D(X); μ₃ — міра асиметрії; μ₄ — міра гостровершинності.</div>
+        <math display="block">
+          <msub>
+            <mi>μ</mi>
+            <mi>k</mi>
+          </msub>
+          <mo>=</mo>
+          <munderover>
+            <mo>∑</mo>
+            <mrow>
+              <mi>i</mi>
+              <mo>=</mo>
+              <mn>1</mn>
+            </mrow>
+            <mi>n</mi>
+          </munderover>
+          <msup>
+            <mrow>
+              <mo>(</mo>
+              <msub>
+                <mi>x</mi>
+                <mi>i</mi>
+              </msub>
+              <mo>−</mo>
+              <mi>M</mi>
+              <mo>(</mo>
+              <mi>X</mi>
+              <mo>)</mo>
+              <mo>)</mo>
+            </mrow>
+            <mi>k</mi>
+          </msup>
+          <msub>
+            <mi>p</mi>
+            <mi>i</mi>
+          </msub>
+        </math>
+        <div class="formula-label">(28) дискретна</div>
+        <math display="block">
+          <msub>
+            <mi>μ</mi>
+            <mi>k</mi>
+          </msub>
+          <mo>=</mo>
+          <msubsup>
+            <mo>∫</mo>
+            <mrow>
+              <mo>−</mo>
+              <mi>∞</mi>
+            </mrow>
+            <mi>∞</mi>
+          </msubsup>
+          <msup>
+            <mrow>
+              <mo>(</mo>
+              <mi>x</mi>
+              <mo>−</mo>
+              <mi>M</mi>
+              <mo>(</mo>
+              <mi>X</mi>
+              <mo>)</mo>
+              <mo>)</mo>
+            </mrow>
+            <mi>k</mi>
+          </msup>
+          <mi>f</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>x</mi>
+            <mo>)</mo>
+          </mrow>
+          <mspace width="0.2em" ></mspace>
+          <mi>d</mi>
+          <mi>x</mi>
+        </math>
+        <div class="formula-label">(29) неперервна</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-8)">⬡ Асиметрія і ексцес</div>
+      <p>Безрозмірні характеристики форми розподілу:</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>As</mi>
+          <mo>=</mo>
+          <mfrac>
+            <msub>
+              <mi>μ</mi>
+              <mn>3</mn>
+            </msub>
+            <msup>
+              <mi>σ</mi>
+              <mn>3</mn>
+            </msup>
+          </mfrac>
+        </math>
+        <div class="formula-label">(31) коефіцієнт асиметрії</div>
+        <div class="formula-where">As = 0 — розподіл симетричний відносно M(X); As &gt; 0 — правий хвіст довший
+          (right-skewed); As &lt; 0 — лівий хвіст довший (left-skewed).</div>
+        <math display="block">
+          <mi>Es</mi>
+          <mo>=</mo>
+          <mfrac>
+            <msub>
+              <mi>μ</mi>
+              <mn>4</mn>
+            </msub>
+            <msup>
+              <mi>σ</mi>
+              <mn>4</mn>
+            </msup>
+          </mfrac>
+          <mo>−</mo>
+          <mn>3</mn>
+        </math>
+        <div class="formula-label">(32) ексцес</div>
+        <div class="formula-where">Чому "−3"? Для нормального розподілу μ₄/σ⁴ = 3, і число 3 віднімається, щоб Es
+          нормального дорівнював 0. Es &gt; 0 — гостровершинний (leptokurtic); Es &lt; 0 — плосковершинний
+          (platykurtic).</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-8)">⬡ Приклад: As = 0 при симетричній f(x)</div>
+      <p>f(x) = (3/4) x(2 − x) на (0, 2]. Показати, що As = 0.</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>M</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <msubsup>
+            <mo>∫</mo>
+            <mn>0</mn>
+            <mn>2</mn>
+          </msubsup>
+          <mi>x</mi>
+          <mo>·</mo>
+          <mfrac>
+            <mn>3</mn>
+            <mn>4</mn>
+          </mfrac>
+          <mi>x</mi>
+          <mrow>
+            <mo>(</mo>
+            <mn>2</mn>
+            <mo>−</mo>
+            <mi>x</mi>
+            <mo>)</mo>
+          </mrow>
+          <mspace width="0.2em" ></mspace>
+          <mi>d</mi>
+          <mi>x</mi>
+          <mo>=</mo>
+          <mfrac>
+            <mn>3</mn>
+            <mn>4</mn>
+          </mfrac>
+          <mo>·</mo>
+          <mfrac>
+            <mrow>
+              <mn>16</mn>
+              <mo>−</mo>
+              <mn>12</mn>
+            </mrow>
+            <mn>3</mn>
+          </mfrac>
+          <mo>=</mo>
+          <mn>1</mn>
+        </math>
+        <math display="block">
+          <msub>
+            <mi>μ</mi>
+            <mn>3</mn>
+          </msub>
+          <mo>=</mo>
+          <msubsup>
+            <mo>∫</mo>
+            <mn>0</mn>
+            <mn>2</mn>
+          </msubsup>
+          <msup>
+            <mrow>
+              <mo>(</mo>
+              <mi>x</mi>
+              <mo>−</mo>
+              <mn>1</mn>
+              <mo>)</mo>
+            </mrow>
+            <mn>3</mn>
+          </msup>
+          <mo>·</mo>
+          <mfrac>
+            <mn>3</mn>
+            <mn>4</mn>
+          </mfrac>
+          <mi>x</mi>
+          <mrow>
+            <mo>(</mo>
+            <mn>2</mn>
+            <mo>−</mo>
+            <mi>x</mi>
+            <mo>)</mo>
+          </mrow>
+          <mspace width="0.2em" ></mspace>
+          <mi>d</mi>
+          <mi>x</mi>
+          <mo>=</mo>
+          <mn>0</mn>
+        </math>
+        <div class="formula-label">μ₃ = 0 ⇒ As = 0; розподіл симетричний відносно M(X) = 1</div>
+      </div>
+      <p>Ексцес Еs при цьому ≠ 0 — показує форму гостровершинності навколо центра.</p>
+    </div>
+
+    <div class="note-block exam">★ <strong>Структура задач:</strong> для будь-якої ВВ обчислюйте характеристики в
+      порядку M(X) → M(X²) → D(X) = M(X²) − M²(X) → σ(X) = √D(X). Робоча формула D(X) = M(X²) − M²(X) майже завжди
+      швидша за визначення через відхилення.</div>
+  </section>
+
+  <!-- CHAPTER 9 -->
+  <section class="chapter" id="ch9">
+    <div class="chapter-header">
+      <span class="chapter-num" style="background:rgba(210,168,255,0.15);color:var(--chapter-9)">РОЗДІЛ 09</span>
+      <h2 class="chapter-title">Основні закони цілочислових випадкових величин</h2>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-9)">⬡ Цілочислові ВВ та твірні функції</div>
+      <p><span class="key-term">Цілочислова</span> ВВ — дискретна, що набуває лише цілих невід'ємних значень. Для
+        дослідження таких ВВ використовують <span class="key-term">імовірнісну твірну функцію</span>:</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>A</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>x</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <munderover>
+            <mo>∑</mo>
+            <mrow>
+              <mi>k</mi>
+              <mo>=</mo>
+              <mn>0</mn>
+            </mrow>
+            <mi>∞</mi>
+          </munderover>
+          <msub>
+            <mi>p</mi>
+            <mi>k</mi>
+          </msub>
+          <msup>
+            <mi>x</mi>
+            <mi>k</mi>
+          </msup>
+          <mo>=</mo>
+          <msub>
+            <mi>p</mi>
+            <mn>0</mn>
+          </msub>
+          <mo>+</mo>
+          <msub>
+            <mi>p</mi>
+            <mn>1</mn>
+          </msub>
+          <mi>x</mi>
+          <mo>+</mo>
+          <msub>
+            <mi>p</mi>
+            <mn>2</mn>
+          </msub>
+          <msup>
+            <mi>x</mi>
+            <mn>2</mn>
+          </msup>
+          <mo>+</mo>
+          <mo>…</mo>
+        </math>
+        <div class="formula-label">(1) імовірнісна твірна функція</div>
+      </div>
+      <p>Властивості:</p>
+      <div class="formula-block">
+        <math display="block">
+          <mi>A</mi>
+          <mrow>
+            <mo>(</mo>
+            <mn>1</mn>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <munderover>
+            <mo>∑</mo>
+            <mrow>
+              <mi>k</mi>
+              <mo>=</mo>
+              <mn>0</mn>
+            </mrow>
+            <mi>∞</mi>
+          </munderover>
+          <msub>
+            <mi>p</mi>
+            <mi>k</mi>
+          </msub>
+          <mo>=</mo>
+          <mn>1</mn>
+        </math>
+        <div class="formula-label">умова нормування</div>
+        <math display="block">
+          <msub>
+            <mi>p</mi>
+            <mi>k</mi>
+          </msub>
+          <mo>=</mo>
+          <mfrac>
+            <mn>1</mn>
+            <mrow>
+              <mi>k</mi>
+              <mo>!</mo>
+            </mrow>
+          </mfrac>
+          <msup>
+            <mi>A</mi>
+            <mrow>
+              <mo>(</mo>
+              <mi>k</mi>
+              <mo>)</mo>
+            </mrow>
+          </msup>
+          <mrow>
+            <mo>(</mo>
+            <mn>0</mn>
+            <mo>)</mo>
+          </mrow>
+        </math>
+        <div class="formula-label">відновлення p<sub>k</sub> через k-ту похідну</div>
+        <math display="block">
+          <mi>M</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <msup>
+            <mi>A</mi>
+            <mo>′</mo>
+          </msup>
+          <mrow>
+            <mo>(</mo>
+            <mn>1</mn>
+            <mo>)</mo>
+          </mrow>
+        </math>
+        <div class="formula-label">(2) математичне сподівання</div>
+        <math display="block">
+          <mi>D</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <msup>
+            <mi>A</mi>
+            <mo>″</mo>
+          </msup>
+          <mrow>
+            <mo>(</mo>
+            <mn>1</mn>
+            <mo>)</mo>
+          </mrow>
+          <mo>+</mo>
+          <msup>
+            <mi>A</mi>
+            <mo>′</mo>
+          </msup>
+          <mrow>
+            <mo>(</mo>
+            <mn>1</mn>
+            <mo>)</mo>
+          </mrow>
+          <mo>−</mo>
+          <msup>
+            <mrow>
+              <mo>(</mo>
+              <msup>
+                <mi>A</mi>
+                <mo>′</mo>
+              </msup>
+              <mrow>
+                <mo>(</mo>
+                <mn>1</mn>
+                <mo>)</mo>
+              </mrow>
+              <mo>)</mo>
+            </mrow>
+            <mn>2</mn>
+          </msup>
+        </math>
+        <div class="formula-label">(3) дисперсія через 2-гу похідну</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-9)">⬡ Біноміальний закон</div>
+      <p>X — кількість появ події в схемі Бернуллі. Можливі значення k = 0, 1, …, n. Імовірності — за формулою Бернуллі.
+      </p>
+      <div class="formula-block">
+        <math display="block">
+          <msub>
+            <mi>p</mi>
+            <mi>k</mi>
+          </msub>
+          <mo>=</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>=</mo>
+            <mi>k</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <msubsup>
+            <mi>C</mi>
+            <mi>n</mi>
+            <mi>k</mi>
+          </msubsup>
+          <msup>
+            <mi>p</mi>
+            <mi>k</mi>
+          </msup>
+          <msup>
+            <mi>q</mi>
+            <mrow>
+              <mi>n</mi>
+              <mo>−</mo>
+              <mi>k</mi>
+            </mrow>
+          </msup>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <mi>k</mi>
+          <mo>=</mo>
+          <mn>0</mn>
+          <mo>,</mo>
+          <mn>1</mn>
+          <mo>,</mo>
+          <mo>…</mo>
+          <mo>,</mo>
+          <mi>n</mi>
+        </math>
+        <div class="formula-label">(4a) ймовірності біноміального розподілу</div>
+        <math display="block">
+          <mi>A</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>x</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <msup>
+            <mrow>
+              <mo>(</mo>
+              <mi>q</mi>
+              <mo>+</mo>
+              <mi>p</mi>
+              <mi>x</mi>
+              <mo>)</mo>
+            </mrow>
+            <mi>n</mi>
+          </msup>
+        </math>
+        <div class="formula-label">(4b) твірна функція</div>
+        <math display="block">
+          <mi>M</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mi>n</mi>
+          <mi>p</mi>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <mi>D</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mi>n</mi>
+          <mi>p</mi>
+          <mi>q</mi>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <mi>σ</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <msqrt>
+            <mi>n</mi>
+            <mi>p</mi>
+            <mi>q</mi>
+          </msqrt>
+        </math>
+        <div class="formula-label">(5–7) числові характеристики</div>
+      </div>
+      <p>Приклад: 400 деталей, p = 0.95 → M(X) = 380, D(X) = 19, σ(X) ≈ 4.36.</p>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-9)">⬡ Пуассонівський закон</div>
+      <p>Граничний випадок біноміального при n → ∞, p → 0, np = a = const. Описує число рідкісних подій за фіксований
+        час/простір.</p>
+      <div class="formula-block">
+        <math display="block">
+          <msub>
+            <mi>p</mi>
+            <mi>k</mi>
+          </msub>
+          <mo>=</mo>
+          <mfrac>
+            <msup>
+              <mi>a</mi>
+              <mi>k</mi>
+            </msup>
+            <mrow>
+              <mi>k</mi>
+              <mo>!</mo>
+            </mrow>
+          </mfrac>
+          <msup>
+            <mi>e</mi>
+            <mrow>
+              <mo>−</mo>
+              <mi>a</mi>
+            </mrow>
+          </msup>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <mi>k</mi>
+          <mo>=</mo>
+          <mn>0</mn>
+          <mo>,</mo>
+          <mn>1</mn>
+          <mo>,</mo>
+          <mn>2</mn>
+          <mo>,</mo>
+          <mo>…</mo>
+        </math>
+        <div class="formula-label">ймовірності пуассонівського розподілу</div>
+        <math display="block">
+          <mi>A</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>x</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <msup>
+            <mi>e</mi>
+            <mrow>
+              <mi>a</mi>
+              <mo>(</mo>
+              <mi>x</mi>
+              <mo>−</mo>
+              <mn>1</mn>
+              <mo>)</mo>
+            </mrow>
+          </msup>
+        </math>
+        <div class="formula-label">твірна функція</div>
+        <math display="block">
+          <mi>M</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mi>D</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mi>a</mi>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <mi>σ</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <msqrt>
+            <mi>a</mi>
+          </msqrt>
+        </math>
+        <div class="formula-label">унікальна властивість: M = D</div>
+      </div>
+      <p>Приклад: 1000 мікроелементів, p = 0.004, тоді a = 4 → M(X) = 4, D(X) = 4, σ(X) = 2.</p>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-9)">⬡ Геометричний закон</div>
+      <p>X — число спроб до першої появи події (включно з вдалою). Спроби незалежні зі сталою p.</p>
+      <div class="formula-block">
+        <math display="block">
+          <msub>
+            <mi>p</mi>
+            <mi>k</mi>
+          </msub>
+          <mo>=</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>=</mo>
+            <mi>k</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mi>p</mi>
+          <msup>
+            <mi>q</mi>
+            <mrow>
+              <mi>k</mi>
+              <mo>−</mo>
+              <mn>1</mn>
+            </mrow>
+          </msup>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <mi>k</mi>
+          <mo>=</mo>
+          <mn>1</mn>
+          <mo>,</mo>
+          <mn>2</mn>
+          <mo>,</mo>
+          <mn>3</mn>
+          <mo>,</mo>
+          <mo>…</mo>
+        </math>
+        <div class="formula-label">ймовірності геометричного розподілу</div>
+        <math display="block">
+          <mi>A</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>x</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mrow>
+              <mi>p</mi>
+              <mi>x</mi>
+            </mrow>
+            <mrow>
+              <mn>1</mn>
+              <mo>−</mo>
+              <mi>q</mi>
+              <mi>x</mi>
+            </mrow>
+          </mfrac>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <mrow>
+            <mo>|</mo>
+            <mi>x</mi>
+            <mo>|</mo>
+          </mrow>
+          <mo>&lt;</mo>
+          <mn>1</mn>
+          <mo>/</mo>
+          <mi>q</mi>
+        </math>
+        <div class="formula-label">твірна функція</div>
+        <math display="block">
+          <mi>M</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mn>1</mn>
+            <mi>p</mi>
+          </mfrac>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <mi>D</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mi>q</mi>
+            <msup>
+              <mi>p</mi>
+              <mn>2</mn>
+            </msup>
+          </mfrac>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <mi>σ</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <msqrt>
+              <mi>q</mi>
+            </msqrt>
+            <mi>p</mi>
+          </mfrac>
+        </math>
+        <div class="formula-label">числові характеристики</div>
+      </div>
+      <p>Приклад: кубик до першої "6", p = 1/6, q = 5/6 → M(X) = 6, D(X) = 30, σ(X) ≈ 5.48.</p>
+      <p><strong>Унікальна властивість: відсутність післядії</strong> — імовірність першої появи на k-му кроці не
+        залежить від того, скільки безуспішних спроб уже було.</p>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-9)">⬡ Рівномірний закон (дискретний)</div>
+      <p>Усі n значень k = 1, 2, …, n рівноможливі.</p>
+      <div class="formula-block">
+        <math display="block">
+          <msub>
+            <mi>p</mi>
+            <mi>k</mi>
+          </msub>
+          <mo>=</mo>
+          <mfrac>
+            <mn>1</mn>
+            <mi>n</mi>
+          </mfrac>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <mi>k</mi>
+          <mo>=</mo>
+          <mn>1</mn>
+          <mo>,</mo>
+          <mn>2</mn>
+          <mo>,</mo>
+          <mo>…</mo>
+          <mo>,</mo>
+          <mi>n</mi>
+        </math>
+        <div class="formula-label">ймовірності рівномірного розподілу</div>
+        <math display="block">
+          <mi>M</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mrow>
+              <mi>n</mi>
+              <mo>+</mo>
+              <mn>1</mn>
+            </mrow>
+            <mn>2</mn>
+          </mfrac>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <mi>D</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mrow>
+              <msup>
+                <mi>n</mi>
+                <mn>2</mn>
+              </msup>
+              <mo>−</mo>
+              <mn>1</mn>
+            </mrow>
+            <mn>12</mn>
+          </mfrac>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <mi>σ</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <msqrt>
+              <msup>
+                <mi>n</mi>
+                <mn>2</mn>
+              </msup>
+              <mo>−</mo>
+              <mn>1</mn>
+            </msqrt>
+            <mrow>
+              <mn>2</mn>
+              <msqrt>
+                <mn>3</mn>
+              </msqrt>
+            </mrow>
+          </mfrac>
+        </math>
+        <div class="formula-label">числові характеристики</div>
+      </div>
+      <p>Приклад: n = 100 → M(X) = 50.5, D(X) = 833.25, σ(X) ≈ 28.87.</p>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-9)">⬡ Гіпергеометричний закон</div>
+      <p>З множини n елементів, серед яких n₁ "особливих", навмання беруть m. X = кількість "особливих" серед взятих.
+        Без повернення (на відміну від біноміального).</p>
+      <div class="formula-block">
+        <math display="block">
+          <msub>
+            <mi>p</mi>
+            <mi>k</mi>
+          </msub>
+          <mo>=</mo>
+          <mi>P</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>=</mo>
+            <mi>k</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mrow>
+              <msubsup>
+                <mi>C</mi>
+                <msub>
+                  <mi>n</mi>
+                  <mn>1</mn>
+                </msub>
+                <mi>k</mi>
+              </msubsup>
+              <mo>·</mo>
+              <msubsup>
+                <mi>C</mi>
+                <mrow>
+                  <mi>n</mi>
+                  <mo>−</mo>
+                  <msub>
+                    <mi>n</mi>
+                    <mn>1</mn>
+                  </msub>
+                </mrow>
+                <mrow>
+                  <mi>m</mi>
+                  <mo>−</mo>
+                  <mi>k</mi>
+                </mrow>
+              </msubsup>
+            </mrow>
+            <msubsup>
+              <mi>C</mi>
+              <mi>n</mi>
+              <mi>m</mi>
+            </msubsup>
+          </mfrac>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <mi>m</mi>
+          <mo>≤</mo>
+          <mi>n</mi>
+        </math>
+        <div class="formula-label">ймовірності гіпергеометричного розподілу</div>
+        <div class="formula-where">найменше k = max(0, m − (n − n₁)); найбільше k = min(m, n₁); умова нормування Σ
+          p<sub>k</sub> = 1.</div>
+      </div>
+      <p>Числові характеристики обчислюються прямо за означеннями M(X), D(X) — твірні функції тут громіздкі.</p>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-9)">⬡ Канонічний приклад: 15 деталей, 9 ст. + 6 бр.</div>
+      <p>Виймають m = 3 деталі без повернення. X = число стандартних. Знайти закон і M(X), D(X), σ(X). Параметри: n =
+        15, n₁ = 9, m = 3, k ∈ {0, 1, 2, 3}; C(15,3) = 455.</p>
+      <table class="comparison">
+        <tr>
+          <th>k</th>
+          <td>0</td>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <th>p<sub>k</sub></th>
+          <td>20/455</td>
+          <td>135/455</td>
+          <td>216/455</td>
+          <td>84/455</td>
+        </tr>
+        <tr>
+          <th>≈</th>
+          <td>0.044</td>
+          <td>0.297</td>
+          <td>0.475</td>
+          <td>0.185</td>
+        </tr>
+      </table>
+      <div class="formula-block">
+        <math display="block">
+          <mi>M</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>0</mn>
+          <mo>·</mo>
+          <mn>0.044</mn>
+          <mo>+</mo>
+          <mn>1</mn>
+          <mo>·</mo>
+          <mn>0.297</mn>
+          <mo>+</mo>
+          <mn>2</mn>
+          <mo>·</mo>
+          <mn>0.475</mn>
+          <mo>+</mo>
+          <mn>3</mn>
+          <mo>·</mo>
+          <mn>0.185</mn>
+          <mo>=</mo>
+          <mn>1.8</mn>
+        </math>
+        <math display="block">
+          <mi>M</mi>
+          <mrow>
+            <mo>(</mo>
+            <msup>
+              <mi>X</mi>
+              <mn>2</mn>
+            </msup>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>0</mn>
+          <mo>+</mo>
+          <mn>0.297</mn>
+          <mo>+</mo>
+          <mn>4</mn>
+          <mo>·</mo>
+          <mn>0.475</mn>
+          <mo>+</mo>
+          <mn>9</mn>
+          <mo>·</mo>
+          <mn>0.185</mn>
+          <mo>=</mo>
+          <mn>3.862</mn>
+        </math>
+        <math display="block">
+          <mi>D</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mn>3.862</mn>
+          <mo>−</mo>
+          <msup>
+            <mn>1.8</mn>
+            <mn>2</mn>
+          </msup>
+          <mo>=</mo>
+          <mn>0.622</mn>
+          <mo>,</mo>
+          <mspace width="1em" ></mspace>
+          <mi>σ</mi>
+          <mrow>
+            <mo>(</mo>
+            <mi>X</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <msqrt>
+            <mn>0.622</mn>
+          </msqrt>
+          <mo>≈</mo>
+          <mn>0.789</mn>
+        </math>
+        <div class="formula-label">розв'язання — пряме обчислення характеристик</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-9)">⬡ Зведення законів — порівняльна таблиця</div>
+      <table class="comparison">
+        <tr>
+          <th>Закон</th>
+          <th>p<sub>k</sub></th>
+          <th>M(X)</th>
+          <th>D(X)</th>
+          <th>Коли застосовувати</th>
+        </tr>
+        <tr>
+          <td>Біноміальний</td>
+          <td>C(n,k) pᵏ qⁿ⁻ᵏ</td>
+          <td>np</td>
+          <td>npq</td>
+          <td>n незалежних спроб з фіксованим p</td>
+        </tr>
+        <tr>
+          <td>Пуассон</td>
+          <td>aᵏ e⁻ᵃ / k!</td>
+          <td>a</td>
+          <td>a</td>
+          <td>n велике, p мале, a = np помірне</td>
+        </tr>
+        <tr>
+          <td>Геометричний</td>
+          <td>p qᵏ⁻¹</td>
+          <td>1/p</td>
+          <td>q/p²</td>
+          <td>спроби до першої появи</td>
+        </tr>
+        <tr>
+          <td>Рівномірний</td>
+          <td>1/n</td>
+          <td>(n+1)/2</td>
+          <td>(n²−1)/12</td>
+          <td>n рівноможливих наслідків</td>
+        </tr>
+        <tr>
+          <td>Гіпергеометричний</td>
+          <td>C(n₁,k)·C(n−n₁,m−k)/C(n,m)</td>
+          <td>m·n₁/n</td>
+          <td>обчислюється прямо</td>
+          <td>вибірка без повернення</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="concept">
+      <div class="concept-title" style="color:var(--chapter-9)">⬡ Біноміальний vs Гіпергеометричний</div>
+      <p>Ключова різниця — повернення:</p>
+      <table class="comparison">
+        <tr>
+          <th>Сценарій</th>
+          <th>Закон</th>
+        </tr>
+        <tr>
+          <td>n незалежних експериментів з фіксованим p (підкидання, контроль виробу)</td>
+          <td>Біноміальний</td>
+        </tr>
+        <tr>
+          <td>Виймання m з n без повернення (партія деталей, лотерея)</td>
+          <td>Гіпергеометричний</td>
+        </tr>
+        <tr>
+          <td>Виймання m з n з поверненням</td>
+          <td>Біноміальний з p = n₁/n</td>
+        </tr>
+        <tr>
+          <td>Виймання без повернення, n &gt;&gt; m</td>
+          <td>Гіпер ≈ Біном (наближено)</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="note-block important">Знання основних законів і їх характеристик — фундамент для статистики, контролю
+      якості, теорії надійності та теорії черг. Біноміальний → Пуассон → нормальний — це канонічний ланцюг асимптотичних
+      переходів, який лежить в основі центральної граничної теореми.</div>
+  </section>
+
+  <!-- GLOSSARY -->
+  <section class="chapter" id="glossary">
+    <div class="chapter-header">
+      <span class="chapter-num" style="background:rgba(139,148,158,0.15);color:var(--text-dim)">ГЛОСАРІЙ</span>
+      <h2 class="chapter-title">Скорочення, позначення та терміни</h2>
+    </div>
+
+    <div class="glossary-category">Базові поняття та простір ймовірностей</div>
+    <div class="glossary-grid">
+      <div class="abbr-card">
+        <div class="abbr-key">Ω</div>
+        <div class="abbr-full">Sample space</div>
+        <div class="abbr-desc">Простір елементарних подій — множина всіх можливих наслідків експерименту; також
+          позначення вірогідної події</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">∅</div>
+        <div class="abbr-full">Empty set</div>
+        <div class="abbr-desc">Порожня множина — позначення неможливої події</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">ω<sub>i</sub></div>
+        <div class="abbr-full">Elementary event</div>
+        <div class="abbr-desc">Елементарна подія — найпростіший наслідок одного експерименту</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">A̅</div>
+        <div class="abbr-full">Complement</div>
+        <div class="abbr-desc">Подія, протилежна до A: A̅ = Ω \ A; виконується A ∪ A̅ = Ω, A ∩ A̅ = ∅</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">Θ</div>
+        <div class="abbr-full">Algebra of events</div>
+        <div class="abbr-desc">Алгебра подій — система, замкнена відносно ∪, ∩, \</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">(Θ, Ω, P)</div>
+        <div class="abbr-full">Probability space</div>
+        <div class="abbr-desc">Простір ймовірностей — трійка з алгебри подій, простору елементарних подій і функції
+          ймовірності</div>
+      </div>
+    </div>
+
+    <div class="glossary-category">Ймовірність та її означення</div>
+    <div class="glossary-grid">
+      <div class="abbr-card">
+        <div class="abbr-key">P(A)</div>
+        <div class="abbr-full">Probability</div>
+        <div class="abbr-desc">Імовірність події A — невід'ємне число у [0, 1], що задовольняє аксіоми Колмогорова</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">P(A/B)</div>
+        <div class="abbr-full">Conditional probability</div>
+        <div class="abbr-desc">Умовна ймовірність — імовірність A за умови, що B відбулася: P(A/B) = P(A∩B)/P(B)</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">W(A)</div>
+        <div class="abbr-full">Relative frequency</div>
+        <div class="abbr-desc">Відносна частота: відношення числа появ A до числа експериментів; основа статистичної
+          ймовірності</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">m / n</div>
+        <div class="abbr-full">Classical probability</div>
+        <div class="abbr-desc">Класичне означення: m — число сприятливих, n — всіх рівноможливих елементарних подій
+        </div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">m(A)/m(Ω)</div>
+        <div class="abbr-full">Geometric probability</div>
+        <div class="abbr-desc">Геометричне означення: відношення мір (довжин/площ/об'ємів) для неперервного Ω</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">p, q</div>
+        <div class="abbr-full">Success / failure</div>
+        <div class="abbr-desc">У схемі Бернуллі: p — імовірність появи події в одному експерименті, q = 1 − p</div>
+      </div>
+    </div>
+
+    <div class="glossary-category">Гіпотези та переоцінка</div>
+    <div class="glossary-grid">
+      <div class="abbr-card">
+        <div class="abbr-key">B<sub>i</sub></div>
+        <div class="abbr-full">Hypotheses</div>
+        <div class="abbr-desc">Гіпотези — попарно несумісні події, що утворюють повну групу; одна з них обов'язково
+          настане</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">P(B<sub>i</sub>)</div>
+        <div class="abbr-full">A priori probability</div>
+        <div class="abbr-desc">Апріорна ймовірність гіпотези — до експерименту</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">P(B<sub>i</sub>/A)</div>
+        <div class="abbr-full">A posteriori probability</div>
+        <div class="abbr-desc">Апостеріорна ймовірність — переоцінка гіпотези після того, як подія A відбулася (формула
+          Байєса)</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">Σ P(B<sub>i</sub>)P(A/B<sub>i</sub>)</div>
+        <div class="abbr-full">Total probability</div>
+        <div class="abbr-desc">Формула повної ймовірності — для подій, що залежать від кількох взаємовиключних гіпотез
+        </div>
+      </div>
+    </div>
+
+    <div class="glossary-category">Схема Бернуллі та асимптотичні теореми</div>
+    <div class="glossary-grid">
+      <div class="abbr-card">
+        <div class="abbr-key">P<sub>n</sub>(m)</div>
+        <div class="abbr-full">Bernoulli probability</div>
+        <div class="abbr-desc">Імовірність m появ події в n незалежних експериментах: C(n,m) pᵐ qⁿ⁻ᵐ</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">m₀</div>
+        <div class="abbr-full">Most probable number / mode</div>
+        <div class="abbr-desc">Найімовірніше число появ: np − q ≤ m₀ ≤ np + p</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">φ(x)</div>
+        <div class="abbr-full">Gauss function</div>
+        <div class="abbr-desc">Функція Гауса (1/√(2π)) e^(−x²/2); ядро локальної теореми Муавра–Лапласа</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">Φ(x)</div>
+        <div class="abbr-full">Laplace function</div>
+        <div class="abbr-desc">Інтеграл Лапласа (1/√(2π)) ∫₀ˣ e^(−t²/2)dt; табульована функція; Φ(∞) = 0.5</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">λ</div>
+        <div class="abbr-full">Poisson parameter</div>
+        <div class="abbr-desc">Параметр інтенсивності λ = np у формулі Пуассона; для пуассонівської ВВ: M = D = λ</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">Стірлінг</div>
+        <div class="abbr-full">Stirling formula</div>
+        <div class="abbr-desc">n! ≈ √(2πn) · n<sup>n</sup> · e<sup>−n</sup>; ключ до доведення Муавра–Лапласа</div>
+      </div>
+    </div>
+
+    <div class="glossary-category">Випадкові величини</div>
+    <div class="glossary-grid">
+      <div class="abbr-card">
+        <div class="abbr-key">X, Y, Z</div>
+        <div class="abbr-full">Random variables</div>
+        <div class="abbr-desc">Випадкові величини; функції на просторі елементарних подій α: Ω → ℝ</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">F(x)</div>
+        <div class="abbr-full">Cumulative distribution function (CDF)</div>
+        <div class="abbr-desc">Функція розподілу ймовірностей (інтегральна): F(x) = P(X &lt; x)</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">f(x)</div>
+        <div class="abbr-full">Probability density function (PDF)</div>
+        <div class="abbr-desc">Щільність ймовірностей (диференціальна функція): f(x) = F'(x); для неперервних ВВ</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">p<sub>i</sub></div>
+        <div class="abbr-full">Probability mass</div>
+        <div class="abbr-desc">Імовірність значення x<sub>i</sub> для дискретної ВВ; Σ p<sub>i</sub> = 1</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">Ряд розподілу</div>
+        <div class="abbr-full">Probability distribution table</div>
+        <div class="abbr-desc">Таблична форма закону для дискретної ВВ: пари (x<sub>i</sub>, p<sub>i</sub>)</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">Імов. многокутник</div>
+        <div class="abbr-full">Probability polygon</div>
+        <div class="abbr-desc">Графічна форма закону для дискретної ВВ: точки (x<sub>i</sub>, p<sub>i</sub>), сполучені
+          відрізками</div>
+      </div>
+    </div>
+
+    <div class="glossary-category">Числові характеристики</div>
+    <div class="glossary-grid">
+      <div class="abbr-card">
+        <div class="abbr-key">M(X)</div>
+        <div class="abbr-full">Mathematical expectation</div>
+        <div class="abbr-desc">Математичне сподівання — середнє значення ВВ; центр розсіювання</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">D(X)</div>
+        <div class="abbr-full">Variance / Dispersion</div>
+        <div class="abbr-desc">Дисперсія — міра розсіювання; D(X) = M(X²) − M²(X) ≥ 0</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">σ(X)</div>
+        <div class="abbr-full">Standard deviation</div>
+        <div class="abbr-desc">Середнє квадратичне відхилення σ(X) = √D(X); має ту ж розмірність, що X</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">Mo</div>
+        <div class="abbr-full">Mode</div>
+        <div class="abbr-desc">Мода — найбільш імовірне значення (для дискретної) або максимум f(x) (для неперервної)
+        </div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">Me</div>
+        <div class="abbr-full">Median</div>
+        <div class="abbr-desc">Медіана — значення, для якого F(Me) = 0.5; ділить розподіл на дві рівні половини</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">ν<sub>k</sub></div>
+        <div class="abbr-full">Initial moment</div>
+        <div class="abbr-desc">Початковий момент k-го порядку: ν<sub>k</sub> = M(X<sup>k</sup>); ν₁ = M(X)</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">μ<sub>k</sub></div>
+        <div class="abbr-full">Central moment</div>
+        <div class="abbr-desc">Центральний момент: μ<sub>k</sub> = M[(X − M(X))<sup>k</sup>]; μ₂ = D(X)</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">As</div>
+        <div class="abbr-full">Skewness</div>
+        <div class="abbr-desc">Коефіцієнт асиметрії As = μ₃/σ³; As = 0 при симетричному розподілі</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">Es</div>
+        <div class="abbr-full">Excess kurtosis</div>
+        <div class="abbr-desc">Ексцес Es = μ₄/σ⁴ − 3; характеризує гостро-/плосковершинність відносно нормального</div>
+      </div>
+    </div>
+
+    <div class="glossary-category">Закони цілочислових ВВ</div>
+    <div class="glossary-grid">
+      <div class="abbr-card">
+        <div class="abbr-key">Bin(n, p)</div>
+        <div class="abbr-full">Binomial</div>
+        <div class="abbr-desc">Біноміальний розподіл — число появ у n незалежних спробах; M = np, D = npq</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">Pois(λ)</div>
+        <div class="abbr-full">Poisson</div>
+        <div class="abbr-desc">Пуассонівський — рідкісні події з інтенсивністю λ; M(X) = D(X) = λ</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">Geom(p)</div>
+        <div class="abbr-full">Geometric</div>
+        <div class="abbr-desc">Геометричний — номер спроби до першої появи; M = 1/p, D = q/p²</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">U{1..n}</div>
+        <div class="abbr-full">Discrete uniform</div>
+        <div class="abbr-desc">Дискретний рівномірний — n рівноможливих значень; M = (n+1)/2</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">Hyp(n, n₁, m)</div>
+        <div class="abbr-full">Hypergeometric</div>
+        <div class="abbr-desc">Гіпергеометричний — вибірка m без повернення з n елементів (n₁ "особливих")</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">A(x)</div>
+        <div class="abbr-full">Probability generating function</div>
+        <div class="abbr-desc">Імовірнісна твірна функція: A(x) = Σ p<sub>k</sub>x<sup>k</sup>; M(X) = A'(1)</div>
+      </div>
+    </div>
+
+    <div class="glossary-category">Постаті</div>
+    <div class="glossary-grid">
+      <div class="abbr-card">
+        <div class="abbr-key">Колмогоров</div>
+        <div class="abbr-full">Андрій Колмогоров (1903–1987)</div>
+        <div class="abbr-desc">Радянський математик; аксіоматизація теорії ймовірностей (1933, «Grundbegriffe der
+          Wahrscheinlichkeitsrechnung»)</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">Бернуллі</div>
+        <div class="abbr-full">Якоб Бернуллі (1654–1705)</div>
+        <div class="abbr-desc">Швейцарський математик; формула біноміального розподілу, закон великих чисел («Ars
+          Conjectandi», 1713)</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">Муавр</div>
+        <div class="abbr-full">Абрахам де Муавр (1667–1754)</div>
+        <div class="abbr-desc">Французько-британський математик; локальна теорема — нормальне наближення біноміального
+        </div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">Лаплас</div>
+        <div class="abbr-full">П'єр-Симон Лаплас (1749–1827)</div>
+        <div class="abbr-desc">Французький математик; інтегральна теорема, узагальнення Муавра; функція Лапласа</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">Пуассон</div>
+        <div class="abbr-full">Симеон Пуассон (1781–1840)</div>
+        <div class="abbr-desc">Французький математик; розподіл рідкісних подій (1837), формула для малих p при великих n
+        </div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">Гаус</div>
+        <div class="abbr-full">Карл Фрідріх Гаус (1777–1855)</div>
+        <div class="abbr-desc">Німецький математик; нормальний розподіл, метод найменших квадратів; функція φ(x)</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">Байєс</div>
+        <div class="abbr-full">Томас Байєс (1701–1761)</div>
+        <div class="abbr-desc">Англійський пресвітеріанський священик і математик; формула переоцінки гіпотез (опубл.
+          1763)</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">Стірлінг</div>
+        <div class="abbr-full">Джеймс Стірлінг (1692–1770)</div>
+        <div class="abbr-desc">Шотландський математик; асимптотична формула для n!</div>
+      </div>
+      <div class="abbr-card">
+        <div class="abbr-key">Чебишов</div>
+        <div class="abbr-full">Пафнутій Чебишов (1821–1894)</div>
+        <div class="abbr-desc">Російський математик; нерівність Чебишова, закон великих чисел у загальній формі</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>Стислий посібник на основі курсу теорії ймовірностей: основні поняття, аксіоми Колмогорова, схема Бернуллі,
+      теореми Муавра–Лапласа, Пуассона, випадкові величини та їхні числові характеристики, основні закони цілочислових
+      ВВ · <a href="{{ '/' | relative_url }}">← Всі посібники</a></p>
+  </footer>
+
+</main>
