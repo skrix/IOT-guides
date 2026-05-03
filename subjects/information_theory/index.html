@@ -2571,28 +2571,30 @@ title: "Теорія інформації та кодування"
         Номер функції <math display="inline">
           <mi>k</mi>
         </math> дорівнює числу змін знака на інтервалі існування.</p>
-      <div class="ip-visual"> wal(0,θ) wal(1,θ)
+      <div class="ip-visual">       wal(0,θ)                          wal(1,θ)
 
-        +1 +-------------------+ +1 +---------+
-        | | | |
-        | | | |
-        | | | +---------+
-        -1 | | -1 | | |
+   +1  ┌─────────────────────┐       +1  ┌──────────┐
+       │                     │           │          │
+       │                     │           │          │
+       │                     │           │          │
+   -1  │                     │       -1  │          └──────────┐
+       └─────────────────────┘           └──────────┴──────────┘
+       -1/2        0        1/2          -1/2       0         1/2
 
-        +---------+---------+ +---------+---------+
-        -1/2 0 1/2 -1/2 0 1/2
+       (0 змін знака)                    (1 зміна знака)
 
 
-        wal(2,θ) wal(3,θ)
+       wal(2,θ)                          wal(3,θ)
 
-        +1 +-----+ +-----+ +1 +----+ +----+
-        | | | | | | | |
-        | | | | | | | |
-        | +---------+ | | +----+ |
-        -1 | | | | -1 | | | |
+   +1  ┌──────┐       ┌──────┐       +1  ┌─────┐  ┌─────┐
+       │      │       │      │           │     │  │     │
+       │      │       │      │           │     │  │     │
+       │      │       │      │           │     │  │     │
+   -1  │      └───────┘      │       -1  │     └──┘     └──────┐
+       └──────┴───────┴──────┘           └─────┴──┴─────┴──────┘
+       -1/2  -1/4    1/4    1/2          -1/2 -1/4  0   1/4   1/2
 
-        +-----+----+----+-----+ +----+----+----+
-        -1/2 0 1/2 -1/2 0 1/2</div>
+       (2 зміни знака)                   (3 зміни знака)</div>
     </div>
 
     <div class="concept">
@@ -3316,17 +3318,17 @@ title: "Теорія інформації та кодування"
         </math>
         <div class="formula-label">(6.3) спектральне розкладання АМ</div>
       </div>
-      <div class="ip-visual"> амплітуда
-        ^
-        | M·A_0/2 A_0 M·A_0/2
-        | | | |
-        | | | |
-        | | | |
-        | | | |
-        +-------+-------------+-------------+----> частота
-        ω_0 - Ω ω_0 ω_0 + Ω
+      <div class="ip-visual">  Амплітуда
+      ↑
+      │       M·A₀/2       A₀       M·A₀/2
+      │          │          │          │
+      │          │          │          │
+      │          ●          ●          ●
+      │          │          │          │
+      └──────────┼──────────┼──────────┼──────→  частота
+               ω₀ − Ω      ω₀       ω₀ + Ω
 
-        &lt;------- ширина спектру = 2Ω -------&gt;</div>
+                 ←──── ширина спектру = 2Ω ────→</div>
     </div>
 
     <div class="concept">
@@ -3717,15 +3719,23 @@ title: "Теорія інформації та кодування"
     <div class="concept">
       <div class="concept-title" style="color:var(--chapter-9)">⬡ Канонічний приклад Хаффмана</div>
       <p>Та сама множина — алгоритм будує дерево знизу вгору, об'єднуючи на кожному кроці два найменші:</p>
-      <div class="ip-visual"> Стискання 1: {0.4, 0.2, 0.15, 0.25} ← 0.15+0.1 = 0.25
-        (у групі 0.25: 0.15→0, 0.1→1)
+      <div class="ip-visual"> Алгоритм Хаффмана (знизу вгору):
 
-        Стискання 2: {0.4, 0.35, 0.25} ← 0.2+0.15 = 0.35
-        (у 0.35: 0.2→0, 0.15→1)
+        Крок 1: {0.4, 0.2, 0.15, 0.15, 0.1}
+        об'єднуємо найменші: 0.15 + 0.1 = 0.25
 
-        Стискання 3: {0.6, 0.4} ← 0.35+0.25 = 0.6
-        (у 0.6: 0.35→0, 0.25→1)
-        (фінал: 0.4→0, 0.6→1)</div>
+        Крок 2: {0.4, 0.2, 0.15, 0.25}
+        об'єднуємо: 0.2 + 0.15 = 0.35
+
+        Крок 3: {0.4, 0.25, 0.35}
+        об'єднуємо: 0.25 + 0.35 = 0.6
+
+        Крок 4: {0.4, 0.6}
+        фінал: 0.4 → 0, 0.6 → 1
+
+        У групі 0.6: 0.35→0, 0.25→1
+        У групі 0.35: 0.2→0, 0.15→1
+        У групі 0.25: 0.15→0, 0.1→1</div>
       <p>Зчитуючи коди від кореня до листя дерева — отримуємо результати у таблиці вище (колонка «Код Хаффмана»).</p>
       <div class="formula-block">
         <math display="block">
@@ -3769,7 +3779,7 @@ title: "Теорія інформації та кодування"
         def _split(group, codes):
         if len(group) <= 1: return # Знаходимо точку розбиття на дві ~рівні підгрупи total=sum(p for _, p in group)
           cumsum, split_idx, best_diff=0, 0, total for i, (_, p) in enumerate(group): cumsum +=p diff=abs(2 * cumsum -
-          total) if diff &lt; best_diff: best_diff=diff split_idx=i + 1 left, right=group[:split_idx], group[split_idx:]
+          total) if diff < best_diff: best_diff=diff split_idx=i + 1 left, right=group[:split_idx], group[split_idx:]
           for sym, _ in left: codes[sym] +="0" for sym, _ in right: codes[sym] +="1" _split(left, codes) _split(right,
           codes)</div>
       </div>
@@ -3786,11 +3796,13 @@ title: "Теорія інформації та кодування"
           while len(heap) > 1:
           lo = heapq.heappop(heap)
           hi = heapq.heappop(heap)
+
           # Префіксуємо коди новими бітами:
           for pair in lo[1:]:
           pair[1] = "0" + pair[1]
           for pair in hi[1:]:
           pair[1] = "1" + pair[1]
+
           heapq.heappush(heap, [lo[0]+hi[0]] + lo[1:] + hi[1:])
 
           return dict(heap[0][1:])</div>
@@ -4095,7 +4107,8 @@ title: "Теорія інформації та кодування"
           </msub>
         </math> коду — найменше <math display="inline">
           <mi>d</mi>
-        </math> серед усіх пар дозволених комбінацій. Вона визначає коректуючі властивості коду.</p>
+        </math> серед усіх пар дозволених комбінацій. Вона визначає коректуючі властивості коду.
+      </p>
     </div>
 
     <div class="concept">
@@ -4907,16 +4920,16 @@ title: "Теорія інформації та кодування"
         </math>
         <div class="formula-label">множення на x<sup>r</sup></div>
       </div>
-      <div class="ip-visual"> Ділення 1101000 на 1011 (двійкове, без переносу = XOR):
+      <div class="ip-visual">  Ділення 1101000 на 1011 (двійкове, XOR):
 
-        1101000 / 1011 = частка 1110, остача 001
+      1101000 ÷ 1011 = частка 1110, остача 001
 
-        F(x) = U(x)·x^3 XOR R(x) = 1101000 XOR 001 = 1101001
+      F(x) = U(x)·x³ ⊕ R(x) = 1101000 ⊕ 001 = 1101001
 
-        +-------+-----+
-        | 1101 | 001 | &lt;-- кодове слово
-        +-------+-----+
-        інформ. контр.</div>
+      ┌────────┬───────┐
+      │  1101  │  001  │ ← кодове слово
+      └────────┴───────┘
+        інформ.  контр.</div>
       <p>Перевірка: <math display="inline">
           <mn>1101001</mn>
         </math> ділиться на <math display="inline">
@@ -5236,36 +5249,35 @@ title: "Теорія інформації та кодування"
         """data — список інформаційних бітів, r — кількість контрольних"""
         n = len(data) + r
         code = [0] * n
+
         # Розставляємо інформаційні на не-степені 2:
         info_idx = 0
         for i in range(1, n + 1):
-        if i &amp; (i - 1) != 0: # i не є степінь 2
+        if i & (i - 1) != 0: # i не є степінь 2
         code[i - 1] = data[info_idx]
         info_idx += 1
+
         # Обчислюємо контрольні (на позиціях 1, 2, 4, 8…):
         for k in range(r):
-        pos = 1 &lt;&lt; k
-        parity = 0
-        for i in range(1, n + 1):
-        if i != pos and (i &gt;&gt; k) &amp; 1:
-        parity ^= code[i - 1]
-        code[pos - 1] = parity
-        return code
+        pos = 1 << k parity=0 for i in range(1, n + 1): if i !=pos and (i>> k) & 1:
+          parity ^= code[i - 1]
+          code[pos - 1] = parity
 
-        def hamming_decode(code, r):
-        """Повертає (виправлений_код, позиція_помилки)"""
-        syndrome = 0
-        for k in range(r):
-        pos = 1 &lt;&lt; k
-        parity = 0
-        for i in range(1, len(code) + 1):
-        if (i &gt;&gt; k) &amp; 1:
-        parity ^= code[i - 1]
-        if parity:
-        syndrome |= pos
-        if syndrome:
-        code[syndrome - 1] ^= 1 # інвертуємо
-        return code, syndrome</div>
+          return code
+
+          def hamming_decode(code, r):
+          """Повертає (виправлений_код, позиція_помилки)"""
+          syndrome = 0
+          for k in range(r):
+          pos = 1 << k parity=0 for i in range(1, len(code) + 1): if (i>> k) & 1:
+            parity ^= code[i - 1]
+            if parity:
+            syndrome |= pos
+
+            if syndrome:
+            code[syndrome - 1] ^= 1 # інвертуємо
+
+            return code, syndrome</div>
     </div>
 
   </section>
